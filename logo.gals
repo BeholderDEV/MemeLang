@@ -1,0 +1,36 @@
+#Options
+GenerateScanner = true
+GenerateParser = true
+Language = Java
+ScannerName = Lexico
+ParserName = Sintatico
+SemanticName = Semantico
+ScannerCaseSensitive = true
+ScannerTable = Full
+Input = Stream
+Parser = LALR
+#RegularDefinitions
+D:[0-9]
+WS: [\ \n\t\s\r]
+#Tokens
+num : {D}+
+repeat: "repita"
+PF : "pf"
+pt : "pt"
+pe : "pe"
+pd : "pd"
+ac : "["
+fc : "]"
+ : {WS}+
+
+#NonTerminals
+<LISTA_CMD>
+<CMD>
+<LOOP>
+<INSTR>
+#Grammar
+<LISTA_CMD> ::= <LISTA_CMD> <CMD>| <CMD>;
+
+<CMD> ::=  <LOOP> | <INSTR> num;
+<LOOP> ::= repeat num ac <LISTA_CMD> fc;
+<INSTR> ::= pd | pt | pe | PF ;
