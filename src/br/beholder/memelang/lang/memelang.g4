@@ -58,7 +58,7 @@ op_rel : MAIORQUE | MENORQUE | MAIOROUIGUAL | MENOROUIGUAL | IDENTICO | DIFERENT
 op_neg : MENOS | BITNOT | NOT;
 op_bitwise : BITSHIFTLEFT | BITSHIFTRIGHT;
 op_arit_baixa : MAIS;
-op_logica : AND | OR2 | NOT | AND2 ;
+op_logica : AND | OR | NOT;
 val_final : CONSTINTEIRO | CONSTSTRING | CONSTLOGICO | CONSTREAL | ID | chamadaFuncao | ID multidimensional | PARENTESEABRE expressao PARENTESEFECHA;
 
 
@@ -75,15 +75,15 @@ INT : 'checkEm';
 STRING : 'lolicon';
 DOUBLE : 'dubs';
 BOOL : 'yesButNo';
-BIN : 'OU É VOCE OU EU !';
-HEXA : 'ESTOU TROCANDO NUMEROS POR LETRAS';
+BIN : 'binLaden';
+HEXA : 'l33t';
 VOID : 'missingNo';
 
 BREAK : 'wat';
 
-SWITCHDES : 'SALVEM-SE QUEM PUDER!!!';
-CASE : 'AAAH!!';
-DEFAULTDES : 'AAAAAAAAAAAAH!!!!!';
+SWITCHDES : 'chooseAPill';
+CASE : 'pill';
+DEFAULTDES : 'hipster';
 
 //Operadores Aritméticos
 
@@ -103,8 +103,6 @@ DIFERENTE : '!=';
 
 AND : 'and';
 OR : 'or';
-AND2 : 'JUNTOS CONSEGUIREMOS!!! MAS SE DER MERDA NEM VOU CONTINUAR';
-OR2 : 'CADA UM POR SI!!! MAS SE DER MERDA NEM VOU CONTINUAR';
 NOT : 'nope';
 
 //Operadores Bit a Bit
@@ -141,6 +139,6 @@ PARENTESEABRE : 'L(';
 PARENTESEFECHA: ')L';
 //EXTRA
 ID : [A-Za-z_][A-Za-z_0-9]*;
-RETORNO : 'VOLTEM!VOLTEM!VOLTEM!!!';
+RETORNO : 'goHomeYouAreDrunk';
 //IGNORADOS
 WHITESPACE : ( '\t' | ' ' | '\r' | '\n'| '\u000C' )+ -> skip ;
