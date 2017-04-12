@@ -45,7 +45,6 @@ public class NewJFrame extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -61,17 +60,6 @@ public class NewJFrame extends javax.swing.JFrame {
         jTextArea1.setText("checkEm divideByZero L( )L illuminati\n\tcheckEm g = 1 desu\n\tcheckEm b = 2 desu\n\tyesButNo xoxo = trap desu\n\tbinLaden halflife = hacker100110101001 desu\n\n\twaitForIt L( checkEm i=0 desu i<10 desu i++ )L illuminati\n\t\teverydayUntilYouLikeIt L( yeah )L illuminati\n\t\t\tkek L( i == 5)L illuminati\n\t\t\t\tbatata a = \"s\" desu\n\t\t\t\tlolicon b = \"tuts tuts\" desu\n\t\t\tconfirmed\n\t\t\tnotSureIf illuminati\n\t\t\t\tfirst lel desu\n\t\t\t\tb = \"Morre\" desu\n\t\t\tconfirmed\n\t\tconfirmed\n\tconfirmed\nconfirmed");
         jScrollPane1.setViewportView(jTextArea1);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -81,19 +69,14 @@ public class NewJFrame extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(690, Short.MAX_VALUE)
                         .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 574, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane1))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -125,26 +108,14 @@ public class NewJFrame extends javax.swing.JFrame {
             viewr.setScale(1);//scale a little
             panel.add(viewr);
             frame.add(panel);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(200,200);
             frame.setVisible(true);
             System.out.println("oi");
             
-            SemanticVisitor visitor = new SemanticVisitor(FuncoesPadroes.gerarFuncoesPadroes(FuncoesPadroes.Compilador.BIPIDE));
-            try
-            {
-                visitor.visit(tree);
-                ids = visitor.getTabelaSimbolos();
-                for (Identificador id : ids) {
-                    System.out.println(id.getNome());
-                }
-//                VisitanteDoDesesperoGeradorBipide gerador = new VisitanteDoDesesperoGeradorBipide(ids);
-//                gerador.visit(tree);
-//                new CodigoApresentado(gerador.getCodigo()).setVisible(true);
-            } catch (Exception e)
-            {
-                erro.getErrors().add(e.getLocalizedMessage());
-            }
+        }
+        for (String errin : erro.getErrors())
+        {
+            System.out.println(errin);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
     
@@ -185,7 +156,6 @@ public class NewJFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables

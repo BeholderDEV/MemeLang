@@ -18,7 +18,7 @@ bloco: CHAVESABRE comandos CHAVESFECHA ;
 comandos: (condicionais|comando)*;
 comando:((retorno|declaracoes|atribuicoes|chamadaFuncao)PONTOEVIRGULA);
 //**** Retorno
-retorno: RETORNO expressao;
+retorno: DEFRETORNO expressao;
 
 //**** Chamada de Funcao
 chamadaFuncao: ID PARENTESEABRE parametrosChamada PARENTESEFECHA;
@@ -66,6 +66,9 @@ val_final : CONSTINTEIRO | CONSTSTRING | CONSTBINARIO | CONSTHEXA | CONSTLOGICO 
 //// Lexer Rules
 
 //*****************Palavras Reservadas*******************//
+
+DEFRETORNO : 'goHomeYouAreDrunk';
+
 IFDES : 'kek';
 ELSE : 'notSureIf';
 WHILEDES : 'everydayUntilYouLikeIt';
@@ -145,6 +148,6 @@ PARENTESEFECHA: ')L';
 ASPA: '"';
 //EXTRA
 ID : [A-Za-z_][A-Za-z_0-9]*;
-RETORNO : 'goHomeYouAreDrunk';
+
 //IGNORADOS
 WHITESPACE : ( '\t' | ' ' | '\r' | '\n'| '\u000C' )+ -> skip ;

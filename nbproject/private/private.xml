@@ -3,12 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Alisson/Documents/Git/MemeLang/src/br/beholder/memelang/MemeLang.java</file>
-            <file>file:/C:/Users/Alisson/Documents/Git/MemeLang/src/br/beholder/memelang/model/Identificador.java</file>
-            <file>file:/C:/Users/Alisson/Documents/Git/MemeLang/src/br/beholder/memelang/visitor/MemeVisitor.java</file>
-            <file>file:/C:/Users/Alisson/Documents/Git/MemeLang/src/br/beholder/memelang/model/Escopo.java</file>
-            <file>file:/C:/Users/Alisson/Documents/Git/MemeLang/src/br/beholder/memelang/model/FuncoesPadroes.java</file>
-            <file>file:/C:/Users/Alisson/Documents/Git/MemeLang/src/br/beholder/memelang/visitor/SemanticVisitor.java</file>
+            <file>file:/C:/Users/Alisson/Documents/Git/MemeLang/src/br/beholder/memelang/NewJFrame.java</file>
         </group>
     </open-files>
 </project-private>
