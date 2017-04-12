@@ -1,351 +1,360 @@
 package br.beholder.memelang.lang;
-
-// Generated from memelang.g4 by ANTLR 4.7
+// Generated from Memelang.g4 by ANTLR 4.7
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
  * This interface defines a complete listener for a parse tree produced by
- * {@link memelangParser}.
+ * {@link MemelangParser}.
  */
-public interface memelangListener extends ParseTreeListener {
+public interface MemelangListener extends ParseTreeListener {
 	/**
-	 * Enter a parse tree produced by {@link memelangParser#prog}.
+	 * Enter a parse tree produced by {@link MemelangParser#prog}.
 	 * @param ctx the parse tree
 	 */
-	void enterProg(memelangParser.ProgContext ctx);
+	void enterProg(MemelangParser.ProgContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link memelangParser#prog}.
+	 * Exit a parse tree produced by {@link MemelangParser#prog}.
 	 * @param ctx the parse tree
 	 */
-	void exitProg(memelangParser.ProgContext ctx);
+	void exitProg(MemelangParser.ProgContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link memelangParser#funcoes}.
+	 * Enter a parse tree produced by {@link MemelangParser#funcoes}.
 	 * @param ctx the parse tree
 	 */
-	void enterFuncoes(memelangParser.FuncoesContext ctx);
+	void enterFuncoes(MemelangParser.FuncoesContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link memelangParser#funcoes}.
+	 * Exit a parse tree produced by {@link MemelangParser#funcoes}.
 	 * @param ctx the parse tree
 	 */
-	void exitFuncoes(memelangParser.FuncoesContext ctx);
+	void exitFuncoes(MemelangParser.FuncoesContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link memelangParser#parametros}.
+	 * Enter a parse tree produced by {@link MemelangParser#parametros}.
 	 * @param ctx the parse tree
 	 */
-	void enterParametros(memelangParser.ParametrosContext ctx);
+	void enterParametros(MemelangParser.ParametrosContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link memelangParser#parametros}.
+	 * Exit a parse tree produced by {@link MemelangParser#parametros}.
 	 * @param ctx the parse tree
 	 */
-	void exitParametros(memelangParser.ParametrosContext ctx);
+	void exitParametros(MemelangParser.ParametrosContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link memelangParser#bloco}.
+	 * Enter a parse tree produced by {@link MemelangParser#bloco}.
 	 * @param ctx the parse tree
 	 */
-	void enterBloco(memelangParser.BlocoContext ctx);
+	void enterBloco(MemelangParser.BlocoContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link memelangParser#bloco}.
+	 * Exit a parse tree produced by {@link MemelangParser#bloco}.
 	 * @param ctx the parse tree
 	 */
-	void exitBloco(memelangParser.BlocoContext ctx);
+	void exitBloco(MemelangParser.BlocoContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link memelangParser#comandos}.
+	 * Enter a parse tree produced by {@link MemelangParser#comandos}.
 	 * @param ctx the parse tree
 	 */
-	void enterComandos(memelangParser.ComandosContext ctx);
+	void enterComandos(MemelangParser.ComandosContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link memelangParser#comandos}.
+	 * Exit a parse tree produced by {@link MemelangParser#comandos}.
 	 * @param ctx the parse tree
 	 */
-	void exitComandos(memelangParser.ComandosContext ctx);
+	void exitComandos(MemelangParser.ComandosContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link memelangParser#retorno}.
+	 * Enter a parse tree produced by {@link MemelangParser#comando}.
 	 * @param ctx the parse tree
 	 */
-	void enterRetorno(memelangParser.RetornoContext ctx);
+	void enterComando(MemelangParser.ComandoContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link memelangParser#retorno}.
+	 * Exit a parse tree produced by {@link MemelangParser#comando}.
 	 * @param ctx the parse tree
 	 */
-	void exitRetorno(memelangParser.RetornoContext ctx);
+	void exitComando(MemelangParser.ComandoContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link memelangParser#chamadaFuncao}.
+	 * Enter a parse tree produced by {@link MemelangParser#retorno}.
 	 * @param ctx the parse tree
 	 */
-	void enterChamadaFuncao(memelangParser.ChamadaFuncaoContext ctx);
+	void enterRetorno(MemelangParser.RetornoContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link memelangParser#chamadaFuncao}.
+	 * Exit a parse tree produced by {@link MemelangParser#retorno}.
 	 * @param ctx the parse tree
 	 */
-	void exitChamadaFuncao(memelangParser.ChamadaFuncaoContext ctx);
+	void exitRetorno(MemelangParser.RetornoContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link memelangParser#parametrosChamada}.
+	 * Enter a parse tree produced by {@link MemelangParser#chamadaFuncao}.
 	 * @param ctx the parse tree
 	 */
-	void enterParametrosChamada(memelangParser.ParametrosChamadaContext ctx);
+	void enterChamadaFuncao(MemelangParser.ChamadaFuncaoContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link memelangParser#parametrosChamada}.
+	 * Exit a parse tree produced by {@link MemelangParser#chamadaFuncao}.
 	 * @param ctx the parse tree
 	 */
-	void exitParametrosChamada(memelangParser.ParametrosChamadaContext ctx);
+	void exitChamadaFuncao(MemelangParser.ChamadaFuncaoContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link memelangParser#condicionais}.
+	 * Enter a parse tree produced by {@link MemelangParser#parametrosChamada}.
 	 * @param ctx the parse tree
 	 */
-	void enterCondicionais(memelangParser.CondicionaisContext ctx);
+	void enterParametrosChamada(MemelangParser.ParametrosChamadaContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link memelangParser#condicionais}.
+	 * Exit a parse tree produced by {@link MemelangParser#parametrosChamada}.
 	 * @param ctx the parse tree
 	 */
-	void exitCondicionais(memelangParser.CondicionaisContext ctx);
+	void exitParametrosChamada(MemelangParser.ParametrosChamadaContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link memelangParser#ifdes}.
+	 * Enter a parse tree produced by {@link MemelangParser#condicionais}.
 	 * @param ctx the parse tree
 	 */
-	void enterIfdes(memelangParser.IfdesContext ctx);
+	void enterCondicionais(MemelangParser.CondicionaisContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link memelangParser#ifdes}.
+	 * Exit a parse tree produced by {@link MemelangParser#condicionais}.
 	 * @param ctx the parse tree
 	 */
-	void exitIfdes(memelangParser.IfdesContext ctx);
+	void exitCondicionais(MemelangParser.CondicionaisContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link memelangParser#ifdeselse}.
+	 * Enter a parse tree produced by {@link MemelangParser#ifdes}.
 	 * @param ctx the parse tree
 	 */
-	void enterIfdeselse(memelangParser.IfdeselseContext ctx);
+	void enterIfdes(MemelangParser.IfdesContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link memelangParser#ifdeselse}.
+	 * Exit a parse tree produced by {@link MemelangParser#ifdes}.
 	 * @param ctx the parse tree
 	 */
-	void exitIfdeselse(memelangParser.IfdeselseContext ctx);
+	void exitIfdes(MemelangParser.IfdesContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link memelangParser#ifdeselseif}.
+	 * Enter a parse tree produced by {@link MemelangParser#ifdeselse}.
 	 * @param ctx the parse tree
 	 */
-	void enterIfdeselseif(memelangParser.IfdeselseifContext ctx);
+	void enterIfdeselse(MemelangParser.IfdeselseContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link memelangParser#ifdeselseif}.
+	 * Exit a parse tree produced by {@link MemelangParser#ifdeselse}.
 	 * @param ctx the parse tree
 	 */
-	void exitIfdeselseif(memelangParser.IfdeselseifContext ctx);
+	void exitIfdeselse(MemelangParser.IfdeselseContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link memelangParser#whiledes}.
+	 * Enter a parse tree produced by {@link MemelangParser#ifdeselseif}.
 	 * @param ctx the parse tree
 	 */
-	void enterWhiledes(memelangParser.WhiledesContext ctx);
+	void enterIfdeselseif(MemelangParser.IfdeselseifContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link memelangParser#whiledes}.
+	 * Exit a parse tree produced by {@link MemelangParser#ifdeselseif}.
 	 * @param ctx the parse tree
 	 */
-	void exitWhiledes(memelangParser.WhiledesContext ctx);
+	void exitIfdeselseif(MemelangParser.IfdeselseifContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link memelangParser#fordes}.
+	 * Enter a parse tree produced by {@link MemelangParser#whiledes}.
 	 * @param ctx the parse tree
 	 */
-	void enterFordes(memelangParser.FordesContext ctx);
+	void enterWhiledes(MemelangParser.WhiledesContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link memelangParser#fordes}.
+	 * Exit a parse tree produced by {@link MemelangParser#whiledes}.
 	 * @param ctx the parse tree
 	 */
-	void exitFordes(memelangParser.FordesContext ctx);
+	void exitWhiledes(MemelangParser.WhiledesContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link memelangParser#dodes}.
+	 * Enter a parse tree produced by {@link MemelangParser#fordes}.
 	 * @param ctx the parse tree
 	 */
-	void enterDodes(memelangParser.DodesContext ctx);
+	void enterFordes(MemelangParser.FordesContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link memelangParser#dodes}.
+	 * Exit a parse tree produced by {@link MemelangParser#fordes}.
 	 * @param ctx the parse tree
 	 */
-	void exitDodes(memelangParser.DodesContext ctx);
+	void exitFordes(MemelangParser.FordesContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link memelangParser#switchdes}.
+	 * Enter a parse tree produced by {@link MemelangParser#dodes}.
 	 * @param ctx the parse tree
 	 */
-	void enterSwitchdes(memelangParser.SwitchdesContext ctx);
+	void enterDodes(MemelangParser.DodesContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link memelangParser#switchdes}.
+	 * Exit a parse tree produced by {@link MemelangParser#dodes}.
 	 * @param ctx the parse tree
 	 */
-	void exitSwitchdes(memelangParser.SwitchdesContext ctx);
+	void exitDodes(MemelangParser.DodesContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link memelangParser#switchCase}.
+	 * Enter a parse tree produced by {@link MemelangParser#switchdes}.
 	 * @param ctx the parse tree
 	 */
-	void enterSwitchCase(memelangParser.SwitchCaseContext ctx);
+	void enterSwitchdes(MemelangParser.SwitchdesContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link memelangParser#switchCase}.
+	 * Exit a parse tree produced by {@link MemelangParser#switchdes}.
 	 * @param ctx the parse tree
 	 */
-	void exitSwitchCase(memelangParser.SwitchCaseContext ctx);
+	void exitSwitchdes(MemelangParser.SwitchdesContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link memelangParser#defaultdes}.
+	 * Enter a parse tree produced by {@link MemelangParser#switchCase}.
 	 * @param ctx the parse tree
 	 */
-	void enterDefaultdes(memelangParser.DefaultdesContext ctx);
+	void enterSwitchCase(MemelangParser.SwitchCaseContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link memelangParser#defaultdes}.
+	 * Exit a parse tree produced by {@link MemelangParser#switchCase}.
 	 * @param ctx the parse tree
 	 */
-	void exitDefaultdes(memelangParser.DefaultdesContext ctx);
+	void exitSwitchCase(MemelangParser.SwitchCaseContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link memelangParser#declaracoes}.
+	 * Enter a parse tree produced by {@link MemelangParser#defaultdes}.
 	 * @param ctx the parse tree
 	 */
-	void enterDeclaracoes(memelangParser.DeclaracoesContext ctx);
+	void enterDefaultdes(MemelangParser.DefaultdesContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link memelangParser#declaracoes}.
+	 * Exit a parse tree produced by {@link MemelangParser#defaultdes}.
 	 * @param ctx the parse tree
 	 */
-	void exitDeclaracoes(memelangParser.DeclaracoesContext ctx);
+	void exitDefaultdes(MemelangParser.DefaultdesContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link memelangParser#multidimensional}.
+	 * Enter a parse tree produced by {@link MemelangParser#declaracoes}.
 	 * @param ctx the parse tree
 	 */
-	void enterMultidimensional(memelangParser.MultidimensionalContext ctx);
+	void enterDeclaracoes(MemelangParser.DeclaracoesContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link memelangParser#multidimensional}.
+	 * Exit a parse tree produced by {@link MemelangParser#declaracoes}.
 	 * @param ctx the parse tree
 	 */
-	void exitMultidimensional(memelangParser.MultidimensionalContext ctx);
+	void exitDeclaracoes(MemelangParser.DeclaracoesContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link memelangParser#declaracoesArray}.
+	 * Enter a parse tree produced by {@link MemelangParser#multidimensional}.
 	 * @param ctx the parse tree
 	 */
-	void enterDeclaracoesArray(memelangParser.DeclaracoesArrayContext ctx);
+	void enterMultidimensional(MemelangParser.MultidimensionalContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link memelangParser#declaracoesArray}.
+	 * Exit a parse tree produced by {@link MemelangParser#multidimensional}.
 	 * @param ctx the parse tree
 	 */
-	void exitDeclaracoesArray(memelangParser.DeclaracoesArrayContext ctx);
+	void exitMultidimensional(MemelangParser.MultidimensionalContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link memelangParser#subArrayDeclaracoes}.
+	 * Enter a parse tree produced by {@link MemelangParser#declaracoesArray}.
 	 * @param ctx the parse tree
 	 */
-	void enterSubArrayDeclaracoes(memelangParser.SubArrayDeclaracoesContext ctx);
+	void enterDeclaracoesArray(MemelangParser.DeclaracoesArrayContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link memelangParser#subArrayDeclaracoes}.
+	 * Exit a parse tree produced by {@link MemelangParser#declaracoesArray}.
 	 * @param ctx the parse tree
 	 */
-	void exitSubArrayDeclaracoes(memelangParser.SubArrayDeclaracoesContext ctx);
+	void exitDeclaracoesArray(MemelangParser.DeclaracoesArrayContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link memelangParser#atribuicoes}.
+	 * Enter a parse tree produced by {@link MemelangParser#subArrayDeclaracoes}.
 	 * @param ctx the parse tree
 	 */
-	void enterAtribuicoes(memelangParser.AtribuicoesContext ctx);
+	void enterSubArrayDeclaracoes(MemelangParser.SubArrayDeclaracoesContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link memelangParser#atribuicoes}.
+	 * Exit a parse tree produced by {@link MemelangParser#subArrayDeclaracoes}.
 	 * @param ctx the parse tree
 	 */
-	void exitAtribuicoes(memelangParser.AtribuicoesContext ctx);
+	void exitSubArrayDeclaracoes(MemelangParser.SubArrayDeclaracoesContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link memelangParser#atribuicoesIncEDec}.
+	 * Enter a parse tree produced by {@link MemelangParser#atribuicoes}.
 	 * @param ctx the parse tree
 	 */
-	void enterAtribuicoesIncEDec(memelangParser.AtribuicoesIncEDecContext ctx);
+	void enterAtribuicoes(MemelangParser.AtribuicoesContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link memelangParser#atribuicoesIncEDec}.
+	 * Exit a parse tree produced by {@link MemelangParser#atribuicoes}.
 	 * @param ctx the parse tree
 	 */
-	void exitAtribuicoesIncEDec(memelangParser.AtribuicoesIncEDecContext ctx);
+	void exitAtribuicoes(MemelangParser.AtribuicoesContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link memelangParser#tipoComVoid}.
+	 * Enter a parse tree produced by {@link MemelangParser#atribuicoesIncEDec}.
 	 * @param ctx the parse tree
 	 */
-	void enterTipoComVoid(memelangParser.TipoComVoidContext ctx);
+	void enterAtribuicoesIncEDec(MemelangParser.AtribuicoesIncEDecContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link memelangParser#tipoComVoid}.
+	 * Exit a parse tree produced by {@link MemelangParser#atribuicoesIncEDec}.
 	 * @param ctx the parse tree
 	 */
-	void exitTipoComVoid(memelangParser.TipoComVoidContext ctx);
+	void exitAtribuicoesIncEDec(MemelangParser.AtribuicoesIncEDecContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link memelangParser#tipo}.
+	 * Enter a parse tree produced by {@link MemelangParser#tipoComVoid}.
 	 * @param ctx the parse tree
 	 */
-	void enterTipo(memelangParser.TipoContext ctx);
+	void enterTipoComVoid(MemelangParser.TipoComVoidContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link memelangParser#tipo}.
+	 * Exit a parse tree produced by {@link MemelangParser#tipoComVoid}.
 	 * @param ctx the parse tree
 	 */
-	void exitTipo(memelangParser.TipoContext ctx);
+	void exitTipoComVoid(MemelangParser.TipoComVoidContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link memelangParser#expressao}.
+	 * Enter a parse tree produced by {@link MemelangParser#tipo}.
 	 * @param ctx the parse tree
 	 */
-	void enterExpressao(memelangParser.ExpressaoContext ctx);
+	void enterTipo(MemelangParser.TipoContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link memelangParser#expressao}.
+	 * Exit a parse tree produced by {@link MemelangParser#tipo}.
 	 * @param ctx the parse tree
 	 */
-	void exitExpressao(memelangParser.ExpressaoContext ctx);
+	void exitTipo(MemelangParser.TipoContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link memelangParser#operations}.
+	 * Enter a parse tree produced by {@link MemelangParser#expressao}.
 	 * @param ctx the parse tree
 	 */
-	void enterOperations(memelangParser.OperationsContext ctx);
+	void enterExpressao(MemelangParser.ExpressaoContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link memelangParser#operations}.
+	 * Exit a parse tree produced by {@link MemelangParser#expressao}.
 	 * @param ctx the parse tree
 	 */
-	void exitOperations(memelangParser.OperationsContext ctx);
+	void exitExpressao(MemelangParser.ExpressaoContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link memelangParser#op_rel}.
+	 * Enter a parse tree produced by {@link MemelangParser#operations}.
 	 * @param ctx the parse tree
 	 */
-	void enterOp_rel(memelangParser.Op_relContext ctx);
+	void enterOperations(MemelangParser.OperationsContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link memelangParser#op_rel}.
+	 * Exit a parse tree produced by {@link MemelangParser#operations}.
 	 * @param ctx the parse tree
 	 */
-	void exitOp_rel(memelangParser.Op_relContext ctx);
+	void exitOperations(MemelangParser.OperationsContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link memelangParser#op_neg}.
+	 * Enter a parse tree produced by {@link MemelangParser#op_rel}.
 	 * @param ctx the parse tree
 	 */
-	void enterOp_neg(memelangParser.Op_negContext ctx);
+	void enterOp_rel(MemelangParser.Op_relContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link memelangParser#op_neg}.
+	 * Exit a parse tree produced by {@link MemelangParser#op_rel}.
 	 * @param ctx the parse tree
 	 */
-	void exitOp_neg(memelangParser.Op_negContext ctx);
+	void exitOp_rel(MemelangParser.Op_relContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link memelangParser#op_bitwise}.
+	 * Enter a parse tree produced by {@link MemelangParser#op_neg}.
 	 * @param ctx the parse tree
 	 */
-	void enterOp_bitwise(memelangParser.Op_bitwiseContext ctx);
+	void enterOp_neg(MemelangParser.Op_negContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link memelangParser#op_bitwise}.
+	 * Exit a parse tree produced by {@link MemelangParser#op_neg}.
 	 * @param ctx the parse tree
 	 */
-	void exitOp_bitwise(memelangParser.Op_bitwiseContext ctx);
+	void exitOp_neg(MemelangParser.Op_negContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link memelangParser#op_arit_baixa}.
+	 * Enter a parse tree produced by {@link MemelangParser#op_bitwise}.
 	 * @param ctx the parse tree
 	 */
-	void enterOp_arit_baixa(memelangParser.Op_arit_baixaContext ctx);
+	void enterOp_bitwise(MemelangParser.Op_bitwiseContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link memelangParser#op_arit_baixa}.
+	 * Exit a parse tree produced by {@link MemelangParser#op_bitwise}.
 	 * @param ctx the parse tree
 	 */
-	void exitOp_arit_baixa(memelangParser.Op_arit_baixaContext ctx);
+	void exitOp_bitwise(MemelangParser.Op_bitwiseContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link memelangParser#op_logica}.
+	 * Enter a parse tree produced by {@link MemelangParser#op_arit_baixa}.
 	 * @param ctx the parse tree
 	 */
-	void enterOp_logica(memelangParser.Op_logicaContext ctx);
+	void enterOp_arit_baixa(MemelangParser.Op_arit_baixaContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link memelangParser#op_logica}.
+	 * Exit a parse tree produced by {@link MemelangParser#op_arit_baixa}.
 	 * @param ctx the parse tree
 	 */
-	void exitOp_logica(memelangParser.Op_logicaContext ctx);
+	void exitOp_arit_baixa(MemelangParser.Op_arit_baixaContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link memelangParser#val_final}.
+	 * Enter a parse tree produced by {@link MemelangParser#op_logica}.
 	 * @param ctx the parse tree
 	 */
-	void enterVal_final(memelangParser.Val_finalContext ctx);
+	void enterOp_logica(MemelangParser.Op_logicaContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link memelangParser#val_final}.
+	 * Exit a parse tree produced by {@link MemelangParser#op_logica}.
 	 * @param ctx the parse tree
 	 */
-	void exitVal_final(memelangParser.Val_finalContext ctx);
+	void exitOp_logica(MemelangParser.Op_logicaContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MemelangParser#val_final}.
+	 * @param ctx the parse tree
+	 */
+	void enterVal_final(MemelangParser.Val_finalContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MemelangParser#val_final}.
+	 * @param ctx the parse tree
+	 */
+	void exitVal_final(MemelangParser.Val_finalContext ctx);
 }

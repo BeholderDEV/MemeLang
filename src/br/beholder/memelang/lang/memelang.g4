@@ -1,4 +1,4 @@
-grammar memelang;
+grammar Memelang;
 
 // Parser Rules
 
@@ -15,7 +15,8 @@ parametros : (tipo ID (VIRGULA tipo ID)*)?;
 bloco: CHAVESABRE comandos CHAVESFECHA ;
 
 //*** Comandos
-comandos: (condicionais|((retorno|declaracoes|atribuicoes|chamadaFuncao)PONTOEVIRGULA))*;
+comandos: (condicionais|comando)*;
+comando:((retorno|declaracoes|atribuicoes|chamadaFuncao)PONTOEVIRGULA);
 //**** Retorno
 retorno: RETORNO expressao;
 
@@ -48,7 +49,7 @@ atribuicoesIncEDec: MAIS MAIS|MENOS MENOS;
 
 //Definições gerais
 tipoComVoid: VOID | tipo;
-tipo: INT | STRING | DOUBLE | BOOL | BIN | HEXA;
+tipo: INT | STRING | DOUBLE | BOOL | BIN | HEXA | CHAR;
 
 // NEW Expressões
 expressao: (op_neg)?(val_final)((operations)(val_final))*;
@@ -59,7 +60,7 @@ op_neg : MENOS | BITNOT | NOT;
 op_bitwise : BITSHIFTLEFT | BITSHIFTRIGHT;
 op_arit_baixa : MAIS;
 op_logica : AND | OR | NOT;
-val_final : CONSTINTEIRO | CONSTSTRING | CONSTLOGICO | CONSTREAL | ID | chamadaFuncao | ID multidimensional | PARENTESEABRE expressao PARENTESEFECHA;
+val_final : CONSTINTEIRO | CONSTSTRING | CONSTBINARIO | CONSTHEXA | CONSTLOGICO | CONSTREAL | ID | chamadaFuncao | ID multidimensional | PARENTESEABRE expressao PARENTESEFECHA;
 
 
 //// Lexer Rules
@@ -78,6 +79,7 @@ BOOL : 'yesButNo';
 BIN : 'binLaden';
 HEXA : 'l33t';
 VOID : 'missingNo';
+CHAR : 'batata';
 
 BREAK : 'wat';
 
@@ -114,12 +116,14 @@ BITXOR : '^';
 BITNOT : '~';
 
 //Valores Constantes ???
+
 CONSTREAL : [0-9]+'.'[0-9]+;
 CONSTINTEIRO : [0-9]+;
 CONSTBINARIO : 'hacker'[01]+;
 CONSTHEXA : '7x1'[A-Fa-f0-9]+;
-CONSTSTRING : 'drEvil'(~["\\]|'\\'.)*'drEvil';
+CONSTSTRING : ASPA(~["\\]|'\\'.)*ASPA;
 CONSTLOGICO : '(yeah)|(trap)';
+CONSTCHAR : ASPA(~["\\]|'\\'.)ASPA;
 
 //Comentarios
 COMENTARIOLINHA : 'first'~[\n\r]* -> skip;
@@ -137,6 +141,8 @@ CHAVESABRE : 'illuminati';
 CHAVESFECHA : 'confirmed'; //47
 PARENTESEABRE : 'L(';
 PARENTESEFECHA: ')L';
+
+ASPA: '"';
 //EXTRA
 ID : [A-Za-z_][A-Za-z_0-9]*;
 RETORNO : 'goHomeYouAreDrunk';

@@ -1,425 +1,437 @@
 package br.beholder.memelang.lang;
 
-// Generated from memelang.g4 by ANTLR 4.7
+// Generated from Memelang.g4 by ANTLR 4.7
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 /**
- * This class provides an empty implementation of {@link memelangListener},
+ * This class provides an empty implementation of {@link MemelangListener},
  * which can be extended to create a listener which only needs to handle a subset
  * of the available methods.
  */
-public class memelangBaseListener implements memelangListener {
+public class MemelangBaseListener implements MemelangListener {
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterProg(memelangParser.ProgContext ctx) { }
+	@Override public void enterProg(MemelangParser.ProgContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitProg(memelangParser.ProgContext ctx) { }
+	@Override public void exitProg(MemelangParser.ProgContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFuncoes(memelangParser.FuncoesContext ctx) { }
+	@Override public void enterFuncoes(MemelangParser.FuncoesContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFuncoes(memelangParser.FuncoesContext ctx) { }
+	@Override public void exitFuncoes(MemelangParser.FuncoesContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterParametros(memelangParser.ParametrosContext ctx) { }
+	@Override public void enterParametros(MemelangParser.ParametrosContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitParametros(memelangParser.ParametrosContext ctx) { }
+	@Override public void exitParametros(MemelangParser.ParametrosContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBloco(memelangParser.BlocoContext ctx) { }
+	@Override public void enterBloco(MemelangParser.BlocoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitBloco(memelangParser.BlocoContext ctx) { }
+	@Override public void exitBloco(MemelangParser.BlocoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterComandos(memelangParser.ComandosContext ctx) { }
+	@Override public void enterComandos(MemelangParser.ComandosContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitComandos(memelangParser.ComandosContext ctx) { }
+	@Override public void exitComandos(MemelangParser.ComandosContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterRetorno(memelangParser.RetornoContext ctx) { }
+	@Override public void enterComando(MemelangParser.ComandoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitRetorno(memelangParser.RetornoContext ctx) { }
+	@Override public void exitComando(MemelangParser.ComandoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterChamadaFuncao(memelangParser.ChamadaFuncaoContext ctx) { }
+	@Override public void enterRetorno(MemelangParser.RetornoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitChamadaFuncao(memelangParser.ChamadaFuncaoContext ctx) { }
+	@Override public void exitRetorno(MemelangParser.RetornoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterParametrosChamada(memelangParser.ParametrosChamadaContext ctx) { }
+	@Override public void enterChamadaFuncao(MemelangParser.ChamadaFuncaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitParametrosChamada(memelangParser.ParametrosChamadaContext ctx) { }
+	@Override public void exitChamadaFuncao(MemelangParser.ChamadaFuncaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCondicionais(memelangParser.CondicionaisContext ctx) { }
+	@Override public void enterParametrosChamada(MemelangParser.ParametrosChamadaContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitCondicionais(memelangParser.CondicionaisContext ctx) { }
+	@Override public void exitParametrosChamada(MemelangParser.ParametrosChamadaContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIfdes(memelangParser.IfdesContext ctx) { }
+	@Override public void enterCondicionais(MemelangParser.CondicionaisContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitIfdes(memelangParser.IfdesContext ctx) { }
+	@Override public void exitCondicionais(MemelangParser.CondicionaisContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIfdeselse(memelangParser.IfdeselseContext ctx) { }
+	@Override public void enterIfdes(MemelangParser.IfdesContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitIfdeselse(memelangParser.IfdeselseContext ctx) { }
+	@Override public void exitIfdes(MemelangParser.IfdesContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIfdeselseif(memelangParser.IfdeselseifContext ctx) { }
+	@Override public void enterIfdeselse(MemelangParser.IfdeselseContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitIfdeselseif(memelangParser.IfdeselseifContext ctx) { }
+	@Override public void exitIfdeselse(MemelangParser.IfdeselseContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterWhiledes(memelangParser.WhiledesContext ctx) { }
+	@Override public void enterIfdeselseif(MemelangParser.IfdeselseifContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitWhiledes(memelangParser.WhiledesContext ctx) { }
+	@Override public void exitIfdeselseif(MemelangParser.IfdeselseifContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFordes(memelangParser.FordesContext ctx) { }
+	@Override public void enterWhiledes(MemelangParser.WhiledesContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFordes(memelangParser.FordesContext ctx) { }
+	@Override public void exitWhiledes(MemelangParser.WhiledesContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDodes(memelangParser.DodesContext ctx) { }
+	@Override public void enterFordes(MemelangParser.FordesContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDodes(memelangParser.DodesContext ctx) { }
+	@Override public void exitFordes(MemelangParser.FordesContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSwitchdes(memelangParser.SwitchdesContext ctx) { }
+	@Override public void enterDodes(MemelangParser.DodesContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSwitchdes(memelangParser.SwitchdesContext ctx) { }
+	@Override public void exitDodes(MemelangParser.DodesContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSwitchCase(memelangParser.SwitchCaseContext ctx) { }
+	@Override public void enterSwitchdes(MemelangParser.SwitchdesContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSwitchCase(memelangParser.SwitchCaseContext ctx) { }
+	@Override public void exitSwitchdes(MemelangParser.SwitchdesContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDefaultdes(memelangParser.DefaultdesContext ctx) { }
+	@Override public void enterSwitchCase(MemelangParser.SwitchCaseContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDefaultdes(memelangParser.DefaultdesContext ctx) { }
+	@Override public void exitSwitchCase(MemelangParser.SwitchCaseContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDeclaracoes(memelangParser.DeclaracoesContext ctx) { }
+	@Override public void enterDefaultdes(MemelangParser.DefaultdesContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDeclaracoes(memelangParser.DeclaracoesContext ctx) { }
+	@Override public void exitDefaultdes(MemelangParser.DefaultdesContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterMultidimensional(memelangParser.MultidimensionalContext ctx) { }
+	@Override public void enterDeclaracoes(MemelangParser.DeclaracoesContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitMultidimensional(memelangParser.MultidimensionalContext ctx) { }
+	@Override public void exitDeclaracoes(MemelangParser.DeclaracoesContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDeclaracoesArray(memelangParser.DeclaracoesArrayContext ctx) { }
+	@Override public void enterMultidimensional(MemelangParser.MultidimensionalContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDeclaracoesArray(memelangParser.DeclaracoesArrayContext ctx) { }
+	@Override public void exitMultidimensional(MemelangParser.MultidimensionalContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSubArrayDeclaracoes(memelangParser.SubArrayDeclaracoesContext ctx) { }
+	@Override public void enterDeclaracoesArray(MemelangParser.DeclaracoesArrayContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSubArrayDeclaracoes(memelangParser.SubArrayDeclaracoesContext ctx) { }
+	@Override public void exitDeclaracoesArray(MemelangParser.DeclaracoesArrayContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAtribuicoes(memelangParser.AtribuicoesContext ctx) { }
+	@Override public void enterSubArrayDeclaracoes(MemelangParser.SubArrayDeclaracoesContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAtribuicoes(memelangParser.AtribuicoesContext ctx) { }
+	@Override public void exitSubArrayDeclaracoes(MemelangParser.SubArrayDeclaracoesContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAtribuicoesIncEDec(memelangParser.AtribuicoesIncEDecContext ctx) { }
+	@Override public void enterAtribuicoes(MemelangParser.AtribuicoesContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAtribuicoesIncEDec(memelangParser.AtribuicoesIncEDecContext ctx) { }
+	@Override public void exitAtribuicoes(MemelangParser.AtribuicoesContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTipoComVoid(memelangParser.TipoComVoidContext ctx) { }
+	@Override public void enterAtribuicoesIncEDec(MemelangParser.AtribuicoesIncEDecContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTipoComVoid(memelangParser.TipoComVoidContext ctx) { }
+	@Override public void exitAtribuicoesIncEDec(MemelangParser.AtribuicoesIncEDecContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTipo(memelangParser.TipoContext ctx) { }
+	@Override public void enterTipoComVoid(MemelangParser.TipoComVoidContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTipo(memelangParser.TipoContext ctx) { }
+	@Override public void exitTipoComVoid(MemelangParser.TipoComVoidContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpressao(memelangParser.ExpressaoContext ctx) { }
+	@Override public void enterTipo(MemelangParser.TipoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExpressao(memelangParser.ExpressaoContext ctx) { }
+	@Override public void exitTipo(MemelangParser.TipoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterOperations(memelangParser.OperationsContext ctx) { }
+	@Override public void enterExpressao(MemelangParser.ExpressaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitOperations(memelangParser.OperationsContext ctx) { }
+	@Override public void exitExpressao(MemelangParser.ExpressaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterOp_rel(memelangParser.Op_relContext ctx) { }
+	@Override public void enterOperations(MemelangParser.OperationsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitOp_rel(memelangParser.Op_relContext ctx) { }
+	@Override public void exitOperations(MemelangParser.OperationsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterOp_neg(memelangParser.Op_negContext ctx) { }
+	@Override public void enterOp_rel(MemelangParser.Op_relContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitOp_neg(memelangParser.Op_negContext ctx) { }
+	@Override public void exitOp_rel(MemelangParser.Op_relContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterOp_bitwise(memelangParser.Op_bitwiseContext ctx) { }
+	@Override public void enterOp_neg(MemelangParser.Op_negContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitOp_bitwise(memelangParser.Op_bitwiseContext ctx) { }
+	@Override public void exitOp_neg(MemelangParser.Op_negContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterOp_arit_baixa(memelangParser.Op_arit_baixaContext ctx) { }
+	@Override public void enterOp_bitwise(MemelangParser.Op_bitwiseContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitOp_arit_baixa(memelangParser.Op_arit_baixaContext ctx) { }
+	@Override public void exitOp_bitwise(MemelangParser.Op_bitwiseContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterOp_logica(memelangParser.Op_logicaContext ctx) { }
+	@Override public void enterOp_arit_baixa(MemelangParser.Op_arit_baixaContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitOp_logica(memelangParser.Op_logicaContext ctx) { }
+	@Override public void exitOp_arit_baixa(MemelangParser.Op_arit_baixaContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVal_final(memelangParser.Val_finalContext ctx) { }
+	@Override public void enterOp_logica(MemelangParser.Op_logicaContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVal_final(memelangParser.Val_finalContext ctx) { }
+	@Override public void exitOp_logica(MemelangParser.Op_logicaContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterVal_final(MemelangParser.Val_finalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitVal_final(MemelangParser.Val_finalContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
