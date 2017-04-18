@@ -5,17 +5,15 @@
  */
 package br.beholder.memelang.control;
 
-import br.beholder.memelang.model.analisador.ErroLexico;
-import br.beholder.memelang.model.language.MemelangLexer;
-import br.beholder.memelang.model.language.MemelangParser;
+import br.beholder.memelang.model.executor.MemeLanguageCompiler;
 import br.beholder.memelang.view.MainWindow;
+import java.awt.Dimension;
 import java.util.Arrays;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import org.antlr.v4.gui.TreeViewer;
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.tree.ParseTree;
 
 /**
  *
@@ -23,7 +21,8 @@ import org.antlr.v4.runtime.tree.ParseTree;
  */
 public class MainWindowController {
     private MainWindow mainWindow;
-
+    private MemeLanguageCompiler compiler = new MemeLanguageCompiler();
+    
     public MainWindowController() {
         this.mainWindow = new MainWindow(this);
         this.mainWindow.setLocationRelativeTo(null);
@@ -31,38 +30,30 @@ public class MainWindowController {
     }
     
     public void prepararCompilacao(){
-        ANTLRInputStream ais = new ANTLRInputStream(this.mainWindow.getTextAreaCodigo().getText());
-        MemelangLexer lexer = new MemelangLexer(ais);//*
-        CommonTokenStream stream = new CommonTokenStream(lexer);//*
-        MemelangParser parser = new MemelangParser(stream);//*
-        lexer.removeErrorListeners();
-        parser.removeErrorListeners();
+        this.mainWindow.getTextAreaMensagens().setText("");
+        this.compiler.realizarCompilacao(this.mainWindow.getTextAreaCodigo().getText());
+        if (this.compiler.getErroLexico().getErrors().isEmpty()){
+            this.mainWindow.getTextAreaMensagens().append("Compilação realizada com Sucesso\n");
 
-        // Instala o tratador de erros personalizado que irá exibir as mensagens
-        // em tela na JList
-        ErroLexico erro = new ErroLexico();
-        lexer.addErrorListener(erro);
-        parser.addErrorListener(erro);
-        
-        if (erro.getErrors().isEmpty())
-        {
-            ParseTree tree = parser.prog(); //*
-            JFrame frame = new JFrame("Antlr AST");
-            JPanel panel = new JPanel();
-            TreeViewer viewr = new TreeViewer(Arrays.asList(parser.getRuleNames()),tree);
-            viewr.setScale(1);//scale a little
-            panel.add(viewr);
-            frame.add(panel);
-            frame.setSize(200,200);
-            frame.setVisible(true);
-            System.out.println("oi");
-            
+        }else{
+            for (String errin : this.compiler.getErroLexico().getErrors()){
+                System.out.println(errin);
+                this.mainWindow.getTextAreaMensagens().append(errin + "\n");
+            } 
         }
-        for (String errin : erro.getErrors())
-        {
-            System.out.println(errin);
-        } 
     }
     
+    public void exibirArvoreSintatica(){
+        if(this.compiler.getTree() == null){
+            JOptionPane.showMessageDialog(this.mainWindow, "É necessário compilar antes de gerar a árvore");
+            return;
+        }
+        JFrame frame = new JFrame("Árvore Sintática");
+        frame.setContentPane(new JScrollPane(new TreeViewer(Arrays.asList(this.compiler.getParser().getRuleNames()), this.compiler.getTree())));
+        frame.setPreferredSize( new Dimension(800, 600));
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }
     
 }

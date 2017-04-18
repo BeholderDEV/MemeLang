@@ -194,7 +194,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoSalvarActionPerformed
 
     private void botaoGerarArvoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoGerarArvoreActionPerformed
-        // TODO add your handling code here:
+        this.controller.exibirArvoreSintatica();
     }//GEN-LAST:event_botaoGerarArvoreActionPerformed
     
     /**
