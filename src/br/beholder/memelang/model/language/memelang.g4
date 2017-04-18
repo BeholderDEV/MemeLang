@@ -5,11 +5,12 @@ grammar Memelang;
 //Escopo do programa
 
 
-prog : funcoes;
+prog : funcaoInicio;
 
 //*Escopo de funções
+funcaoInicio: (VOID ID PARENTESEABRE parametros PARENTESEFECHA bloco funcoes);
 funcoes: (tipoComVoid ID PARENTESEABRE parametros PARENTESEFECHA bloco funcoes)?;
-parametros : (tipo ID (VIRGULA tipo ID)*)?;
+parametros : (tipo ID (multidimensional)?(VIRGULA tipo ID)*)?;
 
 //**Escopo de bloco
 bloco: CHAVESABRE comandos CHAVESFECHA ;

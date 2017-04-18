@@ -351,7 +351,7 @@ public class SemanticVisitor extends MemeVisitor{
      * @param ctxProg
      */
     private void markAllFunctions(MemelangParser.ProgContext ctxProg) {
-        MemelangParser.FuncoesContext ctx = ctxProg.funcoes();
+        MemelangParser.FuncoesContext ctx = ctxProg.funcaoInicio().funcoes();
         while (ctx.ID() != null) {
             visitTipoComVoid(ctx.tipoComVoid());
             if (Escopo.verificaSeExisteNoEscopo(ctx.ID().getSymbol().getText(), tabelaSimbolos, escopoAtual)) {

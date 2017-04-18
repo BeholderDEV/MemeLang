@@ -1,6 +1,6 @@
 package br.beholder.memelang.model.language;
 
-// Generated from Memelang.g4 by ANTLR 4.7
+// Generated from .\Memelang.g4 by ANTLR 4.7
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -24,6 +24,18 @@ public class MemelangBaseListener implements MemelangListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitProg(MemelangParser.ProgContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFuncaoInicio(MemelangParser.FuncaoInicioContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFuncaoInicio(MemelangParser.FuncaoInicioContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

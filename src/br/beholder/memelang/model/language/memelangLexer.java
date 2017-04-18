@@ -1,6 +1,5 @@
 package br.beholder.memelang.model.language;
-
-// Generated from Memelang.g4 by ANTLR 4.7
+// Generated from .\Memelang.g4 by ANTLR 4.7
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;

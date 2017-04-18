@@ -79,7 +79,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         textAreaCodigo.setColumns(20);
         textAreaCodigo.setRows(5);
-        textAreaCodigo.setText("checkEm divideByZero L( )L illuminati\n\tcheckEm g = 1 desu\n\tcheckEm b = 2 desu\n\tyesButNo xoxo = trap desu\n\tbinLaden halflife = hacker100110101001 desu\n\n\twaitForIt L( checkEm i=0 desu i<10 desu i++ )L illuminati\n\t\teverydayUntilYouLikeIt L( yeah )L illuminati\n\t\t\tkek L( i == 5)L illuminati\n\t\t\t\tbatata a = \"s\" desu\n\t\t\t\tlolicon b = \"tuts tuts\" desu\n\t\t\tconfirmed\n\t\t\tnotSureIf illuminati\n\t\t\t\tfirst lel desu\n\t\t\t\tb = \"Morre\" desu\n\t\t\tconfirmed\n\t\tconfirmed\n\tconfirmed\nconfirmed");
+        textAreaCodigo.setText("missingNo divideByZero L( )L illuminati\n\tcheckEm g = 1 desu\n\tcheckEm b = 2 desu\n\tyesButNo xoxo = trap desu\n\tbinLaden halflife = hacker100110101001 desu\n\n\twaitForIt L( checkEm i=0 desu i<10 desu i++ )L illuminati\n\t\teverydayUntilYouLikeIt L( yeah )L illuminati\n\t\t\tkek L( i == 5)L illuminati\n\t\t\t\tbatata a = \"s\" desu\n\t\t\t\tlolicon b = \"tuts tuts\" desu\n\t\t\tconfirmed\n\t\t\tnotSureIf illuminati\n\t\t\t\tfirst lel desu\n\t\t\t\tb = \"Morre\" desu\n\t\t\tconfirmed\n\t\tconfirmed\n\tconfirmed\nconfirmed");
         scrollPaneCodigo.setViewportView(textAreaCodigo);
 
         scrollPanelMensagens.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 102), 2, true));

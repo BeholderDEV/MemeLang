@@ -1,6 +1,5 @@
 package br.beholder.memelang.model.language;
-
-// Generated from Memelang.g4 by ANTLR 4.7
+// Generated from .\Memelang.g4 by ANTLR 4.7
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -18,6 +17,16 @@ public interface MemelangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitProg(MemelangParser.ProgContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MemelangParser#funcaoInicio}.
+	 * @param ctx the parse tree
+	 */
+	void enterFuncaoInicio(MemelangParser.FuncaoInicioContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MemelangParser#funcaoInicio}.
+	 * @param ctx the parse tree
+	 */
+	void exitFuncaoInicio(MemelangParser.FuncaoInicioContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MemelangParser#funcoes}.
 	 * @param ctx the parse tree
