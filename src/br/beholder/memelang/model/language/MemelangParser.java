@@ -163,7 +163,7 @@ public class MemelangParser extends Parser {
 	}
 
 	public static class FuncaoInicioContext extends ParserRuleContext {
-		public TerminalNode VOID() { return getToken(MemelangParser.VOID, 0); }
+		public TerminalNode INT() { return getToken(MemelangParser.INT, 0); }
 		public TerminalNode ID() { return getToken(MemelangParser.ID, 0); }
 		public TerminalNode PARENTESEABRE() { return getToken(MemelangParser.PARENTESEABRE, 0); }
 		public ParametrosContext parametros() {
@@ -203,7 +203,7 @@ public class MemelangParser extends Parser {
 			{
 			{
 			setState(74);
-			match(VOID);
+			match(INT);
 			setState(75);
 			match(ID);
 			setState(76);
@@ -2788,7 +2788,7 @@ public class MemelangParser extends Parser {
 		"\2\2\2.\u00f4\3\2\2\2\60\u0107\3\2\2\2\62\u010f\3\2\2\2\64\u011c\3\2\2"+
 		"\2\66\u0120\3\2\2\28\u0122\3\2\2\2:\u0125\3\2\2\2<\u0135\3\2\2\2>\u0137"+
 		"\3\2\2\2@\u0139\3\2\2\2B\u013b\3\2\2\2D\u013d\3\2\2\2F\u013f\3\2\2\2H"+
-		"\u014f\3\2\2\2JK\5\4\3\2K\3\3\2\2\2LM\7\17\2\2MN\7;\2\2NO\78\2\2OP\5\b"+
+		"\u014f\3\2\2\2JK\5\4\3\2K\3\3\2\2\2LM\7\t\2\2MN\7;\2\2NO\78\2\2OP\5\b"+
 		"\5\2PQ\79\2\2QR\5\n\6\2RS\5\6\4\2S\5\3\2\2\2TU\5\66\34\2UV\7;\2\2VW\7"+
 		"8\2\2WX\5\b\5\2XY\79\2\2YZ\5\n\6\2Z[\5\6\4\2[]\3\2\2\2\\T\3\2\2\2\\]\3"+
 		"\2\2\2]\7\3\2\2\2^_\58\35\2_a\7;\2\2`b\5,\27\2a`\3\2\2\2ab\3\2\2\2bi\3"+

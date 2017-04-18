@@ -8,7 +8,7 @@ grammar Memelang;
 prog : funcaoInicio;
 
 //*Escopo de funções
-funcaoInicio: (VOID ID PARENTESEABRE parametros PARENTESEFECHA bloco funcoes);
+funcaoInicio: (INT ID PARENTESEABRE parametros PARENTESEFECHA bloco funcoes);
 funcoes: (tipoComVoid ID PARENTESEABRE parametros PARENTESEFECHA bloco funcoes)?;
 parametros : (tipo ID (multidimensional)?(VIRGULA tipo ID)*)?;
 
