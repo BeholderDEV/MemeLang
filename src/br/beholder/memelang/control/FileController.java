@@ -21,7 +21,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 
 public class FileController {
-    private static String currentDirectory = ".";
+    private static String currentDirectory = "./Exemplos Codigo";
     
     public static String getMemeCode() throws FileNotFoundException{
         JFileChooser fc = new JFileChooser(currentDirectory);
