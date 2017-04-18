@@ -8,10 +8,12 @@ package br.beholder.memelang.control;
 import br.beholder.memelang.model.executor.MemeLanguageCompiler;
 import br.beholder.memelang.view.MainWindow;
 import java.awt.Dimension;
+import java.io.FileNotFoundException;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import org.antlr.v4.gui.TreeViewer;
 
@@ -34,7 +36,6 @@ public class MainWindowController {
         this.compiler.realizarCompilacao(this.mainWindow.getTextAreaCodigo().getText());
         if (this.compiler.getErroLexico().getErrors().isEmpty()){
             this.mainWindow.getTextAreaMensagens().append("Compilação realizada com Sucesso\n");
-
         }else{
             for (String errin : this.compiler.getErroLexico().getErrors()){
                 System.out.println(errin);
@@ -56,4 +57,27 @@ public class MainWindowController {
         frame.setVisible(true);
     }
     
+    public void prepararCarregamentoArquivo(){
+        try {
+            String codigoCarregado = FileController.getMemeCode();
+            if("".equals(codigoCarregado)){
+                return;
+            }
+            this.mainWindow.getTextAreaCodigo().setText(codigoCarregado);
+            this.mainWindow.getTextAreaMensagens().setText("");
+            this.compiler = new MemeLanguageCompiler();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this.mainWindow, "Erro no carregamento do arquivo");
+        }
+    }
+    
+    public void prepararSalvamentoArquivo(){
+        int returnSave = FileController.salvarTexto(this.mainWindow.getTextAreaCodigo().getText());
+        if(returnSave == 1){
+            this.mainWindow.getTextAreaMensagens().append("Código salvo com sucesso\n");
+        }else if(returnSave == 0){
+            this.mainWindow.getTextAreaMensagens().append("Falha ao salvar\n");
+        }
+    }
 }

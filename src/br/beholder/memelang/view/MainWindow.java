@@ -186,11 +186,11 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoCompilarActionPerformed
 
     private void botaoCarregarArquivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCarregarArquivoActionPerformed
-        // TODO add your handling code here:
+        this.controller.prepararCarregamentoArquivo();
     }//GEN-LAST:event_botaoCarregarArquivoActionPerformed
 
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
-        // TODO add your handling code here:
+        this.controller.prepararSalvamentoArquivo();
     }//GEN-LAST:event_botaoSalvarActionPerformed
 
     private void botaoGerarArvoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoGerarArvoreActionPerformed
