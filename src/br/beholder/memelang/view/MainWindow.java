@@ -6,20 +6,14 @@
 package br.beholder.memelang.view;
 
 import br.beholder.memelang.control.MainWindowController;
-import br.beholder.memelang.model.language.MemelangLexer;
-import br.beholder.memelang.model.language.MemelangParser;
-import br.beholder.memelang.model.analisador.ErroLexico;
-import br.beholder.memelang.model.analisador.FuncoesPadroes;
 import br.beholder.memelang.model.analisador.Identificador;
-import br.beholder.memelang.model.visitor.SemanticVisitor;
-import java.util.Arrays;
+import com.alee.laf.WebLookAndFeel;
+import java.awt.Color;
 import java.util.List;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import org.antlr.v4.gui.TreeViewer;
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.tree.ParseTree;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JTextArea;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -34,10 +28,29 @@ public class MainWindow extends javax.swing.JFrame {
      */
     public MainWindow(MainWindowController ctr) {
         this.controller = ctr;
+        try {
+            javax.swing.UIManager.setLookAndFeel(new WebLookAndFeel());
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
         initComponents();
+        this.setButtonColor(this.botaoCarregarArquivo, Color.WHITE, Color.WHITE, Color.BLACK, Color.RED, Color.DARK_GRAY, Color.RED);
+        this.setButtonColor(this.botaoCompilar, Color.WHITE, Color.WHITE, Color.BLACK, Color.RED, Color.DARK_GRAY, Color.RED);
+        this.setButtonColor(this.botaoGerarArvore, Color.WHITE, Color.WHITE, Color.BLACK, Color.RED, Color.DARK_GRAY, Color.RED);
+        this.setButtonColor(this.botaoSalvar, Color.WHITE, Color.WHITE, Color.BLACK, Color.RED, Color.DARK_GRAY, Color.RED);
+        this.getContentPane().setBackground(Color.WHITE);
         this.textAreaCodigo.setTabSize(4);
     }
 
+    private void setButtonColor(com.alee.laf.button.WebButton b, Color fore, Color selFor, Color top, Color topSel, Color bot, Color botSel){
+        b.setForeground (fore);
+        b.setSelectedForeground (selFor);
+        b.setTopBgColor (top);
+        b.setTopSelectedBgColor (topSel);
+        b.setBottomBgColor (bot);
+        b.setBottomSelectedBgColor (botSel);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -47,82 +60,142 @@ public class MainWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        scrollPaneCodigo = new javax.swing.JScrollPane();
         textAreaCodigo = new javax.swing.JTextArea();
+        scrollPanelMensagens = new javax.swing.JScrollPane();
+        textAreaMensagens = new javax.swing.JTextArea();
+        painelBotoesFooter = new javax.swing.JPanel();
+        botaoCompilar = new com.alee.laf.button.WebButton();
+        botaoCarregarArquivo = new com.alee.laf.button.WebButton();
+        botaoSalvar = new com.alee.laf.button.WebButton();
+        botaoGerarArvore = new com.alee.laf.button.WebButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Meme Language IDE");
+        setBackground(new java.awt.Color(255, 255, 255));
+        setMinimumSize(new java.awt.Dimension(1100, 600));
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        scrollPaneCodigo.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(255, 51, 51), new java.awt.Color(255, 153, 153)));
 
         textAreaCodigo.setColumns(20);
         textAreaCodigo.setRows(5);
         textAreaCodigo.setText("checkEm divideByZero L( )L illuminati\n\tcheckEm g = 1 desu\n\tcheckEm b = 2 desu\n\tyesButNo xoxo = trap desu\n\tbinLaden halflife = hacker100110101001 desu\n\n\twaitForIt L( checkEm i=0 desu i<10 desu i++ )L illuminati\n\t\teverydayUntilYouLikeIt L( yeah )L illuminati\n\t\t\tkek L( i == 5)L illuminati\n\t\t\t\tbatata a = \"s\" desu\n\t\t\t\tlolicon b = \"tuts tuts\" desu\n\t\t\tconfirmed\n\t\t\tnotSureIf illuminati\n\t\t\t\tfirst lel desu\n\t\t\t\tb = \"Morre\" desu\n\t\t\tconfirmed\n\t\tconfirmed\n\tconfirmed\nconfirmed");
-        jScrollPane1.setViewportView(textAreaCodigo);
+        scrollPaneCodigo.setViewportView(textAreaCodigo);
+
+        scrollPanelMensagens.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 102), 2, true));
+
+        textAreaMensagens.setEditable(false);
+        textAreaMensagens.setColumns(20);
+        textAreaMensagens.setRows(5);
+        scrollPanelMensagens.setViewportView(textAreaMensagens);
+
+        painelBotoesFooter.setBackground(new java.awt.Color(255, 255, 255));
+
+        botaoCompilar.setText("Compilar");
+        botaoCompilar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoCompilarActionPerformed(evt);
+            }
+        });
+
+        botaoCarregarArquivo.setText("Carregar Arquivo");
+        botaoCarregarArquivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoCarregarArquivoActionPerformed(evt);
+            }
+        });
+
+        botaoSalvar.setText("Salvar Arquivo");
+        botaoSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoSalvarActionPerformed(evt);
+            }
+        });
+
+        botaoGerarArvore.setText("Gerar Árvore");
+        botaoGerarArvore.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoGerarArvoreActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout painelBotoesFooterLayout = new javax.swing.GroupLayout(painelBotoesFooter);
+        painelBotoesFooter.setLayout(painelBotoesFooterLayout);
+        painelBotoesFooterLayout.setHorizontalGroup(
+            painelBotoesFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelBotoesFooterLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(botaoCarregarArquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(botaoSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addComponent(botaoCompilar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(botaoGerarArvore, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16))
+        );
+
+        painelBotoesFooterLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {botaoCarregarArquivo, botaoCompilar, botaoGerarArvore, botaoSalvar});
+
+        painelBotoesFooterLayout.setVerticalGroup(
+            painelBotoesFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelBotoesFooterLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(painelBotoesFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(botaoCarregarArquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoCompilar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoGerarArvore, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(690, Short.MAX_VALUE)
-                        .addComponent(jButton1))
-                    .addComponent(jScrollPane1))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(scrollPaneCodigo)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(227, 227, 227)
+                .addComponent(scrollPanelMensagens)
+                .addGap(223, 223, 223))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(318, 318, 318)
+                .addComponent(painelBotoesFooter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(311, 311, 311))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(scrollPaneCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(65, 65, 65)
+                .addComponent(scrollPanelMensagens, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
+                .addGap(38, 38, 38)
+                .addComponent(painelBotoesFooter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        ANTLRInputStream ais = new ANTLRInputStream(textAreaCodigo.getText());//*
-        MemelangLexer lexer = new MemelangLexer(ais);//*
-        CommonTokenStream stream = new CommonTokenStream(lexer);//*
-        MemelangParser parser = new MemelangParser(stream);//*
-        lexer.removeErrorListeners();
-        parser.removeErrorListeners();
+    private void botaoCompilarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCompilarActionPerformed
+        this.controller.prepararCompilacao();
+    }//GEN-LAST:event_botaoCompilarActionPerformed
 
-        // Instala o tratador de erros personalizado que irá exibir as mensagens
-        // em tela na JList
-        ErroLexico erro = new ErroLexico();
-        lexer.addErrorListener(erro);
-        parser.addErrorListener(erro);
-        
-        if (erro.getErrors().isEmpty())
-        {
-            ParseTree tree = parser.prog(); //*
-            JFrame frame = new JFrame("Antlr AST");
-            JPanel panel = new JPanel();
-            TreeViewer viewr = new TreeViewer(Arrays.asList(parser.getRuleNames()),tree);
-            viewr.setScale(1);//scale a little
-            panel.add(viewr);
-            frame.add(panel);
-            frame.setSize(200,200);
-            frame.setVisible(true);
-            System.out.println("oi");
-            
-        }
-        for (String errin : erro.getErrors())
-        {
-            System.out.println(errin);
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void botaoCarregarArquivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCarregarArquivoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoCarregarArquivoActionPerformed
+
+    private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoSalvarActionPerformed
+
+    private void botaoGerarArvoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoGerarArvoreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoGerarArvoreActionPerformed
     
     /**
      * @param args the command line arguments
@@ -160,9 +233,24 @@ public class MainWindow extends javax.swing.JFrame {
         });
     }
 
+    
+    public JTextArea getTextAreaCodigo() {
+        return textAreaCodigo;
+    }
+
+    public JTextArea getTextAreaMensagens() {
+        return textAreaMensagens;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private com.alee.laf.button.WebButton botaoCarregarArquivo;
+    private com.alee.laf.button.WebButton botaoCompilar;
+    private com.alee.laf.button.WebButton botaoGerarArvore;
+    private com.alee.laf.button.WebButton botaoSalvar;
+    private javax.swing.JPanel painelBotoesFooter;
+    private javax.swing.JScrollPane scrollPaneCodigo;
+    private javax.swing.JScrollPane scrollPanelMensagens;
     private javax.swing.JTextArea textAreaCodigo;
+    private javax.swing.JTextArea textAreaMensagens;
     // End of variables declaration//GEN-END:variables
 }
