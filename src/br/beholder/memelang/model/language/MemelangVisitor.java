@@ -191,6 +191,12 @@ public interface MemelangVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitOperations(MemelangParser.OperationsContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link MemelangParser#op_atr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOp_atr(MemelangParser.Op_atrContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link MemelangParser#op_rel}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

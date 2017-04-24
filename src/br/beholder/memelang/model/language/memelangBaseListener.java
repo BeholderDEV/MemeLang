@@ -377,6 +377,18 @@ public class MemelangBaseListener implements MemelangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterOp_atr(MemelangParser.Op_atrContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOp_atr(MemelangParser.Op_atrContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterOp_rel(MemelangParser.Op_relContext ctx) { }
 	/**
 	 * {@inheritDoc}

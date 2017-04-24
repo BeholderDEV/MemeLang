@@ -205,7 +205,7 @@ public class SemanticVisitor extends MemeVisitor{
         multidimensional = ctx.COLCHETESABRE().size();
         qtdMultidimensional = 1;
         for (int i = 0; i < multidimensional; i++) {
-            String item = ctx.CONSTINTEIRO(i).getSymbol().getText();
+            String item = ctx.expressao(i).getText();
             qtdMultidimensional *= Integer.parseInt(item);
         }
         return null; //To change body of generated methods, choose Tools | Templates.
@@ -265,34 +265,34 @@ public class SemanticVisitor extends MemeVisitor{
     @Override
     public Object visitDeclaracoes(MemelangParser.DeclaracoesContext ctx) {
         visitTipo(ctx.tipo());
-        if (ctx.multidimensional() != null) {
-            visitMultidimensional(ctx.multidimensional());
-        } else {
-            multidimensional = 0;
-            qtdMultidimensional = 1;
-        }
-        boolean inicializada;
-        if (ctx.IGUAL() == null) {
-            inicializada = false;
-        } else {
-            inicializada = true;
-        }
-        if (Escopo.verificaSeExisteNoEscopo(ctx.ID().getSymbol().getText(), tabelaSimbolos, escopoAtual)) {
-            throw new ParseCancellationException("Declaração de Váriavel " + ctx.ID() + " já existe neste escopo Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine());
-        }
-        Identificador id = new Identificador(
-                ctx.ID().getSymbol().getText(),
-                tipoAtual,
-                inicializada,
-                false,
-                escopoAtual,
-                false,
-                0,
-                multidimensional,
-                qtdMultidimensional,
-                false);
-        tabelaSimbolos.add(id);
-        visitChildren(ctx);
+//        if (ctx.multidimensional() != null) {
+//            visitMultidimensional(ctx.multidimensional());
+//        } else {
+//            multidimensional = 0;
+//            qtdMultidimensional = 1;
+//        }
+//        boolean inicializada;
+//        if (ctx.IGUAL() == null) {
+//            inicializada = false;
+//        } else {
+//            inicializada = true;
+//        }
+//        if (Escopo.verificaSeExisteNoEscopo(ctx.ID().getSymbol().getText(), tabelaSimbolos, escopoAtual)) {
+//            throw new ParseCancellationException("Declaração de Váriavel " + ctx.ID() + " já existe neste escopo Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine());
+//        }
+//        Identificador id = new Identificador(
+//                ctx.ID().getSymbol().getText(),
+//                tipoAtual,
+//                inicializada,
+//                false,
+//                escopoAtual,
+//                false,
+//                0,
+//                multidimensional,
+//                qtdMultidimensional,
+//                false);
+//        tabelaSimbolos.add(id);
+//        visitChildren(ctx);
         return null;
     }
 

@@ -308,6 +308,16 @@ public interface MemelangListener extends ParseTreeListener {
 	 */
 	void exitOperations(MemelangParser.OperationsContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link MemelangParser#op_atr}.
+	 * @param ctx the parse tree
+	 */
+	void enterOp_atr(MemelangParser.Op_atrContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MemelangParser#op_atr}.
+	 * @param ctx the parse tree
+	 */
+	void exitOp_atr(MemelangParser.Op_atrContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link MemelangParser#op_rel}.
 	 * @param ctx the parse tree
 	 */

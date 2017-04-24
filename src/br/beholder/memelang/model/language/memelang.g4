@@ -10,7 +10,7 @@ prog : funcaoInicio;
 //*Escopo de funções
 funcaoInicio: (INT ID PARENTESEABRE parametros PARENTESEFECHA bloco funcoes);
 funcoes: (tipoComVoid ID PARENTESEABRE parametros PARENTESEFECHA bloco funcoes)?;
-parametros : (tipo ID (multidimensional)?(VIRGULA tipo ID)*)?;
+parametros : (tipo ID (multidimensional)?(VIRGULA tipo ID (multidimensional)?)*)?;
 
 //**Escopo de bloco
 bloco: CHAVESABRE comandos CHAVESFECHA ;
@@ -38,14 +38,14 @@ switchdes: SWITCHDES PARENTESEABRE expressao PARENTESEFECHA CHAVESABRE switchCas
 switchCase: (CASE expressao DOISPONTOS comandos (BREAK)?)* ;
 defaultdes: (DEFAULTDES DOISPONTOS comandos (BREAK)?)? ;
 //**** Declaracoes
-declaracoes: tipo ID ((IGUAL expressao)|(multidimensional(IGUAL declaracoesArray)?))?;
-multidimensional: (COLCHETESABRE CONSTINTEIRO COLCHETESFECHA)+;
+declaracoes: tipo ID ((IGUAL expressao)|(multidimensional(IGUAL declaracoesArray)?))? (VIRGULA ID ((IGUAL expressao)|(multidimensional(IGUAL declaracoesArray)?))?)*;
+multidimensional: (COLCHETESABRE expressao COLCHETESFECHA)+;
 
 declaracoesArray: CHAVESABRE (subArrayDeclaracoes|declaracoesArray) CHAVESFECHA (VIRGULA CHAVESABRE (subArrayDeclaracoes|declaracoesArray) CHAVESFECHA)*;
 subArrayDeclaracoes: expressao (VIRGULA expressao)* ;
 
 //**** Atribuições
-atribuicoes: ID (multidimensional)? ((atribuicoesIncEDec)|(IGUAL expressao));
+atribuicoes: ID (multidimensional)? ((atribuicoesIncEDec)|((IGUAL | op_atr) expressao));
 atribuicoesIncEDec: MAIS MAIS|MENOS MENOS;
 
 //Definições gerais
@@ -56,10 +56,11 @@ tipo: INT | STRING | DOUBLE | BOOL | BIN | HEXA | CHAR;
 expressao: (op_neg)?(val_final)((operations)(val_final))*;
 
 operations : op_rel | op_neg | op_bitwise | op_arit_baixa | op_logica;
+op_atr : MAIS IGUAL | MENOS IGUAL;
 op_rel : MAIORQUE | MENORQUE | MAIOROUIGUAL | MENOROUIGUAL | IDENTICO | DIFERENTE;
 op_neg : MENOS | BITNOT | NOT;
 op_bitwise : BITSHIFTLEFT | BITSHIFTRIGHT;
-op_arit_baixa : MAIS;
+op_arit_baixa : MAIS | DIVIDE | MULTIPLICA | MOD;
 op_logica : AND | OR | NOT;
 val_final : CONSTINTEIRO | CONSTSTRING | CONSTBINARIO | CONSTHEXA | CONSTLOGICO | CONSTREAL | ID | chamadaFuncao | ID multidimensional | PARENTESEABRE expressao PARENTESEFECHA;
 
@@ -95,6 +96,9 @@ DEFAULTDES : 'hipster';
 
 MAIS : '+';
 MENOS : '-';
+MULTIPLICA : '*';
+DIVIDE : '/';
+MOD: '%';
 
 //Operadores Relacionais
 
@@ -137,7 +141,7 @@ COMENTARIOMULTIPLO : 'ayy'(.|'\n')*'lmao' -> skip;
 PONTO : '.';
 IGUAL : '=';
 PONTOEVIRGULA : 'desu';
-VIRGULA : '¬¬';
+VIRGULA : ',';
 DOISPONTOS : ':';
 COLCHETESABRE : '[';
 COLCHETESFECHA : ']';
