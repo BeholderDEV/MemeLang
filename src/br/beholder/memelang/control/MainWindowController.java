@@ -32,6 +32,7 @@ public class MainWindowController {
     public void prepararCompilacao(){
         this.mainWindow.getTextAreaMensagens().setText("");
         this.compiler.realizarCompilacao(this.mainWindow.getTextAreaCodigo().getText());
+        
         if (this.compiler.getErroLexico().getErrors().isEmpty()){
             this.mainWindow.getTextAreaMensagens().append("Compilação realizada com Sucesso\n");
         }else{

@@ -17,7 +17,12 @@ bloco: CHAVESABRE comandos CHAVESFECHA ;
 
 //*** Comandos
 comandos: (condicionais|comando)*;
-comando:((retorno|declaracoes|atribuicoes|chamadaFuncao)PONTOEVIRGULA);
+comando:((retorno|declaracoes|atribuicoes|chamadaFuncao|entradaesaida)PONTOEVIRGULA);
+
+//**** Entrada e Saida
+entradaesaida: (DEFREAD | DEFWRITE) PARENTESEABRE val_final PARENTESEFECHA;
+
+
 //**** Retorno
 retorno: DEFRETORNO expressao;
 
@@ -68,6 +73,9 @@ val_final : CONSTINTEIRO | CONSTSTRING | CONSTBINARIO | CONSTHEXA | CONSTLOGICO 
 //// Lexer Rules
 
 //*****************Palavras Reservadas*******************//
+DEFREAD: 'leia';
+DEFWRITE: 'escreva';
+
 
 DEFRETORNO : 'goHomeYouAreDrunk';
 

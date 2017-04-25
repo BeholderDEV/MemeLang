@@ -41,6 +41,7 @@ public class SemanticVisitor extends MemeVisitor{
 
     @Override
     public Object visitExpressao(MemelangParser.ExpressaoContext ctx) {
+        System.out.println("expressão");
         if (ctx == null) {
             return null;
         }
@@ -223,6 +224,7 @@ public class SemanticVisitor extends MemeVisitor{
 
     @Override
     public Object visitAtribuicoes(MemelangParser.AtribuicoesContext ctx) {
+        System.out.println("atribuição");
         Identificador id = Identificador.getId(ctx.ID().getSymbol().getText(), tabelaSimbolos, escopoAtual);
         if (id == null) {
             throw new ParseCancellationException("Váriavel " + ctx.ID() + " não existe neste escopo Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine());

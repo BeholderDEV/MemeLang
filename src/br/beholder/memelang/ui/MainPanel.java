@@ -19,7 +19,7 @@ import javax.swing.JTextArea;
 public class MainPanel extends javax.swing.JPanel {
     
     int pX, pY;
-    public static List<Identificador> ids = null;
+    
     private MainWindowController controller;
     
     
