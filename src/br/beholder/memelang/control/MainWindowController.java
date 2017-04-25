@@ -6,7 +6,7 @@
 package br.beholder.memelang.control;
 
 import br.beholder.memelang.model.executor.MemeLanguageCompiler;
-import br.beholder.memelang.view.MainWindow;
+import br.beholder.memelang.ui.MainPanel;
 import java.awt.Dimension;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
@@ -22,13 +22,11 @@ import org.antlr.v4.gui.TreeViewer;
  * @author 5674867
  */
 public class MainWindowController {
-    private MainWindow mainWindow;
+    private MainPanel mainWindow;
     private MemeLanguageCompiler compiler = new MemeLanguageCompiler();
     
-    public MainWindowController() {
-        this.mainWindow = new MainWindow(this);
-        this.mainWindow.setLocationRelativeTo(null);
-        this.mainWindow.setVisible(true);
+    public MainWindowController(MainPanel mainWindow) {
+        this.mainWindow = mainWindow;
     }
     
     public void prepararCompilacao(){

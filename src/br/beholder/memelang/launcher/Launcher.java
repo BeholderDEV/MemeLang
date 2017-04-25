@@ -14,7 +14,7 @@ import br.beholder.memelang.control.MainWindowController;
  */
 public class Launcher {
     
-        public static void main(String args[]) {
-            MainWindowController starter = new MainWindowController();
-        }
+//        public static void main(String args[]) {
+//            //MainWindowController starter = new MainWindowController();
+//        }
 }
