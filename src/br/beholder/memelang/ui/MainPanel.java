@@ -123,6 +123,7 @@ public class MainPanel extends javax.swing.JPanel {
 
         jPanel2.add(jPanel1, java.awt.BorderLayout.WEST);
 
+        console.setEditable(false);
         console.setColumns(20);
         console.setRows(5);
         jScrollPane1.setViewportView(console);
