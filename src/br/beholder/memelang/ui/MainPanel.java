@@ -24,8 +24,9 @@ public class MainPanel extends javax.swing.JPanel {
     
     
     public MainPanel() {
-        controller= new MainWindowController(this);
+        controller = new MainWindowController(this);
         initComponents();
+        this.textEdit.setTabSize(4);
         configurarCores();
     }
     private void configurarCores(){
@@ -73,7 +74,7 @@ public class MainPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         console = new javax.swing.JTextArea();
 
-        setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         setPreferredSize(new java.awt.Dimension(1024, 600));
         setLayout(new java.awt.BorderLayout(5, 5));
 
@@ -82,6 +83,7 @@ public class MainPanel extends javax.swing.JPanel {
 
         textEdit.setColumns(20);
         textEdit.setRows(5);
+        textEdit.setText("checkEm divideByZero L( )L illuminati\n\tcheckEm g[2] desu\n\tcheckEm b = 2 desu\n\tg[1] = g + b desu\nconfirmed");
         jScrollPane2.setViewportView(textEdit);
 
         jPanel2.add(jScrollPane2, java.awt.BorderLayout.CENTER);

@@ -41,7 +41,6 @@ public class SemanticVisitor extends MemeVisitor{
 
     @Override
     public Object visitExpressao(MemelangParser.ExpressaoContext ctx) {
-        System.out.println("expressão");
         if (ctx == null) {
             return null;
         }
@@ -224,8 +223,8 @@ public class SemanticVisitor extends MemeVisitor{
 
     @Override
     public Object visitAtribuicoes(MemelangParser.AtribuicoesContext ctx) {
-        System.out.println("atribuição");
         Identificador id = Identificador.getId(ctx.ID().getSymbol().getText(), tabelaSimbolos, escopoAtual);
+        System.out.println("Atribuindo variavel " + id.getNome());
         if (id == null) {
             throw new ParseCancellationException("Váriavel " + ctx.ID() + " não existe neste escopo Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine());
         }
@@ -266,11 +265,12 @@ public class SemanticVisitor extends MemeVisitor{
 
     @Override
     public Object visitDeclaracoes(MemelangParser.DeclaracoesContext ctx) {
-        System.out.println("declaração");
         System.out.println(ctx.ID());
         List<TerminalNode> ids = ctx.ID();
         visitTipo(ctx.tipo());
         for (int i = 0 ;  i < ids.size(); i++ ) {
+            multidimensional = 0;
+            qtdMultidimensional = 1;
             TerminalNode id = ids.get(i);
             if (ctx.multidimensional() != null) {
                 for(MemelangParser.MultidimensionalContext mult : ctx.multidimensional()){
@@ -281,7 +281,8 @@ public class SemanticVisitor extends MemeVisitor{
                 qtdMultidimensional = 1;
             }
             boolean inicializada;
-            if (ctx.IGUAL() == null) {
+            System.out.println("Shit desu " + qtdMultidimensional + " Wait " + multidimensional);
+            if (ctx.IGUAL().isEmpty()) {
                 inicializada = false;
             } else {
                 inicializada = true;
