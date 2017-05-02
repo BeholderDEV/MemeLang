@@ -1,6 +1,5 @@
-package br.beholder.memelang.model.language;
-
 // Generated from .\Memelang.g4 by ANTLR 4.7
+package br.beholder.memelang.model.language;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
 /**

@@ -1,5 +1,4 @@
 package br.beholder.memelang.model.language;
-
 // Generated from .\Memelang.g4 by ANTLR 4.7
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -57,9 +56,8 @@ public class MemelangParser extends Parser {
 		"'batata'", "'wat'", "'chooseAPill'", "'pill'", "'hipster'", "'+'", "'-'", 
 		"'*'", "'/'", "'%'", "'>'", "'<'", "'>='", "'<='", "'=='", "'!='", "'and'", 
 		"'or'", "'nope'", "'>>'", "'<<'", "'&'", "'|'", "'^'", "'~'", null, null, 
-		null, null, null, "'(yeah)|(trap)'", null, null, null, "'.'", "'='", "'desu'", 
-		"','", "':'", "'['", "']'", "'illuminati'", "'confirmed'", "'L('", "')L'", 
-		"'\"'"
+		null, null, null, null, null, null, null, "'.'", "'='", "'desu'", "','", 
+		"':'", "'['", "']'", "'illuminati'", "'confirmed'", "'L('", "')L'", "'\"'"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
 		null, "DEFREAD", "DEFWRITE", "DEFRETORNO", "IFDES", "ELSE", "WHILEDES", 

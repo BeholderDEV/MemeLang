@@ -138,7 +138,7 @@ CONSTINTEIRO : [0-9]+;
 CONSTBINARIO : 'hacker'[01]+;
 CONSTHEXA : '7x1'[A-Fa-f0-9]+;
 CONSTSTRING : ASPA(~["\\]|'\\'.)*ASPA;
-CONSTLOGICO : '(yeah)|(trap)';
+CONSTLOGICO : ('yeah')|('trap');
 CONSTCHAR : ASPA(~["\\]|'\\'.)ASPA;
 
 //Comentarios
