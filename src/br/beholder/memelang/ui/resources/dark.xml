@@ -35,7 +35,7 @@
    <tokenStyles>
       <style token="IDENTIFIER" fg="FBFBFB"/>
       <style token="RESERVED_WORD" fg="F1433C" bold="true"/>
-      <style token="RESERVED_WORD_2" fg="F1433C" bold="true"/>
+      <style token="RESERVED_WORD_2" fg="9638d1" bold="true"/>
       <style token="ANNOTATION" fg="E8E2B7"/>
       <style token="COMMENT_DOCUMENTATION" fg="6C788C"/>
       <style token="COMMENT_EOL" fg="66747B"/>
@@ -57,10 +57,10 @@
       <style token="MARKUP_TAG_ATTRIBUTE_VALUE" fg="e1e2cf"/>
       <style token="MARKUP_PROCESSING_INSTRUCTION" fg="A082BD"/>
       <style token="MARKUP_CDATA" fg="ae9fbf"/>
-      <style token="OPERATOR" fg="E8E2B7"/>
+      <style token="OPERATOR" fg="f265ab"/>
       <style token="PREPROCESSOR" fg="A082BD"/>
       <style token="REGEX" fg="d39745"/>
-      <style token="SEPARATOR" fg="E8E2B7"/>
+      <style token="SEPARATOR" fg="74d6db"/>
       <style token="VARIABLE" fg="ae9fbf" bold="true"/>
       <style token="WHITESPACE" fg="FBFBFB"/>
       

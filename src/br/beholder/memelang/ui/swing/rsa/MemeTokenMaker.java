@@ -35,6 +35,40 @@ public class MemeTokenMaker extends AbstractTokenMaker{
         
         tokenMap.put("kek", Token.RESERVED_WORD);
         tokenMap.put("notSureIf", Token.RESERVED_WORD);
+        tokenMap.put("everydayUntilYouLikeIt", Token.RESERVED_WORD);
+        tokenMap.put("waitForIt", Token.RESERVED_WORD);
+        tokenMap.put("justDoIt", Token.RESERVED_WORD);
+        tokenMap.put("wat", Token.RESERVED_WORD);
+        tokenMap.put("chooseAPill", Token.RESERVED_WORD);
+        tokenMap.put("pill", Token.RESERVED_WORD);
+        tokenMap.put("hipster", Token.RESERVED_WORD);
+        
+        tokenMap.put("+", Token.OPERATOR);
+        tokenMap.put("-", Token.OPERATOR);
+        tokenMap.put("*", Token.OPERATOR);
+        tokenMap.put("/", Token.OPERATOR);
+        tokenMap.put("%", Token.OPERATOR);
+        
+        tokenMap.put("<", Token.OPERATOR);
+        tokenMap.put(">", Token.OPERATOR);
+        tokenMap.put("=", Token.OPERATOR);
+        tokenMap.put("<=", Token.OPERATOR);
+        tokenMap.put(">=", Token.OPERATOR);
+        tokenMap.put("==", Token.OPERATOR);
+        tokenMap.put("!=", Token.OPERATOR);
+        
+        tokenMap.put("and", Token.OPERATOR);
+        tokenMap.put("or", Token.OPERATOR);
+        tokenMap.put("nope", Token.OPERATOR);
+        
+        tokenMap.put(",", Token.SEPARATOR);
+        tokenMap.put("illuminati", Token.SEPARATOR);
+        tokenMap.put("confirmed", Token.SEPARATOR);
+        tokenMap.put("desu", Token.SEPARATOR);
+        
+        tokenMap.put("L(", Token.RESERVED_WORD_2);
+        tokenMap.put(")L", Token.RESERVED_WORD_2);
+        
 
         tokenMap.put("leia", Token.FUNCTION);
         tokenMap.put("escreva",  Token.FUNCTION);
