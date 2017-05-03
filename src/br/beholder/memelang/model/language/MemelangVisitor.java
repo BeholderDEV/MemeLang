@@ -35,6 +35,12 @@ public interface MemelangVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitParametros(MemelangParser.ParametrosContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link MemelangParser#parametro}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParametro(MemelangParser.ParametroContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link MemelangParser#bloco}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -142,6 +148,12 @@ public interface MemelangVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitDeclaracoes(MemelangParser.DeclaracoesContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MemelangParser#declaracao}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDeclaracao(MemelangParser.DeclaracaoContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link MemelangParser#multidimensional}.
 	 * @param ctx the parse tree

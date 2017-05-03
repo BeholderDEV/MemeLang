@@ -124,18 +124,18 @@ public class SemanticVisitor extends MemeVisitor{
 
     @Override
     public Object visitParametros(MemelangParser.ParametrosContext ctx) {
-        for (int i = 0; i < ctx.ID().size(); i++) {
-            String idName = ctx.ID(i).getSymbol().getText();
+        for (int i = 0; i < ctx.parametro().size(); i++) {
+            String idName = ctx.parametro(i).ID().getSymbol().getText();
             if (Escopo.verificaSeExisteNoEscopo(idName, tabelaSimbolos, escopoAtual)) {
                 throw new ParseCancellationException("Declaração de Váriavel " + idName + " já existe neste escopo Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine());
             }
             multidimensional = 0;
             qtdMultidimensional = 1;
-            if (ctx.multidimensional(i) != null) {
-                visitMultidimensional(ctx.multidimensional(i));
+            if (ctx.parametro(i).multidimensional() != null) {
+                visitMultidimensional(ctx.parametro(i).multidimensional());
             }
             System.out.println("Parametro: "+ idName +" do tipo" + tipoAtual + "  no escopo "+escopoAtual.getNome()+" qtdMultidimensional: " + qtdMultidimensional + " Mult " + multidimensional);
-            visitTipo(ctx.tipo(i));
+            visitTipo(ctx.parametro(i).tipo());
             Identificador id = new Identificador(
                     idName,
                     tipoAtual,
@@ -271,33 +271,25 @@ public class SemanticVisitor extends MemeVisitor{
 
     @Override
     public Object visitDeclaracoes(MemelangParser.DeclaracoesContext ctx) {
-        System.out.println(ctx.ID());
-        List<TerminalNode> ids = ctx.ID();
+        System.out.println(ctx.declaracao());
         visitTipo(ctx.tipo());
-        for (int i = 0 ;  i < ids.size(); i++ ) {
+        for (MemelangParser.DeclaracaoContext declaracaoContext : ctx.declaracao()) {            
             multidimensional = 0;
             qtdMultidimensional = 1;
-            TerminalNode id = ids.get(i);
-            if (ctx.multidimensional() != null) {
-                for(MemelangParser.MultidimensionalContext mult : ctx.multidimensional()){
-                    visitMultidimensional(mult);
-                }
-            } else {
-                multidimensional = 0;
-                qtdMultidimensional = 1;
+            TerminalNode id = declaracaoContext.ID();
+            if (declaracaoContext.multidimensional() != null) {
+                visitMultidimensional(declaracaoContext.multidimensional());
             }
             boolean inicializada;
             System.out.println("Shit desu " + qtdMultidimensional + " Wait " + multidimensional);
-            for (TerminalNode igualC : ctx.IGUAL()) {
-                System.out.println("AAAA " + igualC.getSymbol().getText());
-            }
-            if (ctx.IGUAL().isEmpty()) {
-                inicializada = false;
-            } else {
+            
+            if (declaracaoContext.IGUAL() != null) {
                 inicializada = true;
+            } else {
+                inicializada = false;
             }
             if (Escopo.verificaSeExisteNoEscopo(id.getSymbol().getText(), tabelaSimbolos, escopoAtual)) {
-                throw new ParseCancellationException("Declaração de Váriavel " + ctx.ID() + " já existe neste escopo Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine());
+                throw new ParseCancellationException("Declaração de Váriavel " + declaracaoContext.ID() + " já existe neste escopo Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine());
             }else{
                 System.out.println("vou salvar a variável: "+id.getSymbol().getStartIndex()+" do tipo" + tipoAtual + "  no escopo "+escopoAtual.getNome()+" inicializada: "+inicializada);
             }
@@ -315,7 +307,6 @@ public class SemanticVisitor extends MemeVisitor{
             tabelaSimbolos.add(ident);
             visitChildren(ctx);
         }
-        
         
         return null;
     }

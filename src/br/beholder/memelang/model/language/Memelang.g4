@@ -10,7 +10,8 @@ prog : funcaoInicio;
 //*Escopo de funções
 funcaoInicio: (INT ID PARENTESEABRE parametros PARENTESEFECHA bloco funcoes);
 funcoes: (tipoComVoid ID PARENTESEABRE parametros PARENTESEFECHA bloco funcoes)?;
-parametros : (tipo ID (multidimensional)?(VIRGULA tipo ID (multidimensional)?)*)?;
+parametros : (parametro(VIRGULA parametro)*)?;
+parametro: tipo (REFERENCIA)? ID (multidimensional)?;
 
 //**Escopo de bloco
 bloco: CHAVESABRE comandos CHAVESFECHA ;
@@ -43,7 +44,8 @@ switchdes: SWITCHDES PARENTESEABRE expressao PARENTESEFECHA CHAVESABRE switchCas
 switchCase: (CASE expressao DOISPONTOS comandos (BREAK)?)* ;
 defaultdes: (DEFAULTDES DOISPONTOS comandos (BREAK)?)? ;
 //**** Declaracoes
-declaracoes: tipo ID ((IGUAL expressao)|(multidimensional(IGUAL declaracoesArray)?))? (VIRGULA ID ((IGUAL expressao)|(multidimensional(IGUAL declaracoesArray)?))?)*;
+declaracoes: tipo declaracao (VIRGULA declaracao?)*;
+declaracao: ID ((IGUAL expressao)|(multidimensional(IGUAL declaracoesArray)?))?;
 multidimensional: (COLCHETESABRE expressao COLCHETESFECHA)+;
 
 declaracoesArray: CHAVESABRE (subArrayDeclaracoes|declaracoesArray) CHAVESFECHA (VIRGULA CHAVESABRE (subArrayDeclaracoes|declaracoesArray) CHAVESFECHA)*;
@@ -122,6 +124,7 @@ DIFERENTE : '!=';
 AND : 'and';
 OR : 'or';
 NOT : 'nope';
+REFERENCIA : 'sauce';
 
 //Operadores Bit a Bit
 BITSHIFTRIGHT : '>>';

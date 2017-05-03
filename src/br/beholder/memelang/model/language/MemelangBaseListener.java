@@ -1,4 +1,5 @@
 package br.beholder.memelang.model.language;
+
 // Generated from .\Memelang.g4 by ANTLR 4.7
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -59,6 +60,18 @@ public class MemelangBaseListener implements MemelangListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitParametros(MemelangParser.ParametrosContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterParametro(MemelangParser.ParametroContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitParametro(MemelangParser.ParametroContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -275,6 +288,18 @@ public class MemelangBaseListener implements MemelangListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitDeclaracoes(MemelangParser.DeclaracoesContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDeclaracao(MemelangParser.DeclaracaoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDeclaracao(MemelangParser.DeclaracaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

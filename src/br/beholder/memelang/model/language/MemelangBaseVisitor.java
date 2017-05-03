@@ -1,5 +1,5 @@
-// Generated from .\Memelang.g4 by ANTLR 4.7
 package br.beholder.memelang.model.language;
+// Generated from .\Memelang.g4 by ANTLR 4.7
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
 /**
@@ -39,6 +39,13 @@ public class MemelangBaseVisitor<T> extends AbstractParseTreeVisitor<T> implemen
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitParametros(MemelangParser.ParametrosContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitParametro(MemelangParser.ParametroContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -165,6 +172,13 @@ public class MemelangBaseVisitor<T> extends AbstractParseTreeVisitor<T> implemen
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitDeclaracoes(MemelangParser.DeclaracoesContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitDeclaracao(MemelangParser.DeclaracaoContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

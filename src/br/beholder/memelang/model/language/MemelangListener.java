@@ -48,6 +48,16 @@ public interface MemelangListener extends ParseTreeListener {
 	 */
 	void exitParametros(MemelangParser.ParametrosContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link MemelangParser#parametro}.
+	 * @param ctx the parse tree
+	 */
+	void enterParametro(MemelangParser.ParametroContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MemelangParser#parametro}.
+	 * @param ctx the parse tree
+	 */
+	void exitParametro(MemelangParser.ParametroContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link MemelangParser#bloco}.
 	 * @param ctx the parse tree
 	 */
@@ -227,6 +237,16 @@ public interface MemelangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitDeclaracoes(MemelangParser.DeclaracoesContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MemelangParser#declaracao}.
+	 * @param ctx the parse tree
+	 */
+	void enterDeclaracao(MemelangParser.DeclaracaoContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MemelangParser#declaracao}.
+	 * @param ctx the parse tree
+	 */
+	void exitDeclaracao(MemelangParser.DeclaracaoContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MemelangParser#multidimensional}.
 	 * @param ctx the parse tree
