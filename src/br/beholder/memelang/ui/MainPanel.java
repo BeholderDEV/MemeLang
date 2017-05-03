@@ -48,11 +48,13 @@ public class MainPanel extends javax.swing.JPanel {
         controller = new MainWindowController(this);
         initComponents();
         textArea = new RSyntaxTextArea(20, 60);
-        textArea.setCodeFoldingEnabled(true);
+        
         AbstractTokenMakerFactory atmf = (AbstractTokenMakerFactory)TokenMakerFactory.getDefaultInstance();
         atmf.putMapping("text/myLanguage", "br.beholder.memelang.ui.swing.rsa.MemeTokenMaker");
+        
+        FoldParserManager.get().addFoldParserMapping("text/myLanguage", new MemeFoldParser());
         textArea.setSyntaxEditingStyle("text/myLanguage");
-        //FoldParserManager.get().addFoldParserMapping("text/myLanguage", new MemeFoldParser());
+        textArea.setCodeFoldingEnabled(true);
         Theme theme = carregarTema();
         theme.apply(textArea);
         sp = new RTextScrollPane(textArea);

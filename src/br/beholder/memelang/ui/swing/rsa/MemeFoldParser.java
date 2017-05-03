@@ -18,16 +18,13 @@ public class MemeFoldParser extends CurlyFoldParser {
 
 	@Override
 	public boolean isLeftCurly(Token t) {
-            System.out.println(t.getLexeme());
-            return false;
-                
+            return t.getLexeme().equals("illuminati");
 	}
 
 
 	@Override
 	public boolean isRightCurly(Token t) {
-            System.out.println(t.getLexeme());
-            return false;
+            return t.getLexeme().equals("confirmed");
 	}
 
 
