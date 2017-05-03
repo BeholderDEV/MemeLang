@@ -7,10 +7,13 @@ package br.beholder.memelang.ui;
 
 import br.beholder.memelang.control.MainWindowController;
 import br.beholder.memelang.ui.swing.rsa.MemeFoldParser;
+import br.beholder.memelang.ui.swing.webLaf.PSOutTabbedPaneUI;
+import br.beholder.memelang.ui.swing.webLaf.PSWebTabbedPaneUI;
 import br.beholder.memelang.ui.swing.webLaf.WeblafUtils;
 import br.beholder.memelang.ui.utils.ColorController;
 import java.io.IOException;
 import java.io.InputStream;
+import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import org.fife.ui.rsyntaxtextarea.AbstractTokenMakerFactory;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
@@ -65,11 +68,17 @@ public class MainPanel extends javax.swing.JPanel {
         this.setBackground(ColorController.COR_PRINCIPAL);
         jPanel1.setBackground(ColorController.COR_PRINCIPAL);
         jPanel2.setBackground(ColorController.COR_PRINCIPAL);
+        jPanel4.setBackground(ColorController.COR_PRINCIPAL);
+        jPanel5.setBackground(ColorController.COR_PRINCIPAL);
+        jPanel7.setBackground(ColorController.COR_PRINCIPAL);
         editorPane.setBackground(ColorController.COR_DESTAQUE);
+        identifiersPane.setBackground(ColorController.COR_DESTAQUE);
         console.setBackground(ColorController.FUNDO_ESCURO);
         console.setForeground(ColorController.COR_LETRA);
         WeblafUtils.instalaWeblaf();
         WeblafUtils.configuraWebLaf(jScrollPane1);
+        jTabbedPane1.setUI(new PSOutTabbedPaneUI());
+        jTabbedPane1.setForeground(ColorController.COR_LETRA);
         WeblafUtils.configuraWebLaf(sp);
         WeblafUtils.configurarBotao(compileButton, ColorController.COR_PRINCIPAL, ColorController.COR_LETRA, ColorController.COR_DESTAQUE, ColorController.COR_LETRA, 5);
         WeblafUtils.configurarBotao(openfileButton, ColorController.COR_PRINCIPAL, ColorController.COR_LETRA, ColorController.COR_DESTAQUE, ColorController.COR_LETRA, 5);
@@ -86,6 +95,13 @@ public class MainPanel extends javax.swing.JPanel {
         return console;
     }
     
+    public JPanel getMessagesPane() {
+        return messagesPane;
+    }
+    
+    public JPanel getIdentifiersPane() {
+        return identifiersPane;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -97,15 +113,23 @@ public class MainPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
+        jSplitPane1 = new javax.swing.JSplitPane();
+        jPanel4 = new javax.swing.JPanel();
+        jSplitPane2 = new javax.swing.JSplitPane();
+        jPanel7 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         openfileButton = new com.alee.laf.button.WebButton();
         savefileButton = new com.alee.laf.button.WebButton();
         compileButton = new com.alee.laf.button.WebButton();
         generatetreeButton = new com.alee.laf.button.WebButton();
         generatetableButton = new com.alee.laf.button.WebButton();
+        editorPane = new javax.swing.JPanel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         console = new javax.swing.JTextArea();
-        editorPane = new javax.swing.JPanel();
+        messagesPane = new javax.swing.JPanel();
+        identifiersPane = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
 
         setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         setPreferredSize(new java.awt.Dimension(1024, 600));
@@ -113,6 +137,16 @@ public class MainPanel extends javax.swing.JPanel {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         jPanel2.setLayout(new java.awt.BorderLayout(5, 5));
+
+        jSplitPane1.setDividerLocation(600);
+        jSplitPane1.setAlignmentX(0.9F);
+
+        jPanel4.setLayout(new java.awt.BorderLayout());
+
+        jSplitPane2.setDividerLocation(500);
+        jSplitPane2.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+
+        jPanel7.setLayout(new java.awt.BorderLayout());
 
         jPanel1.setOpaque(false);
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.Y_AXIS));
@@ -157,17 +191,32 @@ public class MainPanel extends javax.swing.JPanel {
         });
         jPanel1.add(generatetableButton);
 
-        jPanel2.add(jPanel1, java.awt.BorderLayout.WEST);
+        jPanel7.add(jPanel1, java.awt.BorderLayout.WEST);
+
+        editorPane.setLayout(new java.awt.BorderLayout());
+        jPanel7.add(editorPane, java.awt.BorderLayout.CENTER);
+
+        jSplitPane2.setLeftComponent(jPanel7);
 
         console.setEditable(false);
         console.setColumns(20);
         console.setRows(5);
         jScrollPane1.setViewportView(console);
 
-        jPanel2.add(jScrollPane1, java.awt.BorderLayout.PAGE_END);
+        jTabbedPane1.addTab("Console", jScrollPane1);
+        jTabbedPane1.addTab("Messages", messagesPane);
 
-        editorPane.setLayout(new java.awt.BorderLayout());
-        jPanel2.add(editorPane, java.awt.BorderLayout.CENTER);
+        identifiersPane.setLayout(new java.awt.BorderLayout());
+        jTabbedPane1.addTab("Identifiers", identifiersPane);
+
+        jSplitPane2.setRightComponent(jTabbedPane1);
+
+        jPanel4.add(jSplitPane2, java.awt.BorderLayout.CENTER);
+
+        jSplitPane1.setLeftComponent(jPanel4);
+        jSplitPane1.setRightComponent(jPanel5);
+
+        jPanel2.add(jSplitPane1, java.awt.BorderLayout.CENTER);
 
         add(jPanel2, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
@@ -198,9 +247,17 @@ public class MainPanel extends javax.swing.JPanel {
     private javax.swing.JPanel editorPane;
     private com.alee.laf.button.WebButton generatetableButton;
     private com.alee.laf.button.WebButton generatetreeButton;
+    private javax.swing.JPanel identifiersPane;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JSplitPane jSplitPane2;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JPanel messagesPane;
     private com.alee.laf.button.WebButton openfileButton;
     private com.alee.laf.button.WebButton savefileButton;
     // End of variables declaration//GEN-END:variables

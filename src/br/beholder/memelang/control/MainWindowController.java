@@ -19,6 +19,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.plaf.TableHeaderUI;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import org.antlr.v4.gui.TreeViewer;
 
 /**
@@ -39,11 +41,19 @@ public class MainWindowController {
         
         if (this.compiler.getErroLexico().getErrors().isEmpty()){
             this.mainWindow.getTextAreaMensagens().append("Compilação realizada com Sucesso\n");
+            exibirTabela();
         }else{
-            for (String errin : this.compiler.getErroLexico().getErrors()){
-                System.out.println(errin);
-                this.mainWindow.getTextAreaMensagens().append(errin + "\n");
-            } 
+            Object[][] data = new Object[this.compiler.getErroLexico().getErrors().size()][2];
+            Object[] columnsNames = {"Tipo", "Message"};
+            for (int i = 0 ; i < this.compiler.getErroLexico().getErrors().size() ; i++){
+                data[i][0]="erro";
+                data[i][1]=this.compiler.getErroLexico().getErrors().get(i);
+            }
+            TableModel error = new DefaultTableModel(data, columnsNames);
+            JTable table = new JTable(error);
+            WeblafUtils.configuraWebLaf(table);
+            this.mainWindow.getMessagesPane().removeAll();
+            this.mainWindow.getMessagesPane().add(table);
         }
     }
     
@@ -65,15 +75,10 @@ public class MainWindowController {
             JOptionPane.showMessageDialog(this.mainWindow, "É necessário compilar antes de gerar a tabela");
             return;
         }
-        JFrame frame = new JFrame("Tabelas");
         JTable table = new JTable(this.compiler.getModel());
-        WeblafUtils.instalaWeblaf();
         WeblafUtils.configuraWebLaf(table);
-        frame.setContentPane(new JScrollPane(table));
-        frame.setPreferredSize( new Dimension(800, 600));
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+        this.mainWindow.getIdentifiersPane().removeAll();
+        this.mainWindow.getIdentifiersPane().add(table);
     }
     
     public void prepararCarregamentoArquivo(){
