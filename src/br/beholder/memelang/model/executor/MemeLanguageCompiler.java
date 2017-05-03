@@ -12,6 +12,9 @@ import br.beholder.memelang.model.language.MemelangLexer;
 import br.beholder.memelang.model.language.MemelangParser;
 import br.beholder.memelang.model.visitor.SemanticVisitor;
 import java.util.List;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -27,8 +30,42 @@ public class MemeLanguageCompiler {
     MemelangParser parser;
     ErroLexico erroLexico;
     ParseTree tree;
-    List<Identificador> ids = null;
+    TableModel model;
+
+    public TableModel getModel() {
+        return model;
+    }
     
+    
+    List<Identificador> ids = null;
+    private TableModel getModel(List<Identificador> ids)
+    {
+        DefaultTableModel tm = new DefaultTableModel();
+        tm.addColumn("nome");
+        tm.addColumn("tipo");
+        tm.addColumn("inicializada");
+        tm.addColumn("usada");
+        tm.addColumn("escopo");
+        tm.addColumn("parametro");
+        tm.addColumn("posicaoParametro");
+        tm.addColumn("dimensões");
+        tm.addColumn("função");
+        for (Identificador id : ids)
+        {
+            Vector vector = new Vector();
+            vector.add(id.getNome());
+            vector.add(id.getTipo());
+            vector.add(id.isInicializada());
+            vector.add(id.isUsada());
+            vector.add(id.getEscopo());
+            vector.add(id.isParametro());
+            vector.add(id.getPosicaoParametro());
+            vector.add(id.getDimensoes());
+            vector.add(id.isFuncao());
+            tm.addRow(vector);
+        }
+        return tm;
+    }
     public void realizarCompilacao(String txt){
         this.ais = new ANTLRInputStream(txt);
         this.lexer = new MemelangLexer(ais);
@@ -48,6 +85,7 @@ public class MemeLanguageCompiler {
             {
                 semantic.visit(tree);
                 ids = semantic.getTabelaSimbolos();
+                model = getModel(ids);
                 System.out.println("ids: generated");
     //            VisitanteDoDesesperoGeradorBipide gerador = new VisitanteDoDesesperoGeradorBipide(ids);
     //            gerador.visit(tree);

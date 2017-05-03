@@ -129,6 +129,13 @@ public class SemanticVisitor extends MemeVisitor{
             if (Escopo.verificaSeExisteNoEscopo(idName, tabelaSimbolos, escopoAtual)) {
                 throw new ParseCancellationException("Declaração de Váriavel " + idName + " já existe neste escopo Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine());
             }
+            multidimensional = 0;
+            qtdMultidimensional = 1;
+            if (ctx.multidimensional() != null) {
+                for(MemelangParser.MultidimensionalContext mult : ctx.multidimensional()){
+                    visitMultidimensional(mult);
+                }
+            }
             visitTipo(ctx.tipo(i));
             Identificador id = new Identificador(
                     idName,
@@ -138,7 +145,7 @@ public class SemanticVisitor extends MemeVisitor{
                     escopoAtual,
                     true,
                     i + 1,
-                    1, // Só aceita unidimensional como parametro... 
+                    multidimensional, // Só aceita unidimensional como parametro... 
                     false);
             tabelaSimbolos.add(id);
 
@@ -224,7 +231,7 @@ public class SemanticVisitor extends MemeVisitor{
     @Override
     public Object visitAtribuicoes(MemelangParser.AtribuicoesContext ctx) {
         Identificador id = Identificador.getId(ctx.ID().getSymbol().getText(), tabelaSimbolos, escopoAtual);
-        System.out.println("Atribuindo variavel " + id.getNome());
+        System.out.println("Atribuindo "+ id.getPosicaoParametro() +" a variavel " + id.getNome());
         if (id == null) {
             throw new ParseCancellationException("Váriavel " + ctx.ID() + " não existe neste escopo Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine());
         }
@@ -282,6 +289,9 @@ public class SemanticVisitor extends MemeVisitor{
             }
             boolean inicializada;
             System.out.println("Shit desu " + qtdMultidimensional + " Wait " + multidimensional);
+            for (TerminalNode igualC : ctx.IGUAL()) {
+                System.out.println("AAAA " + igualC.getSymbol().getText());
+            }
             if (ctx.IGUAL().isEmpty()) {
                 inicializada = false;
             } else {
@@ -290,7 +300,7 @@ public class SemanticVisitor extends MemeVisitor{
             if (Escopo.verificaSeExisteNoEscopo(id.getSymbol().getText(), tabelaSimbolos, escopoAtual)) {
                 throw new ParseCancellationException("Declaração de Váriavel " + ctx.ID() + " já existe neste escopo Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine());
             }else{
-                System.out.println("vou salvar a variável: "+id+" no escopo "+escopoAtual.getNome()+" inicializada: "+inicializada);
+                System.out.println("vou salvar a variável: "+id.getSymbol().getStartIndex()+" do tipo" + tipoAtual + "  no escopo "+escopoAtual.getNome()+" inicializada: "+inicializada);
             }
             Identificador ident = new Identificador(
                     id.getSymbol().getText(),

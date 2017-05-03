@@ -9,8 +9,14 @@ import br.beholder.memelang.control.MainWindowController;
 import br.beholder.memelang.model.analisador.Identificador;
 import br.beholder.memelang.ui.swing.webLaf.WeblafUtils;
 import br.beholder.memelang.ui.utils.ColorController;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import javax.swing.JTextArea;
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
+import org.fife.ui.rsyntaxtextarea.Theme;
+import org.fife.ui.rtextarea.RTextScrollPane;
 
 /**
  *
@@ -21,32 +27,52 @@ public class MainPanel extends javax.swing.JPanel {
     int pX, pY;
     
     private MainWindowController controller;
+    RSyntaxTextArea textArea;
+    RTextScrollPane sp;
     
+    private Theme carregarTema(){
+        final String caminho = "br/beholder/memelang/ui/resources/dark.xml";
+        final InputStream resourceStream = ClassLoader.getSystemClassLoader().getResourceAsStream(caminho);
+        if (resourceStream != null) {
+            try {
+                return Theme.load(resourceStream);
+            } catch (IOException e) {
+                
+            }
+        }        return null;
+    }
     
     public MainPanel() {
         controller = new MainWindowController(this);
         initComponents();
-        this.textEdit.setTabSize(4);
+        textArea = new RSyntaxTextArea(20, 60);
+        textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_CPLUSPLUS);
+        textArea.setCodeFoldingEnabled(true);
+        Theme theme = carregarTema();
+        theme.apply(textArea);
+        sp = new RTextScrollPane(textArea);
+        editorPane.add(sp);
         configurarCores();
     }
     private void configurarCores(){
+        this.setBackground(ColorController.COR_PRINCIPAL);
         jPanel1.setBackground(ColorController.COR_PRINCIPAL);
         jPanel2.setBackground(ColorController.COR_PRINCIPAL);
-        textEdit.setBackground(ColorController.COR_DESTAQUE);
-        textEdit.setForeground(ColorController.COR_LETRA);
+        editorPane.setBackground(ColorController.COR_DESTAQUE);
         console.setBackground(ColorController.FUNDO_ESCURO);
         console.setForeground(ColorController.COR_LETRA);
         WeblafUtils.instalaWeblaf();
         WeblafUtils.configuraWebLaf(jScrollPane1);
-        WeblafUtils.configuraWebLaf(jScrollPane2);
+        WeblafUtils.configuraWebLaf(sp);
         WeblafUtils.configurarBotao(compileButton, ColorController.COR_PRINCIPAL, ColorController.COR_LETRA, ColorController.COR_DESTAQUE, ColorController.COR_LETRA, 5);
         WeblafUtils.configurarBotao(openfileButton, ColorController.COR_PRINCIPAL, ColorController.COR_LETRA, ColorController.COR_DESTAQUE, ColorController.COR_LETRA, 5);
         WeblafUtils.configurarBotao(savefileButton, ColorController.COR_PRINCIPAL, ColorController.COR_LETRA, ColorController.COR_DESTAQUE, ColorController.COR_LETRA, 5);
         WeblafUtils.configurarBotao(generatetreeButton, ColorController.COR_PRINCIPAL, ColorController.COR_LETRA, ColorController.COR_DESTAQUE, ColorController.COR_LETRA, 5);
+        WeblafUtils.configurarBotao(generatetableButton, ColorController.COR_PRINCIPAL, ColorController.COR_LETRA, ColorController.COR_DESTAQUE, ColorController.COR_LETRA, 5);
     }
     
     public JTextArea getTextAreaCodigo() {
-        return textEdit;
+        return textArea;
     }
 
     public JTextArea getTextAreaMensagens() {
@@ -64,15 +90,15 @@ public class MainPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        textEdit = new javax.swing.JTextArea();
         jPanel1 = new javax.swing.JPanel();
         openfileButton = new com.alee.laf.button.WebButton();
         savefileButton = new com.alee.laf.button.WebButton();
         compileButton = new com.alee.laf.button.WebButton();
         generatetreeButton = new com.alee.laf.button.WebButton();
+        generatetableButton = new com.alee.laf.button.WebButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         console = new javax.swing.JTextArea();
+        editorPane = new javax.swing.JPanel();
 
         setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         setPreferredSize(new java.awt.Dimension(1024, 600));
@@ -80,13 +106,6 @@ public class MainPanel extends javax.swing.JPanel {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         jPanel2.setLayout(new java.awt.BorderLayout(5, 5));
-
-        textEdit.setColumns(20);
-        textEdit.setRows(5);
-        textEdit.setText("checkEm divideByZero L( )L illuminati\n\tcheckEm g[2] desu\n\tcheckEm b = 2 desu\n\tg[1] = g + b desu\nconfirmed");
-        jScrollPane2.setViewportView(textEdit);
-
-        jPanel2.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
         jPanel1.setOpaque(false);
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.Y_AXIS));
@@ -123,6 +142,14 @@ public class MainPanel extends javax.swing.JPanel {
         });
         jPanel1.add(generatetreeButton);
 
+        generatetableButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/beholder/memelang/ui/resources/stop.png"))); // NOI18N
+        generatetableButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                generatetableButtonActionPerformed(evt);
+            }
+        });
+        jPanel1.add(generatetableButton);
+
         jPanel2.add(jPanel1, java.awt.BorderLayout.WEST);
 
         console.setEditable(false);
@@ -131,6 +158,9 @@ public class MainPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(console);
 
         jPanel2.add(jScrollPane1, java.awt.BorderLayout.PAGE_END);
+
+        editorPane.setLayout(new java.awt.BorderLayout());
+        jPanel2.add(editorPane, java.awt.BorderLayout.CENTER);
 
         add(jPanel2, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
@@ -150,17 +180,21 @@ public class MainPanel extends javax.swing.JPanel {
     private void generatetreeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generatetreeButtonActionPerformed
         this.controller.exibirArvoreSintatica();
     }//GEN-LAST:event_generatetreeButtonActionPerformed
+
+    private void generatetableButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generatetableButtonActionPerformed
+        this.controller.exibirTabela();
+    }//GEN-LAST:event_generatetableButtonActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.alee.laf.button.WebButton compileButton;
     private javax.swing.JTextArea console;
+    private javax.swing.JPanel editorPane;
+    private com.alee.laf.button.WebButton generatetableButton;
     private com.alee.laf.button.WebButton generatetreeButton;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private com.alee.laf.button.WebButton openfileButton;
     private com.alee.laf.button.WebButton savefileButton;
-    private javax.swing.JTextArea textEdit;
     // End of variables declaration//GEN-END:variables
 }

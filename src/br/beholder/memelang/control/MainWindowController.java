@@ -7,6 +7,8 @@ package br.beholder.memelang.control;
 
 import br.beholder.memelang.model.executor.MemeLanguageCompiler;
 import br.beholder.memelang.ui.MainPanel;
+import br.beholder.memelang.ui.swing.webLaf.PSTableHeaderUI;
+import br.beholder.memelang.ui.swing.webLaf.WeblafUtils;
 import java.awt.Dimension;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
@@ -15,6 +17,8 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.plaf.TableHeaderUI;
 import org.antlr.v4.gui.TreeViewer;
 
 /**
@@ -50,6 +54,22 @@ public class MainWindowController {
         }
         JFrame frame = new JFrame("Árvore Sintática");
         frame.setContentPane(new JScrollPane(new TreeViewer(Arrays.asList(this.compiler.getParser().getRuleNames()), this.compiler.getTree())));
+        frame.setPreferredSize( new Dimension(800, 600));
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }
+    
+    public void exibirTabela(){
+        if(this.compiler.getModel() == null){
+            JOptionPane.showMessageDialog(this.mainWindow, "É necessário compilar antes de gerar a tabela");
+            return;
+        }
+        JFrame frame = new JFrame("Tabelas");
+        JTable table = new JTable(this.compiler.getModel());
+        WeblafUtils.instalaWeblaf();
+        WeblafUtils.configuraWebLaf(table);
+        frame.setContentPane(new JScrollPane(table));
         frame.setPreferredSize( new Dimension(800, 600));
         frame.pack();
         frame.setLocationRelativeTo(null);
