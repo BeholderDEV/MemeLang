@@ -131,11 +131,10 @@ public class SemanticVisitor extends MemeVisitor{
             }
             multidimensional = 0;
             qtdMultidimensional = 1;
-            if (ctx.multidimensional() != null) {
-                for(MemelangParser.MultidimensionalContext mult : ctx.multidimensional()){
-                    visitMultidimensional(mult);
-                }
+            if (ctx.multidimensional(i) != null) {
+                visitMultidimensional(ctx.multidimensional(i));
             }
+            System.out.println("Parametro: "+ idName +" do tipo" + tipoAtual + "  no escopo "+escopoAtual.getNome()+" qtdMultidimensional: " + qtdMultidimensional + " Mult " + multidimensional);
             visitTipo(ctx.tipo(i));
             Identificador id = new Identificador(
                     idName,

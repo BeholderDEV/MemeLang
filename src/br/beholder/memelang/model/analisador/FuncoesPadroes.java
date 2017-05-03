@@ -33,15 +33,15 @@ public class FuncoesPadroes {
     }
     
     private static List<Identificador> gerarFuncoesPadraoBipide(){
+        List<Identificador> ids = new ArrayList();
 //        Escopo baseFunctionsScope = new Escopo("baseFunctions");
-        
 //        Identificador id = new Identificador(getNome(NomeDescente.LEIA), Identificador.Tipo.INTEIRO, false, true, baseFunctionsScope, false, 0, 0, true);
 //        ids.add(id);
 //        id = new Identificador(getNome(NomeDescente.ESCREVA), Identificador.Tipo.VOID, false, true, baseFunctionsScope, false, 0, 0, true);
 //        ids.add(id);
 //        id = new Identificador("parametro", Identificador.Tipo.INTEIRO, true, false, Escopo.criaEVaiEscopoNovo(getNome(NomeDescente.ESCREVA), baseFunctionsScope), true, 1, 0, false);
 //        ids.add(id);
-        List<Identificador> ids = new ArrayList();
+        
         return ids;
     }
     
