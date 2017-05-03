@@ -87,6 +87,7 @@ public class MainWindowController {
             if("".equals(codigoCarregado)){
                 return;
             }
+            codigoCarregado = codigoCarregado.replace("\r", "");
             this.mainWindow.getTextAreaCodigo().setText(codigoCarregado);
             this.mainWindow.getTextAreaMensagens().setText("");
             this.compiler = new MemeLanguageCompiler();
