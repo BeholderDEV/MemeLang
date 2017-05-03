@@ -6,16 +6,16 @@
 package br.beholder.memelang.ui;
 
 import br.beholder.memelang.control.MainWindowController;
-import br.beholder.memelang.model.analisador.Identificador;
 import br.beholder.memelang.ui.swing.webLaf.WeblafUtils;
 import br.beholder.memelang.ui.utils.ColorController;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 import javax.swing.JTextArea;
+import org.fife.ui.rsyntaxtextarea.AbstractTokenMakerFactory;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rsyntaxtextarea.Theme;
+import org.fife.ui.rsyntaxtextarea.TokenMakerFactory;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
 /**
@@ -48,6 +48,9 @@ public class MainPanel extends javax.swing.JPanel {
         textArea = new RSyntaxTextArea(20, 60);
         textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_CPLUSPLUS);
         textArea.setCodeFoldingEnabled(true);
+        AbstractTokenMakerFactory atmf = (AbstractTokenMakerFactory)TokenMakerFactory.getDefaultInstance();
+        atmf.putMapping("text/myLanguage", "br.beholder.memelang.ui.swing.rsa.MemeTokenMaker");
+        textArea.setSyntaxEditingStyle("text/myLanguage");
         Theme theme = carregarTema();
         theme.apply(textArea);
         sp = new RTextScrollPane(textArea);
