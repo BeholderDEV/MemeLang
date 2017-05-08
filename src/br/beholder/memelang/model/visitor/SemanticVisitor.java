@@ -401,11 +401,12 @@ public class SemanticVisitor extends MemeVisitor{
     public Object visitChamadaFuncao(MemelangParser.ChamadaFuncaoContext ctx) {
         Identificador id = Identificador.getUNSAFEId(ctx.ID().getText(), tabelaSimbolos);
 
+        
         //Vê se a função existe
         if (id == null) {
             this.semanticErrors.add(new ParseCancellationException("Chamada de função inexistente na " + ctx.start.getLine() + " coluna " + ctx.start.getCharPositionInLine() + "."));
-        }
-
+            return null;
+        }        
         //Captura os parametros da função e numeros
         Escopo escopoFuncao = getEscopoDaFuncao(id.getNome());
         int qtdParametrosNaFuncao;
