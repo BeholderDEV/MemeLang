@@ -60,6 +60,7 @@ public class SemanticVisitor extends MemeVisitor{
                 } else if (id.getDimensoes() != multidimensional) {
                     throw new ParseCancellationException("Dimensões incorreta do vetor " + ctx.val_final(i).ID() + " . Ele possui " + id.getDimensoes() + " dimensões e foi usada " + multidimensional + " Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine());
                 } else {
+                    System.out.println("Expressão em " + id.getNome() + "Escopo atual " + escopoAtual + "Escopo dele " + id.getEscopo() );
                     id.setUsada(true);
                     return null;
                 }
@@ -230,7 +231,7 @@ public class SemanticVisitor extends MemeVisitor{
     @Override
     public Object visitAtribuicoes(MemelangParser.AtribuicoesContext ctx) {
         Identificador id = Identificador.getId(ctx.ID().getSymbol().getText(), tabelaSimbolos, escopoAtual);
-        System.out.println("Atribuindo "+ id.getPosicaoParametro() +" a variavel " + id.getNome());
+        System.out.println("Atribuindo "+ id.getNome() +" a variavel " + id.getNome());
         if (id == null) {
             throw new ParseCancellationException("Váriavel " + ctx.ID() + " não existe neste escopo Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine());
         }
@@ -280,9 +281,7 @@ public class SemanticVisitor extends MemeVisitor{
             if (declaracaoContext.multidimensional() != null) {
                 visitMultidimensional(declaracaoContext.multidimensional());
             }
-            boolean inicializada;
-            System.out.println("Shit desu " + qtdMultidimensional + " Wait " + multidimensional);
-            
+            boolean inicializada;            
             if (declaracaoContext.IGUAL() != null) {
                 inicializada = true;
             } else {

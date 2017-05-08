@@ -84,7 +84,6 @@ public class MainPanel extends javax.swing.JPanel {
         WeblafUtils.configurarBotao(openfileButton, ColorController.COR_PRINCIPAL, ColorController.COR_LETRA, ColorController.COR_DESTAQUE, ColorController.COR_LETRA, 5);
         WeblafUtils.configurarBotao(savefileButton, ColorController.COR_PRINCIPAL, ColorController.COR_LETRA, ColorController.COR_DESTAQUE, ColorController.COR_LETRA, 5);
         WeblafUtils.configurarBotao(generatetreeButton, ColorController.COR_PRINCIPAL, ColorController.COR_LETRA, ColorController.COR_DESTAQUE, ColorController.COR_LETRA, 5);
-        WeblafUtils.configurarBotao(generatetableButton, ColorController.COR_PRINCIPAL, ColorController.COR_LETRA, ColorController.COR_DESTAQUE, ColorController.COR_LETRA, 5);
     }
     
     public JTextArea getTextAreaCodigo() {
@@ -122,7 +121,6 @@ public class MainPanel extends javax.swing.JPanel {
         savefileButton = new com.alee.laf.button.WebButton();
         compileButton = new com.alee.laf.button.WebButton();
         generatetreeButton = new com.alee.laf.button.WebButton();
-        generatetableButton = new com.alee.laf.button.WebButton();
         editorPane = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -183,14 +181,6 @@ public class MainPanel extends javax.swing.JPanel {
         });
         jPanel1.add(generatetreeButton);
 
-        generatetableButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/beholder/memelang/ui/resources/stop.png"))); // NOI18N
-        generatetableButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                generatetableButtonActionPerformed(evt);
-            }
-        });
-        jPanel1.add(generatetableButton);
-
         jPanel7.add(jPanel1, java.awt.BorderLayout.WEST);
 
         editorPane.setLayout(new java.awt.BorderLayout());
@@ -238,16 +228,11 @@ public class MainPanel extends javax.swing.JPanel {
     private void generatetreeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generatetreeButtonActionPerformed
         this.controller.exibirArvoreSintatica();
     }//GEN-LAST:event_generatetreeButtonActionPerformed
-
-    private void generatetableButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generatetableButtonActionPerformed
-        this.controller.exibirTabela();
-    }//GEN-LAST:event_generatetableButtonActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.alee.laf.button.WebButton compileButton;
     private javax.swing.JTextArea console;
     private javax.swing.JPanel editorPane;
-    private com.alee.laf.button.WebButton generatetableButton;
     private com.alee.laf.button.WebButton generatetreeButton;
     private javax.swing.JPanel identifiersPane;
     private javax.swing.JPanel jPanel1;

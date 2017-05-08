@@ -25,7 +25,7 @@ public class ErroLexico implements ANTLRErrorListener{
     @Override
     public void syntaxError(Recognizer<?, ?> rcgnzr, Object o, int i, int i1, String string, RecognitionException re)
     {
-        errors.add(string);
+        errors.add("Erro Sintático: " + string);
     }
 
     public List<String> getErrors()

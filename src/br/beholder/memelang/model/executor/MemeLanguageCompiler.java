@@ -86,10 +86,6 @@ public class MemeLanguageCompiler {
                 semantic.visit(tree);
                 ids = semantic.getTabelaSimbolos();
                 model = getModel(ids);
-                System.out.println("ids: generated");
-    //            VisitanteDoDesesperoGeradorBipide gerador = new VisitanteDoDesesperoGeradorBipide(ids);
-    //            gerador.visit(tree);
-    //            new CodigoApresentado(gerador.getCodigo()).setVisible(true);
             } catch (Exception e)
             {
                 erroLexico.getErrors().add(e.getLocalizedMessage());

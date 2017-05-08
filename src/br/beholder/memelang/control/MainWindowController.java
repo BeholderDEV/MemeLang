@@ -42,7 +42,7 @@ public class MainWindowController {
         if (this.compiler.getErroLexico().getErrors().isEmpty()){
             this.mainWindow.getTextAreaMensagens().append("Compilação realizada com Sucesso\n");
             this.mainWindow.getMessagesPane().removeAll();
-            exibirTabela();
+            this.exibirTabela();
             this.mainWindow.repaint();
         }else{
             this.mainWindow.getTextAreaMensagens().setText("Erros foram encontrados, visualizar aba de Mensagens");
@@ -90,8 +90,10 @@ public class MainWindowController {
         }
         JTable table = new JTable(this.compiler.getModel());
         WeblafUtils.configuraWebLaf(table);
+        JScrollPane identPane = new JScrollPane(table);
+        WeblafUtils.configuraWebLaf(identPane);
         this.mainWindow.getIdentifiersPane().removeAll();
-        this.mainWindow.getIdentifiersPane().add(table);
+        this.mainWindow.getIdentifiersPane().add(identPane);
     }
     
     public void prepararCarregamentoArquivo(){
