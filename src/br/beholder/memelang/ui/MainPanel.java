@@ -204,6 +204,8 @@ public class MainPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(console);
 
         jTabbedPane1.addTab("Console", jScrollPane1);
+
+        messagesPane.setLayout(new java.awt.BorderLayout());
         jTabbedPane1.addTab("Messages", messagesPane);
 
         identifiersPane.setLayout(new java.awt.BorderLayout());

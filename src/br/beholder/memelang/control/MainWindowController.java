@@ -41,20 +41,33 @@ public class MainWindowController {
         
         if (this.compiler.getErroLexico().getErrors().isEmpty()){
             this.mainWindow.getTextAreaMensagens().append("Compilação realizada com Sucesso\n");
-            exibirTabela();
-        }else{
-            Object[][] data = new Object[this.compiler.getErroLexico().getErrors().size()][2];
-            Object[] columnsNames = {"Tipo", "Message"};
-            for (int i = 0 ; i < this.compiler.getErroLexico().getErrors().size() ; i++){
-                data[i][0]="erro";
-                data[i][1]=this.compiler.getErroLexico().getErrors().get(i);
-            }
-            TableModel error = new DefaultTableModel(data, columnsNames);
-            JTable table = new JTable(error);
-            WeblafUtils.configuraWebLaf(table);
             this.mainWindow.getMessagesPane().removeAll();
-            this.mainWindow.getMessagesPane().add(table);
+            exibirTabela();
+            this.mainWindow.repaint();
+        }else{
+            this.mainWindow.getTextAreaMensagens().setText("Erros foram encontrados, visualizar aba de Mensagens");
+            this.prepararTabelaErros();
+
         }
+    }
+    
+    public void prepararTabelaErros(){
+        Object[][] data = new Object[this.compiler.getErroLexico().getErrors().size()][2];
+        Object[] columnsNames = {"Tipo", "Message"};
+        for (int i = 0 ; i < this.compiler.getErroLexico().getErrors().size() ; i++){
+            data[i][0] = "erro";
+            data[i][1] = this.compiler.getErroLexico().getErrors().get(i);
+        }
+        TableModel error = new DefaultTableModel(data, columnsNames);
+        JTable table = new JTable(error);
+        WeblafUtils.configuraWebLaf(table);
+        JScrollPane errorPane = new JScrollPane(table);
+        WeblafUtils.configuraWebLaf(errorPane);
+        this.mainWindow.getMessagesPane().removeAll();
+        this.mainWindow.getMessagesPane().add(errorPane);
+        this.mainWindow.getMessagesPane().revalidate();
+        this.mainWindow.repaint();
+        
     }
     
     public void exibirArvoreSintatica(){
