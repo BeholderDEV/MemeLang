@@ -11,6 +11,7 @@ import br.beholder.memelang.model.analisador.Identificador;
 import br.beholder.memelang.model.language.MemelangLexer;
 import br.beholder.memelang.model.language.MemelangParser;
 import br.beholder.memelang.model.visitor.SemanticVisitor;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
@@ -32,7 +33,8 @@ public class MemeLanguageCompiler {
     ErroLexico erroLexico;
     ParseTree tree;
     TableModel model;
-
+    private List<String> warnings = new ArrayList<String>();
+    
     public TableModel getModel() {
         return model;
     }
@@ -57,6 +59,13 @@ public class MemeLanguageCompiler {
             vector.add(id.getNome());
             vector.add(id.getTipo());
             vector.add(id.isInicializada());
+            if(!id.isInicializada()){
+                this.warnings.add("Variável " + id.getNome() + " no escopo " + id.getEscopo() + " não foi inicializada");
+            }else{
+                if(!id.isUsada()){
+                    this.warnings.add("Variável " + id.getNome() + " no escopo " + id.getEscopo() + " não foi utilizada");
+                }
+            }
             vector.add(id.isUsada());
             vector.add(id.getEscopo());
             vector.add(id.isParametro());
@@ -77,7 +86,7 @@ public class MemeLanguageCompiler {
         this.parser.removeErrorListeners();
         this.lexer.addErrorListener(erroLexico);
         this.parser.addErrorListener(erroLexico);
-        
+        this.warnings.clear();
         
         this.tree = parser.prog();
         if(erroLexico.getErrors().isEmpty()){
@@ -91,8 +100,8 @@ public class MemeLanguageCompiler {
                     for (ParseCancellationException err : semantic.getSemanticErrors()) {
                         erroLexico.getErrors().add(err.getMessage());
                     }
-                    return;
                 }
+                
             } catch (Exception e)
             {
                 erroLexico.getErrors().add(e.getLocalizedMessage());
@@ -110,5 +119,9 @@ public class MemeLanguageCompiler {
     
     public ErroLexico getErroLexico() {
         return erroLexico;
+    }
+
+    public List<String> getWarnings() {
+        return warnings;
     }
 }

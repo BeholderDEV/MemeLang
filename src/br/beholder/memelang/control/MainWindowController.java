@@ -42,9 +42,14 @@ public class MainWindowController {
         if (this.compiler.getErroLexico().getErrors().isEmpty()){
             this.mainWindow.getTextAreaMensagens().append("Compilação realizada com Sucesso\n");
             this.mainWindow.getMessagesPane().removeAll();
+            if(this.compiler.getWarnings().size() > 0){
+                this.mainWindow.getTextAreaMensagens().append("Porém avisos foram gerados\n");
+                this.prepararTabelaErros();
+            }
             this.exibirTabela();
             this.mainWindow.repaint();
         }else{
+            this.mainWindow.getIdentifiersPane().removeAll();
             this.mainWindow.getTextAreaMensagens().setText("Erros foram encontrados, visualizar aba de Mensagens");
             this.prepararTabelaErros();
 
@@ -52,11 +57,15 @@ public class MainWindowController {
     }
     
     public void prepararTabelaErros(){
-        Object[][] data = new Object[this.compiler.getErroLexico().getErrors().size()][2];
+        Object[][] data = new Object[this.compiler.getErroLexico().getErrors().size() + this.compiler.getWarnings().size()][2];
         Object[] columnsNames = {"Tipo", "Message"};
         for (int i = 0 ; i < this.compiler.getErroLexico().getErrors().size() ; i++){
-            data[i][0] = "erro";
+            data[i][0] = "Erro";
             data[i][1] = this.compiler.getErroLexico().getErrors().get(i);
+        }
+        for (int i = this.compiler.getErroLexico().getErrors().size() ; i < this.compiler.getErroLexico().getErrors().size() + this.compiler.getWarnings().size() ; i++){
+            data[i][0] = "Aviso";
+            data[i][1] = this.compiler.getWarnings().get(i - this.compiler.getErroLexico().getErrors().size());
         }
         TableModel error = new DefaultTableModel(data, columnsNames);
         JTable table = new JTable(error);

@@ -63,7 +63,7 @@ public class SemanticVisitor extends MemeVisitor{
                 } else if (id.getDimensoes() != multidimensional) {
                     this.semanticErrors.add(new ParseCancellationException("Dimensões incorreta do vetor " + ctx.val_final(i).ID() + " . Ele possui " + id.getDimensoes() + " dimensões e foi usada " + multidimensional + " Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine()));
                 } else {
-                    System.out.println("Expressão em " + id.getNome() + "Escopo atual " + escopoAtual + "Escopo dele " + id.getEscopo() );
+                    System.out.println("Expressão em " + id.getNome() + " Escopo atual " + escopoAtual + " Escopo dele " + id.getEscopo() );
                     id.setUsada(true);
                 }
                 return null;
