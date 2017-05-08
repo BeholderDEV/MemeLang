@@ -17,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 /**
@@ -86,6 +87,12 @@ public class MemeLanguageCompiler {
                 semantic.visit(tree);
                 ids = semantic.getTabelaSimbolos();
                 model = getModel(ids);
+                if(!semantic.getSemanticErrors().isEmpty()){
+                    for (ParseCancellationException err : semantic.getSemanticErrors()) {
+                        erroLexico.getErrors().add(err.getMessage());
+                    }
+                    return;
+                }
             } catch (Exception e)
             {
                 erroLexico.getErrors().add(e.getLocalizedMessage());

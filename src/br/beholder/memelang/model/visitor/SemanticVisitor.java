@@ -9,6 +9,7 @@ import br.beholder.memelang.model.language.MemelangParser;
 import br.beholder.memelang.model.analisador.Identificador.Tipo;
 import br.beholder.memelang.model.analisador.Escopo;
 import br.beholder.memelang.model.analisador.Identificador;
+import java.util.ArrayList;
 import java.util.List;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.antlr.v4.runtime.tree.TerminalNode;
@@ -20,6 +21,8 @@ import org.antlr.v4.runtime.tree.TerminalNode;
  * @author Alisson
  */
 public class SemanticVisitor extends MemeVisitor{
+    
+    List<ParseCancellationException> semanticErrors = new ArrayList<ParseCancellationException>();
     
     public SemanticVisitor(List<Identificador> tabelaSimbolos) {
         super(tabelaSimbolos);
@@ -54,16 +57,16 @@ public class SemanticVisitor extends MemeVisitor{
                     multidimensional = 0;
                 }
                 if (id == null) {
-                    throw new ParseCancellationException("Váriavel " + ctx.val_final(i).ID() + " não existe neste escopo Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine());
+                    this.semanticErrors.add(new ParseCancellationException("Váriavel " + ctx.val_final(i).ID() + " não existe neste escopo Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine()));
                 } else if (!id.isInicializada()) {
-                    throw new ParseCancellationException("Váriavel " + ctx.val_final(i).ID() + " não inicializada Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine());
+                    this.semanticErrors.add(new ParseCancellationException("Váriavel " + ctx.val_final(i).ID() + " não inicializada Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine()));
                 } else if (id.getDimensoes() != multidimensional) {
-                    throw new ParseCancellationException("Dimensões incorreta do vetor " + ctx.val_final(i).ID() + " . Ele possui " + id.getDimensoes() + " dimensões e foi usada " + multidimensional + " Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine());
+                    this.semanticErrors.add(new ParseCancellationException("Dimensões incorreta do vetor " + ctx.val_final(i).ID() + " . Ele possui " + id.getDimensoes() + " dimensões e foi usada " + multidimensional + " Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine()));
                 } else {
                     System.out.println("Expressão em " + id.getNome() + "Escopo atual " + escopoAtual + "Escopo dele " + id.getEscopo() );
                     id.setUsada(true);
-                    return null;
                 }
+                return null;
             }
         }
 
@@ -128,7 +131,7 @@ public class SemanticVisitor extends MemeVisitor{
         for (int i = 0; i < ctx.parametro().size(); i++) {
             String idName = ctx.parametro(i).ID().getSymbol().getText();
             if (Escopo.verificaSeExisteNoEscopo(idName, tabelaSimbolos, escopoAtual)) {
-                throw new ParseCancellationException("Declaração de Váriavel " + idName + " já existe neste escopo Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine());
+                this.semanticErrors.add(new ParseCancellationException("Declaração de Váriavel " + idName + " já existe neste escopo Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine()));
             }
             multidimensional = 0;
             qtdMultidimensional = 1;
@@ -174,7 +177,7 @@ public class SemanticVisitor extends MemeVisitor{
             }
         }
         if (escopo == null) {
-            throw new ParseCancellationException("Escopo não encontrado");
+            this.semanticErrors.add(new ParseCancellationException("Escopo não encontrado"));
         }
 
         for (Escopo subEscopo : escopo.getSubEscopos()) {
@@ -233,10 +236,10 @@ public class SemanticVisitor extends MemeVisitor{
         Identificador id = Identificador.getId(ctx.ID().getSymbol().getText(), tabelaSimbolos, escopoAtual);
         System.out.println("Atribuindo "+ id.getNome() +" a variavel " + id.getNome());
         if (id == null) {
-            throw new ParseCancellationException("Váriavel " + ctx.ID() + " não existe neste escopo Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine());
+            this.semanticErrors.add(new ParseCancellationException("Váriavel " + ctx.ID() + " não existe neste escopo Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine()));
         }
         if (ctx.atribuicoesIncEDec() != null && !id.isInicializada()) {
-            throw new ParseCancellationException("Váriavel " + ctx.ID() + " não inicializada Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine());
+            this.semanticErrors.add(new ParseCancellationException("Váriavel " + ctx.ID() + " não inicializada Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine()));
         }
 
         boolean usada = id.isUsada();
@@ -272,7 +275,6 @@ public class SemanticVisitor extends MemeVisitor{
 
     @Override
     public Object visitDeclaracoes(MemelangParser.DeclaracoesContext ctx) {
-        System.out.println(ctx.declaracao());
         visitTipo(ctx.tipo());
         for (MemelangParser.DeclaracaoContext declaracaoContext : ctx.declaracao()) {            
             multidimensional = 0;
@@ -288,7 +290,7 @@ public class SemanticVisitor extends MemeVisitor{
                 inicializada = false;
             }
             if (Escopo.verificaSeExisteNoEscopo(id.getSymbol().getText(), tabelaSimbolos, escopoAtual)) {
-                throw new ParseCancellationException("Declaração de Váriavel " + declaracaoContext.ID() + " já existe neste escopo Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine());
+               this.semanticErrors.add(new ParseCancellationException("Declaração de Váriavel " + declaracaoContext.ID() + " já existe neste escopo Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine()));
             }else{
                 System.out.println("vou salvar a variável: "+id.getSymbol().getStartIndex()+" do tipo" + tipoAtual + "  no escopo "+escopoAtual.getNome()+" inicializada: "+inicializada);
             }
@@ -369,7 +371,7 @@ public class SemanticVisitor extends MemeVisitor{
         while (ctx.ID() != null) {
             visitTipoComVoid(ctx.tipoComVoid());
             if (Escopo.verificaSeExisteNoEscopo(ctx.ID().getSymbol().getText(), tabelaSimbolos, escopoAtual)) {
-                throw new ParseCancellationException("Declaração de Váriavel " + ctx.ID().getSymbol().getText() + " já existe neste escopo Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine());
+                this.semanticErrors.add(new ParseCancellationException("Declaração de Váriavel " + ctx.ID().getSymbol().getText() + " já existe neste escopo Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine()));
             }
             Identificador id = new Identificador(
                     ctx.ID().getSymbol().getText(),
@@ -401,7 +403,7 @@ public class SemanticVisitor extends MemeVisitor{
 
         //Vê se a função existe
         if (id == null) {
-            throw new ParseCancellationException("Chamada de função inexistente na " + ctx.start.getLine() + " coluna " + ctx.start.getCharPositionInLine() + ".");
+            this.semanticErrors.add(new ParseCancellationException("Chamada de função inexistente na " + ctx.start.getLine() + " coluna " + ctx.start.getCharPositionInLine() + "."));
         }
 
         //Captura os parametros da função e numeros
@@ -417,7 +419,7 @@ public class SemanticVisitor extends MemeVisitor{
 
         //Valida se os numeros de parametros bate
         if (qtdParametrosChamada != qtdParametrosNaFuncao) {
-            throw new ParseCancellationException("Chamada de função na linha " + ctx.start.getLine() + " coluna " + ctx.start.getCharPositionInLine() + " com numero incorreto de parametros. Esperado: " + qtdParametrosNaFuncao + " Encontrado: " + qtdParametrosChamada);
+            this.semanticErrors.add(new ParseCancellationException("Chamada de função na linha " + ctx.start.getLine() + " coluna " + ctx.start.getCharPositionInLine() + " com numero incorreto de parametros. Esperado: " + qtdParametrosNaFuncao + " Encontrado: " + qtdParametrosChamada));
         }
         visitChildren(ctx);
         return null;
@@ -442,4 +444,9 @@ public class SemanticVisitor extends MemeVisitor{
     public Object visitOp_neg(MemelangParser.Op_negContext ctx) {
         return super.visitOp_neg(ctx); //To change body of generated methods, choose Tools | Templates.
     }
+
+    public List<ParseCancellationException> getSemanticErrors() {
+        return semanticErrors;
+    }
+    
 }
