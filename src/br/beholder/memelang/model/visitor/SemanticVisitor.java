@@ -350,7 +350,7 @@ public class SemanticVisitor extends MemeVisitor{
         if (ctx.ID() == null) {
             return null;
         }
-
+        System.out.println("Funcao " + ctx.ID().getText());
         //criaEVaiEscopoNovo(ctx.ID().getText());
         escopoAtual = getEscopoDaFuncao(ctx.ID().getText());
         //visitParametros(ctx.parametros());
@@ -372,7 +372,7 @@ public class SemanticVisitor extends MemeVisitor{
         while (ctx.ID() != null) {
             visitTipoComVoid(ctx.tipoComVoid());
             if (Escopo.verificaSeExisteNoEscopo(ctx.ID().getSymbol().getText(), tabelaSimbolos, escopoAtual)) {
-                this.semanticErrors.add(new ParseCancellationException("Declaração de Váriavel " + ctx.ID().getSymbol().getText() + " já existe neste escopo Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine()));
+                this.semanticErrors.add(new ParseCancellationException("Declaração da Função " + ctx.ID().getSymbol().getText() + " já existe neste escopo Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine()));
             }
             Identificador id = new Identificador(
                     ctx.ID().getSymbol().getText(),
@@ -408,6 +408,7 @@ public class SemanticVisitor extends MemeVisitor{
             this.semanticErrors.add(new ParseCancellationException("Chamada de função inexistente na " + ctx.start.getLine() + " coluna " + ctx.start.getCharPositionInLine() + "."));
             return null;
         }        
+        id.setUsada(true);
         //Captura os parametros da função e numeros
         Escopo escopoFuncao = getEscopoDaFuncao(id.getNome());
         int qtdParametrosNaFuncao;
@@ -417,6 +418,7 @@ public class SemanticVisitor extends MemeVisitor{
         }else{
             qtdParametrosNaFuncao = 0;
         }
+        visitExpressao(ctx.parametrosChamada().expressao(multidimensional));
         int qtdParametrosChamada = ctx.parametrosChamada().expressao().size();
 
         //Valida se os numeros de parametros bate

@@ -63,7 +63,8 @@ public class MemeLanguageCompiler {
                 this.warnings.add("Variável " + id.getNome() + " no escopo " + id.getEscopo() + " não foi inicializada");
             }else{
                 if(!id.isUsada()){
-                    this.warnings.add("Variável " + id.getNome() + " no escopo " + id.getEscopo() + " não foi utilizada");
+                    String funcaoVar = (id.isFuncao()) ? "Função " : "Variável ";
+                    this.warnings.add(funcaoVar + id.getNome() + " no escopo " + id.getEscopo() + " não foi utilizada");
                 }
             }
             vector.add(id.isUsada());
