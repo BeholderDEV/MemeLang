@@ -53,6 +53,7 @@ public class MemeLanguageCompiler {
         tm.addColumn("usada");
         tm.addColumn("escopo");
         tm.addColumn("parametro");
+        tm.addColumn("referencia");
         tm.addColumn("posicaoParametro");
         tm.addColumn("dimensões");
         tm.addColumn("função");
@@ -73,6 +74,7 @@ public class MemeLanguageCompiler {
             vector.add(id.isUsada());
             vector.add(id.getEscopo());
             vector.add(id.isParametro());
+            vector.add(id.isReferencia());
             vector.add(id.getPosicaoParametro());
             vector.add(id.getDimensoes());
             vector.add(id.isFuncao());

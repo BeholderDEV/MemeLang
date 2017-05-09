@@ -24,12 +24,13 @@ public class Identificador {
     boolean usada;
     Escopo escopo;
     boolean parametro;
+    boolean referencia;
     int posicaoParametro;
     int dimensoes;
     int qtdArmazenada;
     boolean funcao;
 
-    public Identificador(String nome, Tipo tipo, boolean inicializada, boolean usada, Escopo escopo, boolean parametro, int posicaoParametro, int dimensoes, int qtdArmazenada, boolean funcao)
+    public Identificador( String nome, Tipo tipo, boolean inicializada, boolean usada, Escopo escopo, boolean parametro, boolean referencia, int posicaoParametro, int dimensoes, int qtdArmazenada, boolean funcao )
     {
         this.nome = nome;
         this.tipo = tipo;
@@ -37,12 +38,13 @@ public class Identificador {
         this.usada = usada;
         this.escopo = escopo;
         this.parametro = parametro;
+        this.referencia = referencia;
         this.posicaoParametro = posicaoParametro;
         this.dimensoes = dimensoes;
         this.qtdArmazenada = qtdArmazenada;
         this.funcao = funcao;
     }
-    public Identificador(String nome, Tipo tipo, boolean inicializada, boolean usada, Escopo escopo, boolean parametro, int posicaoParametro, int dimensoes, boolean funcao)
+    public Identificador(String nome, Tipo tipo, boolean inicializada, boolean usada, Escopo escopo, boolean parametro, boolean referencia, int posicaoParametro, int dimensoes, boolean funcao)
     {
         this.nome = nome;
         this.tipo = tipo;
@@ -50,6 +52,7 @@ public class Identificador {
         this.usada = usada;
         this.escopo = escopo;
         this.parametro = parametro;
+        this.referencia = referencia;
         this.posicaoParametro = posicaoParametro;
         this.dimensoes = dimensoes;
         this.qtdArmazenada = 1;
@@ -193,14 +196,20 @@ public class Identificador {
         this.dimensoes = dimensoes;
     }
 
+    public boolean isReferencia() {
+        return referencia;
+    }
+
     public boolean isFuncao() {
         return funcao;
     }
 
+    public void setReferencia(boolean referencia){
+        this.referencia = referencia;
+    }
+    
     public void setFuncao(boolean funcao) {
         this.funcao = funcao;
     }
-    
-    
 
 }

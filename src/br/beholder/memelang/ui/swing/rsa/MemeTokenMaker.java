@@ -44,6 +44,10 @@ public class MemeTokenMaker extends AbstractTokenMaker{
         tokenMap.put("hipster", Token.RESERVED_WORD);
         tokenMap.put("escreva", Token.RESERVED_WORD);
         tokenMap.put("leia", Token.RESERVED_WORD);
+        tokenMap.put("sauce", Token.RESERVED_WORD);
+        
+        tokenMap.put("trap", Token.RESERVED_WORD);
+        tokenMap.put("yeah", Token.RESERVED_WORD);
         
         tokenMap.put("+", Token.OPERATOR);
         tokenMap.put("-", Token.OPERATOR);
@@ -62,6 +66,8 @@ public class MemeTokenMaker extends AbstractTokenMaker{
         tokenMap.put("and", Token.OPERATOR);
         tokenMap.put("or", Token.OPERATOR);
         tokenMap.put("nope", Token.OPERATOR);
+        
+        
         
         tokenMap.put(",", Token.SEPARATOR);
         tokenMap.put("illuminati", Token.SEPARATOR);
@@ -130,7 +136,9 @@ public class MemeTokenMaker extends AbstractTokenMaker{
                     case '"':
                        currentTokenType = Token.LITERAL_STRING_DOUBLE_QUOTE;
                        break;
-
+                    case '\'':
+                       currentTokenType = Token.LITERAL_CHAR;
+                       break;
                     case '#':
                        currentTokenType = Token.COMMENT_EOL;
                        break;
@@ -166,7 +174,11 @@ public class MemeTokenMaker extends AbstractTokenMaker{
                        currentTokenStart = i;
                        currentTokenType = Token.LITERAL_STRING_DOUBLE_QUOTE;
                        break;
-
+                    case '\'':
+                       addToken(text, currentTokenStart,i-1, Token.WHITESPACE, newStartOffset+currentTokenStart);
+                       currentTokenStart = i;
+                       currentTokenType = Token.LITERAL_CHAR;
+                       break;
                     case '#':
                        addToken(text, currentTokenStart,i-1, Token.WHITESPACE, newStartOffset+currentTokenStart);
                        currentTokenStart = i;
@@ -211,7 +223,11 @@ public class MemeTokenMaker extends AbstractTokenMaker{
                        currentTokenStart = i;
                        currentTokenType = Token.LITERAL_STRING_DOUBLE_QUOTE;
                        break;
-
+                    case '\'':
+                       addToken(text, currentTokenStart,i-1, Token.IDENTIFIER, newStartOffset+currentTokenStart);
+                       currentTokenStart = i;
+                       currentTokenType = Token.LITERAL_CHAR;
+                       break;
                     default:
                        if (RSyntaxUtilities.isLetterOrDigit(c) || c=='/' || c=='_') {
                           break;   // Still an identifier of some type.
@@ -238,7 +254,11 @@ public class MemeTokenMaker extends AbstractTokenMaker{
                        currentTokenStart = i;
                        currentTokenType = Token.LITERAL_STRING_DOUBLE_QUOTE;
                        break;
-
+                    case '\'':
+                       addToken(text, currentTokenStart,i-1, Token.LITERAL_NUMBER_DECIMAL_INT, newStartOffset+currentTokenStart);
+                       currentTokenStart = i;
+                       currentTokenType = Token.LITERAL_CHAR;
+                       break;
                     default:
 
                        if (RSyntaxUtilities.isDigit(c)) {
@@ -264,6 +284,12 @@ public class MemeTokenMaker extends AbstractTokenMaker{
               case Token.LITERAL_STRING_DOUBLE_QUOTE:
                  if (c=='"') {
                     addToken(text, currentTokenStart,i, Token.LITERAL_STRING_DOUBLE_QUOTE, newStartOffset+currentTokenStart);
+                    currentTokenType = Token.NULL;
+                 }
+                 break;
+              case Token.LITERAL_CHAR:
+                 if (c=='\'') {
+                    addToken(text, currentTokenStart,i, Token.LITERAL_CHAR, newStartOffset+currentTokenStart);
                     currentTokenType = Token.NULL;
                  }
                  break;

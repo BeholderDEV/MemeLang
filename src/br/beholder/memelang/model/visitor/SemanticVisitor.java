@@ -102,6 +102,7 @@ public class SemanticVisitor extends MemeVisitor{
             op = this.pilhaOperacao.pop();
 //            System.out.println("Doing " + tipo2.name() + " " + op.name() + " " + tipo1.name());
             int resulExp = SemanticTable.resultType(tipo1, tipo2, op);
+            System.out.println("Tipo1 " + tipo1.name() + " tipo2 " + tipo2.name() + " op " + op.name() + " ResultType " + resulExp);
             if(resulExp == SemanticTable.ERR){
                 this.semanticErrors.add(new ParseCancellationException("Tentando realizar uma " + op.name() + " entre " + tipo1.name() + " e " + tipo2.name() + " na linha " + ctx.start.getLine()));
                 return;
@@ -279,6 +280,7 @@ public class SemanticVisitor extends MemeVisitor{
             if (ctx.parametro(i).multidimensional() != null) {
                 visitMultidimensional(ctx.parametro(i).multidimensional());
             }
+            
             System.out.println("Parametro: "+ idName +" do tipo" + tipoAtual + "  no escopo "+escopoAtual.getNome()+" qtdMultidimensional: " + qtdMultidimensional + " Mult " + multidimensional);
             visitTipo(ctx.parametro(i).tipo());
             Identificador id = new Identificador(
@@ -288,6 +290,7 @@ public class SemanticVisitor extends MemeVisitor{
                     false,
                     escopoAtual,
                     true,
+                    ctx.parametro(i).REFERENCIA() != null,
                     i + 1,
                     multidimensional, // Só aceita unidimensional como parametro... 
                     false);
@@ -458,6 +461,7 @@ public class SemanticVisitor extends MemeVisitor{
                     false,
                     escopoAtual,
                     false,
+                    false,
                     0,
                     multidimensional,
                     qtdMultidimensional,
@@ -537,6 +541,7 @@ public class SemanticVisitor extends MemeVisitor{
                     true,
                     false,
                     escopoAtual,
+                    false,
                     false,
                     0,
                     0,
