@@ -1,4 +1,5 @@
 package br.beholder.memelang.model.language;
+
 // Generated from .\Memelang.g4 by ANTLR 4.7
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -64,6 +65,12 @@ public interface MemelangVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitEntradaesaida(MemelangParser.EntradaesaidaContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MemelangParser#chamadafuncaousuario}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitChamadafuncaousuario(MemelangParser.ChamadafuncaousuarioContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link MemelangParser#retorno}.
 	 * @param ctx the parse tree

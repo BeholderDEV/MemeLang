@@ -368,29 +368,36 @@ public class SemanticVisitor extends MemeVisitor{
      * @param ctxProg
      */
     private void markAllFunctions(MemelangParser.ProgContext ctxProg) {
-        MemelangParser.FuncoesContext ctx = ctxProg.funcaoInicio().funcoes();
-        while (ctx.ID() != null) {
-            visitTipoComVoid(ctx.tipoComVoid());
-            if (Escopo.verificaSeExisteNoEscopo(ctx.ID().getSymbol().getText(), tabelaSimbolos, escopoAtual)) {
-                this.semanticErrors.add(new ParseCancellationException("Declaração da Função " + ctx.ID().getSymbol().getText() + " já existe neste escopo Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine()));
-            }
-            Identificador id = new Identificador(
-                    ctx.ID().getSymbol().getText(),
-                    tipoAtual,
-                    true,
-                    false,
-                    escopoAtual,
-                    false,
-                    0,
-                    0,
-                    true);
-            tabelaSimbolos.add(id);
-
-            escopoAtual = Escopo.criaEVaiEscopoNovo(ctx.ID().getText(), escopoAtual);
-            visitParametros(ctx.parametros());
-            retornaEscopoPai();
-            ctx = ctx.funcoes();
+        for(int i = 0 ; i < ctxProg.funcaoInicio().comandos().size(); i++){
+            MemelangParser.ComandosContext ctx = ctxProg.funcaoInicio().comandos(i);
+            visitComandos(ctx);
         }
+        for(int i = 0 ; i < ctxProg.funcaoInicio().funcoes().size(); i++){
+            MemelangParser.FuncoesContext ctx = ctxProg.funcaoInicio().funcoes(i);
+            while (ctx.ID() != null) {
+                visitTipoComVoid(ctx.tipoComVoid());
+                if (Escopo.verificaSeExisteNoEscopo(ctx.ID().getSymbol().getText(), tabelaSimbolos, escopoAtual)) {
+                    this.semanticErrors.add(new ParseCancellationException("Declaração da Função " + ctx.ID().getSymbol().getText() + " já existe neste escopo Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine()));
+                }
+                Identificador id = new Identificador(
+                        ctx.ID().getSymbol().getText(),
+                        tipoAtual,
+                        true,
+                        false,
+                        escopoAtual,
+                        false,
+                        0,
+                        0,
+                        true);
+                tabelaSimbolos.add(id);
+
+                escopoAtual = Escopo.criaEVaiEscopoNovo(ctx.ID().getText(), escopoAtual);
+                visitParametros(ctx.parametros());
+                retornaEscopoPai();
+                ctx = ctx.funcoes();
+            }
+        }
+        
     }
 
     @Override
@@ -400,32 +407,32 @@ public class SemanticVisitor extends MemeVisitor{
 
     @Override
     public Object visitChamadaFuncao(MemelangParser.ChamadaFuncaoContext ctx) {
-        Identificador id = Identificador.getUNSAFEId(ctx.ID().getText(), tabelaSimbolos);
-
-        
-        //Vê se a função existe
-        if (id == null) {
-            this.semanticErrors.add(new ParseCancellationException("Chamada de função inexistente na " + ctx.start.getLine() + " coluna " + ctx.start.getCharPositionInLine() + "."));
-            return null;
-        }        
-        id.setUsada(true);
-        //Captura os parametros da função e numeros
-        Escopo escopoFuncao = getEscopoDaFuncao(id.getNome());
-        int qtdParametrosNaFuncao;
-        if (escopoFuncao != null) {
-            List<Identificador> idListParametros = Identificador.getParametrosFuncao(escopoFuncao, tabelaSimbolos);
-            qtdParametrosNaFuncao = idListParametros.size();
-        }else{
-            qtdParametrosNaFuncao = 0;
-        }
-        visitExpressao(ctx.parametrosChamada().expressao(multidimensional));
-        int qtdParametrosChamada = ctx.parametrosChamada().expressao().size();
-
-        //Valida se os numeros de parametros bate
-        if (qtdParametrosChamada != qtdParametrosNaFuncao) {
-            this.semanticErrors.add(new ParseCancellationException("Chamada de função na linha " + ctx.start.getLine() + " coluna " + ctx.start.getCharPositionInLine() + " com numero incorreto de parametros. Esperado: " + qtdParametrosNaFuncao + " Encontrado: " + qtdParametrosChamada));
-        }
-        visitChildren(ctx);
+//        Identificador id = Identificador.getUNSAFEId(ctx.ID().getText(), tabelaSimbolos);
+//
+//        
+//        //Vê se a função existe
+//        if (id == null) {
+//            this.semanticErrors.add(new ParseCancellationException("Chamada de função inexistente na " + ctx.start.getLine() + " coluna " + ctx.start.getCharPositionInLine() + "."));
+//            return null;
+//        }        
+//        id.setUsada(true);
+//        //Captura os parametros da função e numeros
+//        Escopo escopoFuncao = getEscopoDaFuncao(id.getNome());
+//        int qtdParametrosNaFuncao;
+//        if (escopoFuncao != null) {
+//            List<Identificador> idListParametros = Identificador.getParametrosFuncao(escopoFuncao, tabelaSimbolos);
+//            qtdParametrosNaFuncao = idListParametros.size();
+//        }else{
+//            qtdParametrosNaFuncao = 0;
+//        }
+//        visitExpressao(ctx.parametrosChamada().expressao(multidimensional));
+//        int qtdParametrosChamada = ctx.parametrosChamada().expressao().size();
+//
+//        //Valida se os numeros de parametros bate
+//        if (qtdParametrosChamada != qtdParametrosNaFuncao) {
+//            this.semanticErrors.add(new ParseCancellationException("Chamada de função na linha " + ctx.start.getLine() + " coluna " + ctx.start.getCharPositionInLine() + " com numero incorreto de parametros. Esperado: " + qtdParametrosNaFuncao + " Encontrado: " + qtdParametrosChamada));
+//        }
+//        visitChildren(ctx);
         return null;
 
         //Valida se os parametros que estão sendo passados existem se forem IDs

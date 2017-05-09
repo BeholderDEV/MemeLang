@@ -125,6 +125,18 @@ public class MemelangBaseListener implements MemelangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterChamadafuncaousuario(MemelangParser.ChamadafuncaousuarioContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitChamadafuncaousuario(MemelangParser.ChamadafuncaousuarioContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterRetorno(MemelangParser.RetornoContext ctx) { }
 	/**
 	 * {@inheritDoc}

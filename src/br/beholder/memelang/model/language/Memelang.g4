@@ -8,8 +8,8 @@ grammar Memelang;
 prog : funcaoInicio;
 
 //*Escopo de funções
-funcaoInicio: (INT ID PARENTESEABRE parametros PARENTESEFECHA bloco funcoes);
-funcoes: (tipoComVoid ID PARENTESEABRE parametros PARENTESEFECHA bloco funcoes)?;
+funcaoInicio: (comandos | funcoes)+;
+funcoes: (tipoComVoid ID PARENTESEABRE parametros PARENTESEFECHA bloco (funcoes)?);
 parametros : (parametro(VIRGULA parametro)*)?;
 parametro: tipo (REFERENCIA)? ID (multidimensional)?;
 
@@ -17,18 +17,21 @@ parametro: tipo (REFERENCIA)? ID (multidimensional)?;
 bloco: CHAVESABRE comandos CHAVESFECHA ;
 
 //*** Comandos
-comandos: (condicionais|comando)*;
+comandos: (condicionais|comando)+;
 comando:((retorno|declaracoes|atribuicoes|chamadaFuncao|entradaesaida)PONTOEVIRGULA);
 
 //**** Entrada e Saida
-entradaesaida: (DEFREAD | DEFWRITE) PARENTESEABRE val_final PARENTESEFECHA;
+entradaesaida: (DEFREAD | DEFWRITE) PARENTESEABRE parametrosChamada PARENTESEFECHA;
 
+//**** Chamada Funcao do usuario
+chamadafuncaousuario: ID PARENTESEABRE parametrosChamada PARENTESEFECHA;
 
 //**** Retorno
 retorno: DEFRETORNO expressao;
 
 //**** Chamada de Funcao
-chamadaFuncao: ID PARENTESEABRE parametrosChamada PARENTESEFECHA;
+chamadaFuncao: chamadafuncaousuario | entradaesaida;
+
 parametrosChamada: (expressao (VIRGULA expressao)*)? ;
 
 //**** Condicionais
@@ -69,7 +72,7 @@ op_neg : MENOS | BITNOT | NOT;
 op_bitwise : BITSHIFTLEFT | BITSHIFTRIGHT;
 op_arit_baixa : MAIS | DIVIDE | MULTIPLICA | MOD;
 op_logica : AND | OR | NOT;
-val_final : CONSTINTEIRO | CONSTSTRING | CONSTBINARIO | CONSTHEXA | CONSTLOGICO | CONSTREAL | ID | chamadaFuncao | ID multidimensional | PARENTESEABRE expressao PARENTESEFECHA;
+val_final : CONSTINTEIRO | CONSTSTRING | CONSTBINARIO | CONSTHEXA | CONSTCHAR | CONSTLOGICO | CONSTREAL | ID | chamadaFuncao | ID multidimensional | PARENTESEABRE expressao PARENTESEFECHA;
 
 
 //// Lexer Rules
@@ -142,7 +145,7 @@ CONSTBINARIO : 'hacker'[01]+;
 CONSTHEXA : '7x1'[A-Fa-f0-9]+;
 CONSTSTRING : ASPA(~["\\]|'\\'.)*ASPA;
 CONSTLOGICO : ('yeah')|('trap');
-CONSTCHAR : ASPA(~["\\]|'\\'.)ASPA;
+CONSTCHAR : ASPASIMPLES(~["\\]|'\\'.)ASPASIMPLES;
 
 //Comentarios
 COMENTARIOLINHA : 'first'~[\n\r]* -> skip;
@@ -162,6 +165,7 @@ PARENTESEABRE : 'L(';
 PARENTESEFECHA: ')L';
 
 ASPA: '"';
+ASPASIMPLES: '\'';
 //EXTRA
 ID : [A-Za-z_][A-Za-z_0-9]*;
 
