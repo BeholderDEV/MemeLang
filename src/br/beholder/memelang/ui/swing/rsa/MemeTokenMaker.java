@@ -42,6 +42,8 @@ public class MemeTokenMaker extends AbstractTokenMaker{
         tokenMap.put("chooseAPill", Token.RESERVED_WORD);
         tokenMap.put("pill", Token.RESERVED_WORD);
         tokenMap.put("hipster", Token.RESERVED_WORD);
+        tokenMap.put("escreva", Token.RESERVED_WORD);
+        tokenMap.put("leia", Token.RESERVED_WORD);
         
         tokenMap.put("+", Token.OPERATOR);
         tokenMap.put("-", Token.OPERATOR);
