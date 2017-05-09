@@ -7,10 +7,12 @@ package br.beholder.memelang.control;
 
 import br.beholder.memelang.model.executor.MemeLanguageCompiler;
 import br.beholder.memelang.ui.MainPanel;
-import br.beholder.memelang.ui.swing.webLaf.PSTableHeaderUI;
 import br.beholder.memelang.ui.swing.webLaf.WeblafUtils;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.io.FileNotFoundException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,7 +20,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.plaf.TableHeaderUI;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import org.antlr.v4.gui.TreeViewer;
@@ -53,6 +54,25 @@ public class MainWindowController {
             this.mainWindow.getTextAreaMensagens().setText("Erros foram encontrados, visualizar aba de Mensagens");
             this.prepararTabelaErros();
 
+        }
+    }
+    public void abrirTabelaTipos(){
+        try {
+            URI f = getClass().getResource("/br/beholder/memelang/web/tables.html").toURI();
+            openWebpage(f);
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    private void openWebpage(URI uri) {
+        Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+        if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+            try {
+                desktop.browse(uri);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
     
