@@ -25,7 +25,7 @@ public abstract class MemeVisitor extends MemelangBaseVisitor<Object>{
         OR,AND,NOT,
         MAIORQUE,MENORQUE,MAIOROUIGUAL,MENOROUIGUAL,IDENTICO,DIFERENTE,
         BITSHIFTLEFT,BITSHIFTRIGHT,BITNOT,
-        MENOS,MAIS,MOD,MULTIPLICA,DIVIDE
+        SUBTRACAO,SOMA,MOD,MULTIPLICACAO,DIVISAO
     };
     protected Operation operacao;
     /**

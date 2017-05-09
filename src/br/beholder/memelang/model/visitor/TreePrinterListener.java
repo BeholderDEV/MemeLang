@@ -71,7 +71,7 @@ public class TreePrinterListener implements ParseTreeListener {
 
         builder.append(ruleName);
     }
-
+    
     @Override
     public void exitEveryRule(ParserRuleContext ctx) {
         if (ctx.getChildCount() > 0) {

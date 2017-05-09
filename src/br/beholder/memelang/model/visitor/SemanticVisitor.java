@@ -11,6 +11,8 @@ import br.beholder.memelang.model.analisador.Escopo;
 import br.beholder.memelang.model.analisador.Identificador;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
+import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
@@ -23,6 +25,9 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 public class SemanticVisitor extends MemeVisitor{
     
     List<ParseCancellationException> semanticErrors = new ArrayList<ParseCancellationException>();
+    List<String> semanticWarnings = new ArrayList<String>();
+    Stack<Identificador.Tipo> pilhaTipoExpressao = new Stack<>();
+    Stack<Operation> pilhaOperacao = new Stack<>();
     
     public SemanticVisitor(List<Identificador> tabelaSimbolos) {
         super(tabelaSimbolos);
@@ -47,7 +52,12 @@ public class SemanticVisitor extends MemeVisitor{
         if (ctx == null) {
             return null;
         }
+        this.pilhaOperacao.clear();
+        this.pilhaTipoExpressao.clear();
         System.out.println("Expressao " + ctx.getText());
+        for (MemelangParser.OperationsContext opCont : ctx.operations()) {
+            this.pilhaOperacao.push(verificarTipoOperacao(opCont));
+        }
         for (int i = 0; i < ctx.val_final().size(); i++) {
             String valFinal = ctx.val_final(i).getText();
             if (Identificador.getId(valFinal, tabelaSimbolos, escopoAtual) != null) {
@@ -65,15 +75,143 @@ public class SemanticVisitor extends MemeVisitor{
                 }
                 System.out.println("Expressão em " + id.getNome() + " Escopo atual " + escopoAtual + " Escopo dele " + id.getEscopo() );
                 id.setUsada(true);
-            }else if(ctx.val_final(i).CONSTINTEIRO() == null && ctx.val_final(i).CONSTLOGICO() == null && ctx.val_final(i).CONSTREAL() == null && ctx.val_final(i).CONSTSTRING() == null && ctx.val_final(i).CONSTBINARIO() == null && ctx.val_final(i).CONSTHEXA() == null){
+                
+                this.pilhaTipoExpressao.push(id.getTipo());
+                
+            }else if(verificarTipoConstante(ctx.val_final(i)) == null){
                 this.semanticErrors.add(new ParseCancellationException("Váriavel " + valFinal + " não existe neste escopo Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine()));
             }else{
-                // Tabela Atribuicoes
+                this.pilhaTipoExpressao.push(verificarTipoConstante(ctx.val_final(i)));
             }
         }
+        verificarCompatibilidadeOperacao(ctx);
         return super.visitExpressao(ctx); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public void verificarCompatibilidadeOperacao(MemelangParser.ExpressaoContext ctx){
+//        System.out.println("Here for " + ctx.getText());
+        if(this.pilhaOperacao.empty() || this.pilhaTipoExpressao.size() != this.pilhaOperacao.size() + 1){
+            return;
+        }
+        int resultExp;
+        Tipo tipo1, tipo2;
+        Operation op;
+        while(!this.pilhaOperacao.empty()) {
+            tipo1 = this.pilhaTipoExpressao.pop();
+            tipo2 = this.pilhaTipoExpressao.pop();
+            op = this.pilhaOperacao.pop();
+//            System.out.println("Doing " + tipo2.name() + " " + op.name() + " " + tipo1.name());
+            int resulExp = SemanticTable.resultType(tipo1, tipo2, op);
+            if(resulExp == SemanticTable.ERR){
+                this.semanticErrors.add(new ParseCancellationException("Tentando realizar uma " + op.name() + " entre " + tipo1.name() + " e " + tipo2.name() + " na linha " + ctx.start.getLine()));
+                return;
+            }
+            this.pilhaTipoExpressao.push(SemanticTable.getCodeType(resulExp));
+        }
+    }
+    
+    public void verificarCompatibilidadeAtribuicao(Tipo tipoVariavelFinal, ParserRuleContext ctx){
+        if(this.pilhaTipoExpressao.isEmpty()){
+            return;
+        }
+        Tipo tipoAtribuição = this.pilhaTipoExpressao.pop();
+        int resultAtr = SemanticTable.atribType(tipoVariavelFinal, tipoAtribuição);
+        if(resultAtr == SemanticTable.ERR){
+            this.semanticErrors.add(new ParseCancellationException("Tentando atribuir um " + tipoAtribuição.name() + " a um " + tipoVariavelFinal.name() + " na linha " + ctx.start.getLine()));
+            return;
+        }
+        if(resultAtr == SemanticTable.WAR){
+            this.semanticWarnings.add("Atribuindo um " + tipoAtribuição.name() + " a um " + tipoVariavelFinal.name() + " na linha " + ctx.start.getLine());
+        }
+    }
+    
+    public Operation verificarTipoOperacao(MemelangParser.OperationsContext opContext){
+        if(opContext.op_arit_baixa() != null){
+            if(opContext.op_arit_baixa().DIVIDE() != null){
+                return Operation.DIVISAO;
+            }
+            if(opContext.op_arit_baixa().MAIS() != null){
+                return Operation.SOMA;
+            }
+            if(opContext.op_arit_baixa().MULTIPLICA() != null){
+                return Operation.MULTIPLICACAO;
+            }
+            if(opContext.op_arit_baixa().MOD() != null){
+                return Operation.MOD;
+            }
+        }
+        if(opContext.op_bitwise() != null){
+            if(opContext.op_bitwise().BITSHIFTLEFT() != null){
+                return Operation.BITSHIFTLEFT;
+            }
+            if(opContext.op_bitwise().BITSHIFTRIGHT() != null){
+                return Operation.BITSHIFTRIGHT;
+            }
+        }
+        if(opContext.op_logica() != null){
+            if(opContext.op_logica().AND() != null){
+                return Operation.AND;
+            }
+            if(opContext.op_logica().NOT() != null){
+                return Operation.NOT;
+            }
+            if(opContext.op_logica().OR() != null){
+                return Operation.OR;
+            }
+        }
+        if(opContext.op_neg() != null){
+            if(opContext.op_neg().BITNOT() != null){
+                return Operation.BITNOT;
+            }
+            if(opContext.op_neg().MENOS() != null){
+                return Operation.SUBTRACAO;
+            }
+            if(opContext.op_neg().NOT() != null){
+                return Operation.NOT;
+            }
+        }
+        if(opContext.op_rel() != null){
+            if(opContext.op_rel().DIFERENTE() != null){
+                return Operation.DIFERENTE;
+            }
+            if(opContext.op_rel().IDENTICO() != null){
+                return Operation.IDENTICO;
+            }
+            if(opContext.op_rel().MAIOROUIGUAL() != null){
+                return Operation.MAIOROUIGUAL;
+            }
+            if(opContext.op_rel().MAIORQUE() != null){
+                return Operation.MAIORQUE;
+            }
+            if(opContext.op_rel().MENOROUIGUAL() != null){
+                return Operation.MENOROUIGUAL;
+            }
+            if(opContext.op_rel().MENORQUE() != null){
+                return Operation.MENORQUE;
+            }
+        }
+        return null;
+    }
+    
+    public Tipo verificarTipoConstante(MemelangParser.Val_finalContext val){
+        if (val.CONSTBINARIO() != null) {
+            return Tipo.BINARIO;
+        } else if (val.CONSTLOGICO() != null) {
+            return Tipo.LOGICO;
+        } else if (val.CONSTREAL() != null) {
+            return Tipo.REAL;
+        } else if (val.CONSTHEXA() != null) {
+            return Tipo.HEXADECIMAL;
+        } else if (val.CONSTINTEIRO() != null) {
+            return Tipo.INTEIRO;
+        } else if (val.CONSTSTRING() != null) {
+            return Tipo.STRING;
+        }else if(val.CONSTCHAR() != null){
+            return Tipo.CHAR;
+        }
+        return null;
+    }
+    
     @Override
     public Object visitVal_final(MemelangParser.Val_finalContext ctx) {
         return super.visitVal_final(ctx); //To change body of generated methods, choose Tools | Templates.
@@ -112,7 +250,9 @@ public class SemanticVisitor extends MemeVisitor{
         } else if (ctx.INT() != null) {
             tipoAtual = Tipo.INTEIRO;
         } else if (ctx.STRING() != null) {
-            tipoAtual = Tipo.TEXTO;
+            tipoAtual = Tipo.STRING;
+        }else if(ctx.CHAR() != null){
+            tipoAtual = Tipo.CHAR;
         }
         return null;
     }
@@ -236,15 +376,21 @@ public class SemanticVisitor extends MemeVisitor{
     public Object visitAtribuicoes(MemelangParser.AtribuicoesContext ctx) {
         
         Identificador id = Identificador.getId(ctx.ID().getSymbol().getText(), tabelaSimbolos, escopoAtual);
-        System.out.println("Atribuindo "+ id.getNome() +" na expressao " + ctx.expressao().getText());
         if (id == null) {
             this.semanticErrors.add(new ParseCancellationException("Váriavel " + ctx.ID() + " não existe neste escopo Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine()));
+            return null;
         }
+        System.out.println("Atribuindo "+ id.getNome());
         if (ctx.atribuicoesIncEDec() != null && !id.isInicializada()) {
             this.semanticErrors.add(new ParseCancellationException("Váriavel " + ctx.ID() + " não inicializada Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine()));
         }
+        if(ctx.atribuicoesIncEDec() != null){
+            // Tratar isso depois
+        }else{
+            visitExpressao(ctx.expressao());
+            verificarCompatibilidadeAtribuicao(id.getTipo(), ctx);
+        }
 
-        visitExpressao(ctx.expressao());
         id.setUsada(true);
 
         id.setInicializada(true);
@@ -308,6 +454,7 @@ public class SemanticVisitor extends MemeVisitor{
                     false);
             tabelaSimbolos.add(ident);
             visitChildren(ctx);
+            verificarCompatibilidadeAtribuicao(ident.getTipo(), ctx);
         }
         
         return null;
@@ -451,6 +598,10 @@ public class SemanticVisitor extends MemeVisitor{
 
     public List<ParseCancellationException> getSemanticErrors() {
         return semanticErrors;
+    }
+
+    public List<String> getSemanticWarnings() {
+        return semanticWarnings;
     }
     
 }

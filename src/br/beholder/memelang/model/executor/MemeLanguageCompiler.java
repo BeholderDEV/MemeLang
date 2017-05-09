@@ -14,6 +14,9 @@ import br.beholder.memelang.model.visitor.SemanticVisitor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Application;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -88,7 +91,6 @@ public class MemeLanguageCompiler {
         this.lexer.addErrorListener(erroLexico);
         this.parser.addErrorListener(erroLexico);
         this.warnings.clear();
-        
         this.tree = parser.prog();
         if(erroLexico.getErrors().isEmpty()){
             SemanticVisitor semantic = new SemanticVisitor(FuncoesPadroes.gerarFuncoesPadroes(FuncoesPadroes.Compilador.BIPIDE));
@@ -96,16 +98,22 @@ public class MemeLanguageCompiler {
             {
                 semantic.visit(tree);
                 ids = semantic.getTabelaSimbolos();
+                if(!semantic.getSemanticWarnings().isEmpty()){
+                    for (String war : semantic.getSemanticWarnings()) {
+                        this.warnings.add(war);
+                    }
+                }
                 model = getModel(ids);
                 if(!semantic.getSemanticErrors().isEmpty()){
                     for (ParseCancellationException err : semantic.getSemanticErrors()) {
                         erroLexico.getErrors().add(err.getMessage());
                     }
                 }
-                
+
             } catch (Exception e)
             {
                 erroLexico.getErrors().add(e.getLocalizedMessage());
+                Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, e);
             }
         }
     }

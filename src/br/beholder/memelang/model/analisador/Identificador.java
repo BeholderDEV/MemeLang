@@ -15,9 +15,9 @@ import java.util.List;
 public class Identificador {
 
     public enum Tipo {
-
-        INTEIRO, TEXTO, REAL, LOGICO, BINARIO, HEXADECIMAL, VOID
+        INTEIRO, STRING, CHAR, REAL, LOGICO, BINARIO, HEXADECIMAL, VOID
     }
+    
     String nome;
     Tipo tipo;
     boolean inicializada;
