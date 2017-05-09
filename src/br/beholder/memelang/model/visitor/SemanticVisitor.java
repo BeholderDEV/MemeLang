@@ -389,7 +389,13 @@ public class SemanticVisitor extends MemeVisitor{
         }
         
         if(ctx.atribuicoesIncEDec() != null){
-            // Tratar isso depois
+            
+            Operation incDec;
+            if(ctx.atribuicoesIncEDec().MAIS().size() == 2){
+                incDec = Operation.SOMA;
+            }else if(ctx.atribuicoesIncEDec().MENOS().size() == 2){
+                incDec = Operation.SUBTRACAO;
+            }
         }else{
             visitExpressao(ctx.expressao());
             verificarCompatibilidadeAtribuicao(id.getTipo(), ctx);
