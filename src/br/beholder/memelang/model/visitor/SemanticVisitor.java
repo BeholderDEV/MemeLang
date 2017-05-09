@@ -384,6 +384,10 @@ public class SemanticVisitor extends MemeVisitor{
         if (ctx.atribuicoesIncEDec() != null && !id.isInicializada()) {
             this.semanticErrors.add(new ParseCancellationException("Váriavel " + ctx.ID() + " não inicializada Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine()));
         }
+        if(id.getDimensoes() > 0 && ctx.multidimensional() == null){
+            this.semanticErrors.add(new ParseCancellationException("Tentando atribuir ao vetor " + id.getNome() +" sem dizer a posiçao na linha " + ctx.start.getLine()));
+        }
+        
         if(ctx.atribuicoesIncEDec() != null){
             // Tratar isso depois
         }else{
