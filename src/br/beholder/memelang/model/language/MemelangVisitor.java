@@ -24,11 +24,11 @@ public interface MemelangVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitFuncaoInicio(MemelangParser.FuncaoInicioContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link MemelangParser#funcoes}.
+	 * Visit a parse tree produced by {@link MemelangParser#funcao}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitFuncoes(MemelangParser.FuncoesContext ctx);
+	T visitFuncao(MemelangParser.FuncaoContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link MemelangParser#parametros}.
 	 * @param ctx the parse tree

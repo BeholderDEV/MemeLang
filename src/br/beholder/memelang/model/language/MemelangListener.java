@@ -29,15 +29,15 @@ public interface MemelangListener extends ParseTreeListener {
 	 */
 	void exitFuncaoInicio(MemelangParser.FuncaoInicioContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MemelangParser#funcoes}.
+	 * Enter a parse tree produced by {@link MemelangParser#funcao}.
 	 * @param ctx the parse tree
 	 */
-	void enterFuncoes(MemelangParser.FuncoesContext ctx);
+	void enterFuncao(MemelangParser.FuncaoContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MemelangParser#funcoes}.
+	 * Exit a parse tree produced by {@link MemelangParser#funcao}.
 	 * @param ctx the parse tree
 	 */
-	void exitFuncoes(MemelangParser.FuncoesContext ctx);
+	void exitFuncao(MemelangParser.FuncaoContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MemelangParser#parametros}.
 	 * @param ctx the parse tree

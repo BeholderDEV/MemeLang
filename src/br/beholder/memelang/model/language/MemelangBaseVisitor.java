@@ -32,7 +32,7 @@ public class MemelangBaseVisitor<T> extends AbstractParseTreeVisitor<T> implemen
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitFuncoes(MemelangParser.FuncoesContext ctx) { return visitChildren(ctx); }
+	@Override public T visitFuncao(MemelangParser.FuncaoContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

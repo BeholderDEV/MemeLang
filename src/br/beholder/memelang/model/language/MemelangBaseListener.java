@@ -41,13 +41,13 @@ public class MemelangBaseListener implements MemelangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFuncoes(MemelangParser.FuncoesContext ctx) { }
+	@Override public void enterFuncao(MemelangParser.FuncaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFuncoes(MemelangParser.FuncoesContext ctx) { }
+	@Override public void exitFuncao(MemelangParser.FuncaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
