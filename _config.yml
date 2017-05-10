@@ -1,1 +1,10 @@
+
+title: MemeLang
+description: Programação esotérica para iniciantes
+show_downloads: true
 theme: jekyll-theme-cayman
+markdown: kramdown
+highlighter: rouge
+
+gems:
+- jekyll-mentions
