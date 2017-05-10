@@ -36,12 +36,12 @@ public class SemanticTable {
    // TIPO DE RETORNO DAS EXPRESSOES ENTRE TIPOS
    // 5 x 5 X 5  = TIPO X TIPO X OPER
     private static final int expTable [][][] = 
-                 {  /*     INT       */ /*       FLOAT    */  /*      CHAR       */   /*    STRING    */  /*     BOOL        */
-     /*INT*/     {{INT,INT,INT,FLO,BOO},{FLO,FLO,FLO,FLO,BOO},{ERR,ERR,ERR,ERR,ERR},{ERR,ERR,ERR,ERR,ERR},{ERR,ERR,ERR,ERR,ERR}, {INT,ERR,ERR,ERR,ERR}, {INT,ERR,ERR,ERR,ERR}, {ERR,ERR,ERR,ERR,ERR}},
-     /*FLOAT*/   {{FLO,FLO,FLO,FLO,BOO},{FLO,FLO,FLO,FLO,BOO},{ERR,ERR,ERR,ERR,ERR},{ERR,ERR,ERR,ERR,ERR},{ERR,ERR,ERR,ERR,ERR}, {ERR,ERR,ERR,ERR,ERR}, {ERR,ERR,ERR,ERR,ERR}, {ERR,ERR,ERR,ERR,ERR}},
-     /*CHAR*/    {{ERR,ERR,ERR,ERR,ERR},{ERR,ERR,ERR,ERR,ERR},{STR,ERR,ERR,ERR,BOO},{STR,ERR,ERR,ERR,BOO},{ERR,ERR,ERR,ERR,ERR}, {ERR,ERR,ERR,ERR,ERR}, {ERR,ERR,ERR,ERR,ERR}, {ERR,ERR,ERR,ERR,ERR}},
-     /*STRING*/  {{ERR,ERR,ERR,ERR,ERR},{ERR,ERR,ERR,ERR,ERR},{STR,ERR,ERR,ERR,BOO},{STR,ERR,ERR,ERR,BOO},{ERR,ERR,ERR,ERR,ERR}, {ERR,ERR,ERR,ERR,ERR}, {ERR,ERR,ERR,ERR,ERR}, {ERR,ERR,ERR,ERR,ERR}},
-     /*BOOL*/    {{ERR,ERR,ERR,ERR,ERR},{ERR,ERR,ERR,ERR,ERR},{ERR,ERR,ERR,ERR,ERR},{ERR,ERR,ERR,ERR,ERR},{ERR,ERR,ERR,ERR,BOO}, {ERR,ERR,ERR,ERR,ERR}, {ERR,ERR,ERR,ERR,ERR}, {ERR,ERR,ERR,ERR,BOO}}                   
+                 {  /*          INT                 */ /*             FLOAT              */  /*      CHAR                     */   /*    STRING                     */  /*     BOOL        */
+     /*INT*/     {{INT,INT,INT,FLO,BOO, INT, INT, BOO},{FLO,FLO,FLO,FLO,BOO, ERR, FLO, BOO},{ERR,ERR,ERR,ERR,ERR, ERR, ERR, ERR},{ERR,ERR,ERR,ERR,ERR, ERR, ERR, ERR},{ERR,ERR,ERR,ERR,ERR, ERR, ERR, ERR}},
+     /*FLOAT*/   {{FLO,FLO,FLO,FLO,BOO, ERR, INT, BOO},{FLO,FLO,FLO,FLO,BOO, ERR, FLO, BOO},{ERR,ERR,ERR,ERR,ERR, ERR, ERR, ERR},{ERR,ERR,ERR,ERR,ERR, ERR, ERR, ERR},{ERR,ERR,ERR,ERR,ERR, ERR, ERR, ERR}},
+     /*CHAR*/    {{ERR,ERR,ERR,ERR,ERR, ERR, ERR, ERR},{ERR,ERR,ERR,ERR,ERR, ERR, ERR, ERR},{STR,ERR,ERR,ERR,BOO, ERR, ERR, BOO},{STR,ERR,ERR,ERR,BOO, ERR, ERR, BOO},{ERR,ERR,ERR,ERR,ERR, ERR, ERR, ERR}},
+     /*STRING*/  {{ERR,ERR,ERR,ERR,ERR, ERR, ERR, ERR},{ERR,ERR,ERR,ERR,ERR, ERR, ERR, ERR},{STR,ERR,ERR,ERR,BOO, ERR, ERR, BOO},{STR,ERR,ERR,ERR,BOO, ERR, ERR, BOO},{ERR,ERR,ERR,ERR,ERR, ERR, ERR, ERR}},
+     /*BOOL*/    {{ERR,ERR,ERR,ERR,ERR, ERR, ERR, ERR},{ERR,ERR,ERR,ERR,ERR, ERR, ERR, ERR},{ERR,ERR,ERR,ERR,ERR, ERR, ERR, ERR},{ERR,ERR,ERR,ERR,ERR, ERR, ERR, ERR},{ERR,ERR,ERR,ERR,BOO, ERR, ERR, BOO}}                   
                  };
    
    // atribuicoes compativeis 
@@ -58,10 +58,6 @@ public class SemanticTable {
         int tp1Code = getTypeCode(tp1);
         int tp2Code = getTypeCode(tp2);
         int opCode = getOpCode(op);
-        System.out.println("Explodindo " + opCode + " com tamanho " + expTable[0][0].length);
-        if(opCode >= 5){
-            opCode = 4;
-        }
         return (expTable[tp1Code][tp2Code][opCode]);
     }
    
