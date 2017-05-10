@@ -1,11 +1,10 @@
 # Linguagem MemeLang
 
-Linguagem de Programação exotérica para iniciantes
+Linguagem de Programação esotérica para iniciantes
 
 ## Características
 
  * Sintaxe simples
  * Palavras Chave Legais
  * Tipagem Forte
- * Encoraja a programação Exotérica
-
+ * Encoraja a programação Esotérica
