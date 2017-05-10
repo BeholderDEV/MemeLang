@@ -59,7 +59,11 @@ public class SemanticVisitor extends MemeVisitor{
             this.pilhaOperacao.push(verificarTipoOperacao(opCont));
         }
         for (int i = 0; i < ctx.val_final().size(); i++) {
+            
             String valFinal = ctx.val_final(i).getText();
+            if(ctx.val_final(i).multidimensional() != null){
+                valFinal =  ctx.val_final(i).ID().getText();
+            }
             if (Identificador.getId(valFinal, tabelaSimbolos, escopoAtual) != null) {
                 Identificador id = Identificador.getId(valFinal, tabelaSimbolos, escopoAtual);
                 if (ctx.val_final(i).multidimensional() != null) {
@@ -511,6 +515,7 @@ public class SemanticVisitor extends MemeVisitor{
         if (ctx.ID() == null) {
             return null;
         }
+
         System.out.println("Funcao " + ctx.ID().getText());
         //criaEVaiEscopoNovo(ctx.ID().getText());
         escopoAtual = getEscopoDaFuncao(ctx.ID().getText());
@@ -533,11 +538,15 @@ public class SemanticVisitor extends MemeVisitor{
             if (Escopo.verificaSeExisteNoEscopo(ctx.ID().getSymbol().getText(), tabelaSimbolos, escopoAtual)) {
                 this.semanticErrors.add(new ParseCancellationException("Declaração da Função " + ctx.ID().getSymbol().getText() + " já existe neste escopo Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine()));
             }
+            boolean usada = false;
+            if(ctx.ID().getSymbol().getText().equals("divideByZero")){
+                usada = true;
+            }
             Identificador id = new Identificador(
                     ctx.ID().getSymbol().getText(),
                     tipoAtual,
                     true,
-                    false,
+                    usada,
                     escopoAtual,
                     false,
                     false,
