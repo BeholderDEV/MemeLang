@@ -550,14 +550,12 @@ public class SemanticVisitor extends MemeVisitor{
             visitParametros(ctx.parametros());
             retornaEscopoPai();
             //visitFuncao(ctx);
-            System.out.println("functio");
         }
         
-        List<MemelangParser.DeclaracoesContext> dctx = ctxProg.funcaoInicio().declaracoes();
-        for (MemelangParser.DeclaracoesContext ctx : dctx) {
-            //visitDeclaracoes(ctx);
-            System.out.println("declaracao");
-        }
+//        List<MemelangParser.DeclaracoesContext> dctx = ctxProg.funcaoInicio().declaracoes();
+//        for (MemelangParser.DeclaracoesContext ctx : dctx) {
+//            visitDeclaracoes(ctx);
+//        }
         
         
     }
