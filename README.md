@@ -2,6 +2,8 @@
 
 Linguagem de Programação esotérica para iniciantes
 
+![](https://raw.githubusercontent.com/BeholderDEV/MemeLang/master/doc/coding.png)
+
 ## Características
 
  * Sintaxe simples
