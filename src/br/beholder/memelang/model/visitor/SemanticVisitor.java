@@ -507,7 +507,7 @@ public class SemanticVisitor extends MemeVisitor{
     }
 
     @Override
-    public Object visitFuncoes(MemelangParser.FuncoesContext ctx) {
+    public Object visitFuncao(MemelangParser.FuncaoContext ctx) {
         if (ctx.ID() == null) {
             return null;
         }
@@ -517,8 +517,6 @@ public class SemanticVisitor extends MemeVisitor{
         //visitParametros(ctx.parametros());
         visitBloco(ctx.bloco());
         retornaEscopoPai();
-        visitFuncoes(ctx.funcoes());
-
         return null; //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -529,8 +527,8 @@ public class SemanticVisitor extends MemeVisitor{
      * @param ctxProg
      */
     private void markAllFunctions(MemelangParser.ProgContext ctxProg) {
-        MemelangParser.FuncoesContext ctx = ctxProg.funcaoInicio().funcoes();
-        while (ctx.ID() != null) {
+        List<MemelangParser.FuncaoContext> fctx = ctxProg.funcaoInicio().funcao();
+        for (MemelangParser.FuncaoContext ctx : fctx) {
             visitTipoComVoid(ctx.tipoComVoid());
             if (Escopo.verificaSeExisteNoEscopo(ctx.ID().getSymbol().getText(), tabelaSimbolos, escopoAtual)) {
                 this.semanticErrors.add(new ParseCancellationException("Declaração da Função " + ctx.ID().getSymbol().getText() + " já existe neste escopo Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine()));
@@ -551,8 +549,17 @@ public class SemanticVisitor extends MemeVisitor{
             escopoAtual = Escopo.criaEVaiEscopoNovo(ctx.ID().getText(), escopoAtual);
             visitParametros(ctx.parametros());
             retornaEscopoPai();
-            ctx = ctx.funcoes();
+            //visitFuncao(ctx);
+            System.out.println("functio");
         }
+        
+        List<MemelangParser.DeclaracoesContext> dctx = ctxProg.funcaoInicio().declaracoes();
+        for (MemelangParser.DeclaracoesContext ctx : dctx) {
+            //visitDeclaracoes(ctx);
+            System.out.println("declaracao");
+        }
+        
+        
     }
 
     @Override

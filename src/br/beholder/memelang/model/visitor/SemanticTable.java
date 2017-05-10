@@ -59,6 +59,9 @@ public class SemanticTable {
         int tp2Code = getTypeCode(tp2);
         int opCode = getOpCode(op);
         System.out.println("Explodindo " + opCode + " com tamanho " + expTable[0][0].length);
+        if(opCode >= 5){
+            opCode = 4;
+        }
         return (expTable[tp1Code][tp2Code][opCode]);
     }
    

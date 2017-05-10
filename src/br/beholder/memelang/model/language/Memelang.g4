@@ -7,8 +7,12 @@ grammar Memelang;
 
 prog : funcaoInicio;
 
+//prog : lstDecl;
+//lstDecl : lstDecl decl | decl;
+//decl : declaracoes | funcao;
+
 //*Escopo de funções
-funcaoInicio: (declaracoes | funcao)+;
+funcaoInicio: ((declaracoes PONTOEVIRGULA) | funcao)+;
 funcao: tipoComVoid ID PARENTESEABRE parametros PARENTESEFECHA bloco;
 parametros : (parametro(VIRGULA parametro)*)?;
 parametro: tipo (REFERENCIA)? ID (multidimensional)?;
@@ -44,7 +48,7 @@ switchdes: SWITCHDES PARENTESEABRE expressao PARENTESEFECHA CHAVESABRE switchCas
 switchCase: (CASE expressao DOISPONTOS comandos (BREAK)?)* ;
 defaultdes: (DEFAULTDES DOISPONTOS comandos (BREAK)?)? ;
 //**** Declaracoes
-declaracoes: tipo declaracao (VIRGULA declaracao?)*;
+declaracoes: tipo declaracao (VIRGULA declaracao)*;
 declaracao: ID ((IGUAL expressao)|(multidimensional(IGUAL declaracoesArray)?))?;
 multidimensional: (COLCHETESABRE expressao COLCHETESFECHA)+;
 
