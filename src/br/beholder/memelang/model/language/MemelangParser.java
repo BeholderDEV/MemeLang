@@ -1,5 +1,4 @@
 package br.beholder.memelang.model.language;
-
 // Generated from .\Memelang.g4 by ANTLR 4.7
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;

@@ -60,9 +60,12 @@ public class SemanticVisitor extends MemeVisitor{
         }
         for (int i = 0; i < ctx.val_final().size(); i++) {
             
-            String valFinal = ctx.val_final(i).getText();
+            String valFinal = ctx.val_final(i).getText();            
             if(ctx.val_final(i).multidimensional() != null){
                 valFinal =  ctx.val_final(i).ID().getText();
+            }
+            if(ctx.val_final(i).chamadaFuncao() != null){
+                valFinal = ctx.val_final(i).chamadaFuncao().ID().getText();
             }
             if (Identificador.getId(valFinal, tabelaSimbolos, escopoAtual) != null) {
                 Identificador id = Identificador.getId(valFinal, tabelaSimbolos, escopoAtual);
