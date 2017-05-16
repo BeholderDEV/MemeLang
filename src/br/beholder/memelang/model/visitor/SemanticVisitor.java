@@ -47,6 +47,69 @@ public class SemanticVisitor extends MemeVisitor{
         return null;
     }
 
+    
+//checkEm divideByZero L( )L illuminati
+//	checkEm g = L( 1 + 2 )L desu
+//	checkEm b = 2 desu
+//confirmed
+
+    public Tipo visitExpressaoLoop(MemelangParser.ExpressaoContext ctx){
+        if (ctx == null) {
+            return null;
+        }
+        Stack<Identificador.Tipo> pilhaTipoExpressaoLoop = new Stack<>();
+        Stack<Operation> pilhaOperacaoLoop = new Stack<>();
+        
+        System.out.println("Expressao Parenteses " + ctx.getText());
+        
+        for (MemelangParser.OperationsContext opCont : ctx.operations()) {
+            pilhaOperacaoLoop.push(verificarTipoOperacao(opCont));
+        }
+        for (int i = 0; i < ctx.val_final().size(); i++) {
+            String valFinal = ctx.val_final(i).getText();            
+            Tipo tipoExpParenteses = null;
+            if(ctx.val_final(i).multidimensional() != null){
+                valFinal =  ctx.val_final(i).ID().getText();
+            }
+            if(ctx.val_final(i).chamadaFuncao() != null){
+                valFinal = ctx.val_final(i).chamadaFuncao().ID().getText();
+            }
+            if(ctx.val_final(i).PARENTESEABRE() != null){
+                pilhaTipoExpressaoLoop.push(visitExpressaoLoop(ctx.val_final(i).expressao()));
+                
+                continue;
+            }
+            if (Identificador.getId(valFinal, tabelaSimbolos, escopoAtual) != null) {
+                Identificador id = Identificador.getId(valFinal, tabelaSimbolos, escopoAtual);
+                if (ctx.val_final(i).multidimensional() != null) {
+                    visitMultidimensional(ctx.val_final(i).multidimensional());
+                } else {
+                    multidimensional = 0;
+                }
+                if (!id.isInicializada()) {
+                    this.semanticErrors.add(new ParseCancellationException("Váriavel " + id.getNome() + " não inicializada Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine()));
+                }
+                if (id.getDimensoes() != multidimensional) {
+                    this.semanticErrors.add(new ParseCancellationException("Dimensões incorreta do vetor " + id.getNome() + " . Ele possui " + id.getDimensoes() + " dimensões e foi usada " + multidimensional + " Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine()));
+                }
+                System.out.println("Expressão em " + id.getNome() + " Escopo atual " + escopoAtual + " Escopo dele " + id.getEscopo() );
+                id.setUsada(true);
+                
+                pilhaTipoExpressaoLoop.push(id.getTipo());
+                
+            }else if(verificarTipoConstante(ctx.val_final(i)) == null && tipoExpParenteses == null){
+                this.semanticErrors.add(new ParseCancellationException("Váriavel " + valFinal + " não existe neste escopo Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine()));
+            }else{
+                if(tipoExpParenteses != null){
+                    pilhaTipoExpressaoLoop.push(tipoExpParenteses);
+                }
+                pilhaTipoExpressaoLoop.push(verificarTipoConstante(ctx.val_final(i)));
+            }
+        }
+        verificarCompatibilidadeOperacao(ctx, pilhaTipoExpressaoLoop, pilhaOperacaoLoop);
+        return pilhaTipoExpressaoLoop.peek();
+    }
+    
     @Override
     public Object visitExpressao(MemelangParser.ExpressaoContext ctx) {
         if (ctx == null) {
@@ -58,14 +121,18 @@ public class SemanticVisitor extends MemeVisitor{
         for (MemelangParser.OperationsContext opCont : ctx.operations()) {
             this.pilhaOperacao.push(verificarTipoOperacao(opCont));
         }
+        System.out.println("Operacoes " + this.pilhaOperacao.size());
         for (int i = 0; i < ctx.val_final().size(); i++) {
-            
             String valFinal = ctx.val_final(i).getText();            
             if(ctx.val_final(i).multidimensional() != null){
                 valFinal =  ctx.val_final(i).ID().getText();
             }
             if(ctx.val_final(i).chamadaFuncao() != null){
                 valFinal = ctx.val_final(i).chamadaFuncao().ID().getText();
+            }
+            if(ctx.val_final(i).PARENTESEABRE() != null){
+                this.pilhaTipoExpressao.push(visitExpressaoLoop(ctx.val_final(i).expressao()));
+                continue;
             }
             if (Identificador.getId(valFinal, tabelaSimbolos, escopoAtual) != null) {
                 Identificador id = Identificador.getId(valFinal, tabelaSimbolos, escopoAtual);
@@ -91,30 +158,43 @@ public class SemanticVisitor extends MemeVisitor{
                 this.pilhaTipoExpressao.push(verificarTipoConstante(ctx.val_final(i)));
             }
         }
-        verificarCompatibilidadeOperacao(ctx);
-        return super.visitExpressao(ctx); //To change body of generated methods, choose Tools | Templates.
+        verificarCompatibilidadeOperacao(ctx, this.pilhaTipoExpressao, this.pilhaOperacao);
+        return null;
+//        return super.visitExpressao(ctx); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void verificarCompatibilidadeOperacao(MemelangParser.ExpressaoContext ctx){
+    public void verificarCompatibilidadeOperacao(MemelangParser.ExpressaoContext ctx, Stack<Tipo> pilhaTipoExpressao, Stack<Operation> pilhaOperacao){
 //        System.out.println("Here for " + ctx.getText());
-        if(this.pilhaOperacao.empty() || this.pilhaTipoExpressao.size() != this.pilhaOperacao.size() + 1){
+        if(pilhaOperacao.empty() || pilhaTipoExpressao.size() != pilhaOperacao.size() + 1){
+            
             return;
         }
         int resultExp;
         Tipo tipo1, tipo2;
         Operation op;
-        while(!this.pilhaOperacao.empty()) {
-            tipo1 = this.pilhaTipoExpressao.pop();
-            tipo2 = this.pilhaTipoExpressao.pop();
-            op = this.pilhaOperacao.pop();
-//            System.out.println("Doing " + tipo2.name() + " " + op.name() + " " + tipo1.name());
+        while(!pilhaOperacao.empty()) {
+            System.out.println("pilha e "+pilhaTipoExpressao.size());
+            System.out.println("Tipo 1 "+ pilhaTipoExpressao.peek() );
+            tipo1 = pilhaTipoExpressao.pop();
+            System.out.println("pilha e "+pilhaTipoExpressao.size());
+            System.out.println("Tipo 2 "+ pilhaTipoExpressao.peek() );
+            tipo2 = pilhaTipoExpressao.pop();
+            
+            op = pilhaOperacao.pop();
+            if(tipo2 == null){
+                System.out.println("Doing " + op.name() + " " + tipo1.name());
+            }else{
+                System.out.println("Doing " + tipo2.name() + " " + op.name() + " " + tipo1.name());
+            }
+            
             int resulExp = SemanticTable.resultType(tipo1, tipo2, op);
             System.out.println("Tipo1 " + tipo1.name() + " tipo2 " + tipo2.name() + " op " + op.name() + " ResultType " + resulExp);
             if(resulExp == SemanticTable.ERR){
                 this.semanticErrors.add(new ParseCancellationException("Tentando realizar uma " + op.name() + " entre " + tipo1.name() + " e " + tipo2.name() + " na linha " + ctx.start.getLine()));
                 return;
             }
-            this.pilhaTipoExpressao.push(SemanticTable.getCodeType(resulExp));
+            pilhaTipoExpressao.push(SemanticTable.getCodeType(resulExp));
+            System.out.println("COLOCANDO EXPRESSAO PILHA " + pilhaTipoExpressao.peek());
         }
     }
     
