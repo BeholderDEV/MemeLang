@@ -542,7 +542,7 @@ public class SemanticVisitor extends MemeVisitor{
                 this.semanticErrors.add(new ParseCancellationException("Declaração da Função " + ctx.ID().getSymbol().getText() + " já existe neste escopo Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine()));
             }
             boolean usada = false;
-            if(ctx.ID().getSymbol().getText().equals("divideByZero")){
+            if(ctx.ID().getSymbol().getText().equals("divideByZero")){ 
                 usada = true;
             }
             Identificador id = new Identificador(

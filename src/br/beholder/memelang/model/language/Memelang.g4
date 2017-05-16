@@ -64,7 +64,9 @@ tipoComVoid: VOID | tipo;
 tipo: INT | STRING | DOUBLE | BOOL | BIN | HEXA | CHAR;
 
 // NEW Expressões
-expressao: (op_neg)?(val_final)((operations)(val_final))*;
+expressao: expressao_p | expressao_sp;
+expressao_p: PARENTESE ((op_neg)?(val_final)((operations)(val_final))) | expressao PARENTESE;
+expressao_sp: (op_neg)?(val_final)((operations)(val_final))* | expressao;
 
 operations : op_rel | op_neg | op_bitwise | op_arit_baixa | op_logica;
 op_atr : MAIS IGUAL | MENOS IGUAL;
