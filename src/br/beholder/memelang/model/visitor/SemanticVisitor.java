@@ -82,7 +82,11 @@ public class SemanticVisitor extends MemeVisitor{
             if (Identificador.getId(valFinal, tabelaSimbolos, escopoAtual) != null) {
                 Identificador id = Identificador.getId(valFinal, tabelaSimbolos, escopoAtual);
                 if (ctx.val_final(i).multidimensional() != null) {
-                    visitMultidimensional(ctx.val_final(i).multidimensional());
+                    Tipo posicaoVetor = visitExpressaoLoop(ctx.val_final(i).multidimensional().expressao(0));
+                    if(posicaoVetor != Tipo.INTEIRO){
+                        this.semanticErrors.add(new ParseCancellationException("Tentando acessar posição de vetor com tipo não inteiro na Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine()));
+                    }
+                    visitMultidimensional(ctx.val_final(i).multidimensional(), posicaoVetor);
                 } else {
                     multidimensional = 0;
                 }
@@ -137,7 +141,11 @@ public class SemanticVisitor extends MemeVisitor{
             if (Identificador.getId(valFinal, tabelaSimbolos, escopoAtual) != null) {
                 Identificador id = Identificador.getId(valFinal, tabelaSimbolos, escopoAtual);
                 if (ctx.val_final(i).multidimensional() != null) {
-                    visitMultidimensional(ctx.val_final(i).multidimensional());
+                    Tipo posicaoVetor = visitExpressaoLoop(ctx.val_final(i).multidimensional().expressao(0));
+                    if(posicaoVetor != Tipo.INTEIRO){
+                        this.semanticErrors.add(new ParseCancellationException("Tentando acessar posição de vetor com tipo não inteiro na Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine()));
+                    }
+                    visitMultidimensional(ctx.val_final(i).multidimensional(), posicaoVetor);
                 } else {
                     multidimensional = 0;
                 }
@@ -448,6 +456,16 @@ public class SemanticVisitor extends MemeVisitor{
         for (int i = 0; i < multidimensional; i++) {
             String item = ctx.expressao(i).getText();
             qtdMultidimensional *= Integer.parseInt(item);
+        }
+        return null; //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public Object visitMultidimensional(MemelangParser.MultidimensionalContext ctx, Tipo tipo) {
+        multidimensional = ctx.COLCHETESABRE().size();
+        qtdMultidimensional = 1;
+        for (int i = 0; i < multidimensional; i++) {
+            String item = ctx.expressao(i).getText();
+//            qtdMultidimensional *= Integer.parseInt(item);
         }
         return null; //To change body of generated methods, choose Tools | Templates.
     }
