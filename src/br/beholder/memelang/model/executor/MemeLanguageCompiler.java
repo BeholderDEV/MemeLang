@@ -110,8 +110,9 @@ public class MemeLanguageCompiler {
                     for (ParseCancellationException err : semantic.getSemanticErrors()) {
                         erroLexico.getErrors().add(err.getMessage());
                     }
+                }else{
+                    
                 }
-
             } catch (Exception e)
             {
                 erroLexico.getErrors().add(e.getLocalizedMessage());
