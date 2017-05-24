@@ -24,7 +24,7 @@ public class Escopo {
         this.nome = nome;
         this.pai = null;
     }
-    private Escopo(String nome, Escopo pai)
+    public Escopo(String nome, Escopo pai)
     {
         this.nome = nome;
         this.pai = pai;
@@ -46,6 +46,18 @@ public class Escopo {
     public static boolean verificaSeExisteNoEscopo(String nome,List<Identificador> tabelaSimbolos, Escopo escopoAtual) {
         for (Identificador id : tabelaSimbolos) {
             if (id.getEscopo() == escopoAtual && id.getNome().equals(nome)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public static boolean verificaEscopoSimilar(Escopo escopoAtual){
+        if(escopoAtual.getPai() == null){
+            return false;
+        }
+        for (Escopo sub: escopoAtual.getPai().getSubEscopos()) {
+            if(escopoAtual.nome.equals(sub.nome)){
                 return true;
             }
         }
