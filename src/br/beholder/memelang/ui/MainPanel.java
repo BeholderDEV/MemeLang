@@ -14,6 +14,7 @@ import br.beholder.memelang.ui.utils.ColorController;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import org.fife.ui.rsyntaxtextarea.AbstractTokenMakerFactory;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
@@ -65,26 +66,32 @@ public class MainPanel extends javax.swing.JPanel {
         configurarCores();
     }
     private void configurarCores(){
-        this.setBackground(ColorController.COR_PRINCIPAL);
-        jPanel1.setBackground(ColorController.COR_PRINCIPAL);
-        jPanel2.setBackground(ColorController.COR_PRINCIPAL);
-        jPanel4.setBackground(ColorController.COR_PRINCIPAL);
-        jPanel5.setBackground(ColorController.COR_PRINCIPAL);
-        jPanel7.setBackground(ColorController.COR_PRINCIPAL);
-        editorPane.setBackground(ColorController.COR_DESTAQUE);
-        identifiersPane.setBackground(ColorController.COR_DESTAQUE);
-        console.setBackground(ColorController.FUNDO_ESCURO);
-        console.setForeground(ColorController.COR_LETRA);
+        
         WeblafUtils.instalaWeblaf();
-        WeblafUtils.configuraWebLaf(jScrollPane1);
-        jTabbedPane1.setUI(new PSOutTabbedPaneUI());
-        jTabbedPane1.setForeground(ColorController.COR_LETRA);
-        WeblafUtils.configuraWebLaf(sp);
-        WeblafUtils.configurarBotao(compileButton, ColorController.COR_PRINCIPAL, ColorController.COR_LETRA, ColorController.COR_DESTAQUE, ColorController.COR_LETRA, 5);
-        WeblafUtils.configurarBotao(openfileButton, ColorController.COR_PRINCIPAL, ColorController.COR_LETRA, ColorController.COR_DESTAQUE, ColorController.COR_LETRA, 5);
-        WeblafUtils.configurarBotao(savefileButton, ColorController.COR_PRINCIPAL, ColorController.COR_LETRA, ColorController.COR_DESTAQUE, ColorController.COR_LETRA, 5);
-        WeblafUtils.configurarBotao(generatetreeButton, ColorController.COR_PRINCIPAL, ColorController.COR_LETRA, ColorController.COR_DESTAQUE, ColorController.COR_LETRA, 5);
-        WeblafUtils.configurarBotao(tabelatiposButton, ColorController.COR_PRINCIPAL, ColorController.COR_LETRA, ColorController.COR_DESTAQUE, ColorController.COR_LETRA, 5);
+        if(WeblafUtils.weblafEstaInstalado()){
+            this.setBackground(ColorController.COR_PRINCIPAL);
+            jPanel1.setBackground(ColorController.COR_PRINCIPAL);
+            jPanel2.setBackground(ColorController.COR_PRINCIPAL);
+            jPanel4.setBackground(ColorController.COR_PRINCIPAL);
+            treePanel.setBackground(ColorController.COR_PRINCIPAL);
+            treePanel.setForeground(ColorController.COR_LETRA);
+            sidePanel.setBackground(ColorController.COR_PRINCIPAL);
+            jPanel7.setBackground(ColorController.COR_PRINCIPAL);
+            editorPane.setBackground(ColorController.COR_DESTAQUE);
+            identifiersPane.setBackground(ColorController.COR_DESTAQUE);
+            console.setBackground(ColorController.FUNDO_ESCURO);
+            console.setForeground(ColorController.COR_LETRA);
+            WeblafUtils.configuraWebLaf(jScrollPane1);
+            jTabbedPane1.setUI(new PSOutTabbedPaneUI());
+            jTabbedPane1.setForeground(ColorController.COR_LETRA);
+            WeblafUtils.configuraWebLaf(sp);
+            WeblafUtils.configuraWebLaf(treeScroll);
+            WeblafUtils.configurarBotao(compileButton, ColorController.COR_PRINCIPAL, ColorController.COR_LETRA, ColorController.COR_DESTAQUE, ColorController.COR_LETRA, 5);
+            WeblafUtils.configurarBotao(openfileButton, ColorController.COR_PRINCIPAL, ColorController.COR_LETRA, ColorController.COR_DESTAQUE, ColorController.COR_LETRA, 5);
+            WeblafUtils.configurarBotao(savefileButton, ColorController.COR_PRINCIPAL, ColorController.COR_LETRA, ColorController.COR_DESTAQUE, ColorController.COR_LETRA, 5);
+            WeblafUtils.configurarBotao(generatetreeButton, ColorController.COR_PRINCIPAL, ColorController.COR_LETRA, ColorController.COR_DESTAQUE, ColorController.COR_LETRA, 5);
+            WeblafUtils.configurarBotao(tabelatiposButton, ColorController.COR_PRINCIPAL, ColorController.COR_LETRA, ColorController.COR_DESTAQUE, ColorController.COR_LETRA, 5);
+        }
     }
     
     public JTextArea getTextAreaCodigo() {
@@ -97,6 +104,9 @@ public class MainPanel extends javax.swing.JPanel {
     
     public JPanel getMessagesPane() {
         return messagesPane;
+    }
+    public JPanel getTreePanel() {
+        return treePanel;
     }
     
     public JPanel getIdentifiersPane() {
@@ -129,7 +139,9 @@ public class MainPanel extends javax.swing.JPanel {
         console = new javax.swing.JTextArea();
         messagesPane = new javax.swing.JPanel();
         identifiersPane = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
+        sidePanel = new javax.swing.JPanel();
+        treeScroll = new javax.swing.JScrollPane();
+        treePanel = new javax.swing.JPanel();
 
         setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         setPreferredSize(new java.awt.Dimension(1024, 600));
@@ -216,7 +228,14 @@ public class MainPanel extends javax.swing.JPanel {
         jPanel4.add(jSplitPane2, java.awt.BorderLayout.CENTER);
 
         jSplitPane1.setLeftComponent(jPanel4);
-        jSplitPane1.setRightComponent(jPanel5);
+
+        sidePanel.setLayout(new java.awt.BorderLayout());
+
+        treeScroll.setViewportView(treePanel);
+
+        sidePanel.add(treeScroll, java.awt.BorderLayout.CENTER);
+
+        jSplitPane1.setRightComponent(sidePanel);
 
         jPanel2.add(jSplitPane1, java.awt.BorderLayout.CENTER);
 
@@ -252,7 +271,6 @@ public class MainPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSplitPane jSplitPane1;
@@ -261,6 +279,9 @@ public class MainPanel extends javax.swing.JPanel {
     private javax.swing.JPanel messagesPane;
     private com.alee.laf.button.WebButton openfileButton;
     private com.alee.laf.button.WebButton savefileButton;
+    private javax.swing.JPanel sidePanel;
     private com.alee.laf.button.WebButton tabelatiposButton;
+    private javax.swing.JPanel treePanel;
+    private javax.swing.JScrollPane treeScroll;
     // End of variables declaration//GEN-END:variables
 }

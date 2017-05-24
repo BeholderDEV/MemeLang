@@ -7,22 +7,30 @@ package br.beholder.memelang.control;
 
 import br.beholder.memelang.model.executor.MemeLanguageCompiler;
 import br.beholder.memelang.ui.MainPanel;
+import br.beholder.memelang.ui.swing.webLaf.AjustadorLinhaTabelaMensagensCompilador;
+import br.beholder.memelang.ui.swing.webLaf.ExampleTreeRender;
+import br.beholder.memelang.ui.swing.webLaf.PSTreeUI;
+import br.beholder.memelang.ui.swing.webLaf.RenderizadorTabelaMensagensCompilador;
+import br.beholder.memelang.ui.swing.webLaf.WebHeaderRenderer;
 import br.beholder.memelang.ui.swing.webLaf.WeblafUtils;
+import br.beholder.memelang.ui.utils.ColorController;
+import com.alee.laf.table.WebTableHeaderUI;
 import java.awt.Desktop;
-import java.awt.Dimension;
 import java.io.FileNotFoundException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTree;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeSelectionModel;
 import org.antlr.v4.gui.TreeViewer;
+import org.antlr.v4.runtime.tree.Tree;
 
 /**
  *
@@ -46,16 +54,40 @@ public class MainWindowController {
             if(this.compiler.getWarnings().size() > 0){
                 this.mainWindow.getTextAreaMensagens().append("Porém avisos foram gerados\n");
                 this.prepararTabelaErros();
+                
             }
-            this.exibirTabela();
-            this.mainWindow.repaint();
+            this.exibirTabela(); 
+            this.mainWindow.repaint(); 
+            
         }else{
             this.mainWindow.getIdentifiersPane().removeAll();
             this.mainWindow.getTextAreaMensagens().setText("Erros foram encontrados, visualizar aba de Mensagens");
             this.prepararTabelaErros();
 
         }
+        
     }
+    public void exibirTabela(){ 
+        if(this.compiler.getModel() == null){ 
+            JOptionPane.showMessageDialog(this.mainWindow, "É necessário compilar antes de gerar a tabela"); 
+            return; 
+        }
+        JTable table = new JTable(this.compiler.getModel()); 
+        table.getTableHeader().setUI(new WebTableHeaderUI());
+        table.getTableHeader().setBackground(ColorController.COR_PRINCIPAL);
+        table.getTableHeader().setForeground(ColorController.COR_LETRA);
+        RenderizadorTabelaMensagensCompilador renderizador = new RenderizadorTabelaMensagensCompilador();
+        WeblafUtils.configuraWebLaf(table, renderizador, table.getColumnCount());
+        AjustadorLinhaTabelaMensagensCompilador ajustadorLinha = new AjustadorLinhaTabelaMensagensCompilador(table);
+
+        table.addComponentListener(ajustadorLinha);
+        this.compiler.getModel().addTableModelListener(ajustadorLinha);
+        JScrollPane identPane = new JScrollPane(table); 
+        WeblafUtils.configuraWebLaf(identPane); 
+        this.mainWindow.getIdentifiersPane().removeAll(); 
+        this.mainWindow.getIdentifiersPane().add(identPane); 
+ 
+    } 
     public void abrirTabelaTipos(){
         try {
             URI f = getClass().getResource("/br/beholder/memelang/web/tables.html").toURI();
@@ -89,8 +121,25 @@ public class MainWindowController {
         }
         TableModel error = new DefaultTableModel(data, columnsNames);
         JTable table = new JTable(error);
-        WeblafUtils.configuraWebLaf(table);
+        table.getColumnModel().getColumn(0).setMaxWidth(50);
+        table.getColumnModel().getColumn(0).setResizable(false);
+
+        
+        table.getTableHeader().setBackground(ColorController.COR_PRINCIPAL);
+        table.getTableHeader().setForeground(ColorController.COR_LETRA);
         JScrollPane errorPane = new JScrollPane(table);
+        
+        
+        RenderizadorTabelaMensagensCompilador renderizador = new RenderizadorTabelaMensagensCompilador();
+        WeblafUtils.configuraWebLaf(table, renderizador, table.getColumnCount());
+        AjustadorLinhaTabelaMensagensCompilador ajustadorLinha = new AjustadorLinhaTabelaMensagensCompilador(table);
+        
+
+        table.addComponentListener(ajustadorLinha);
+        this.compiler.getModel().addTableModelListener(ajustadorLinha);
+        
+        
+        
         WeblafUtils.configuraWebLaf(errorPane);
         this.mainWindow.getMessagesPane().removeAll();
         this.mainWindow.getMessagesPane().add(errorPane);
@@ -99,30 +148,50 @@ public class MainWindowController {
         
     }
     
+    private static void fillTree(TreeNodeWrapper node, Tree tree) {
+
+        if (tree == null) {
+            return;
+        }
+
+        for (int i = 0; i < tree.getChildCount(); i++) {
+
+            Tree childTree = tree.getChild(i);
+            TreeNodeWrapper childNode = new TreeNodeWrapper(childTree);
+
+            node.add(childNode);
+
+            fillTree(childNode, childTree);
+        }
+    }
+    
     public void exibirArvoreSintatica(){
         if(this.compiler.getTree() == null){
             JOptionPane.showMessageDialog(this.mainWindow, "É necessário compilar antes de gerar a árvore");
             return;
         }
-        JFrame frame = new JFrame("Árvore Sintática");
-        frame.setContentPane(new JScrollPane(new TreeViewer(Arrays.asList(this.compiler.getParser().getRuleNames()), this.compiler.getTree())));
-        frame.setPreferredSize( new Dimension(800, 600));
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+        
+        Tree parseTreeRoot = this.compiler.getTree();
+        TreeNodeWrapper nodeRoot = new TreeNodeWrapper(parseTreeRoot);
+        fillTree(nodeRoot, parseTreeRoot);
+        final JTree tree = new JTree(nodeRoot);
+        tree.setCellRenderer(new ExampleTreeRender());
+        tree.setUI(new PSTreeUI());
+        tree.setBackground(ColorController.COR_PRINCIPAL);
+        tree.setForeground(ColorController.COR_LETRA);
+        
+        
+        this.mainWindow.getTreePanel().removeAll();
+        this.mainWindow.getTreePanel().add(tree);
+        this.mainWindow.getTreePanel().repaint();        
     }
     
-    public void exibirTabela(){
-        if(this.compiler.getModel() == null){
-            JOptionPane.showMessageDialog(this.mainWindow, "É necessário compilar antes de gerar a tabela");
-            return;
+    private static class TreeNodeWrapper extends DefaultMutableTreeNode {
+
+        TreeNodeWrapper(Tree tree) {
+            super(tree);
         }
-        JTable table = new JTable(this.compiler.getModel());
-        WeblafUtils.configuraWebLaf(table);
-        JScrollPane identPane = new JScrollPane(table);
-        WeblafUtils.configuraWebLaf(identPane);
-        this.mainWindow.getIdentifiersPane().removeAll();
-        this.mainWindow.getIdentifiersPane().add(identPane);
+
     }
     
     public void prepararCarregamentoArquivo(){

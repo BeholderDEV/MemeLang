@@ -7,6 +7,7 @@ package br.beholder.memelang.ui.swing.webLaf;
 
 import br.beholder.memelang.ui.utils.ColorController;
 import com.alee.laf.table.renderers.WebTableHeaderCellRenderer;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Insets;
 import javax.swing.JTable;
@@ -21,6 +22,7 @@ public class WebHeaderRenderer extends WebTableHeaderCellRenderer
     {
         super();
         setDrawShade(false);
+        setBackground(Color.red);
         setForeground(ColorController.COR_LETRA);
         setMargin(new Insets(0,0,0,0));
         setBorder(null);
