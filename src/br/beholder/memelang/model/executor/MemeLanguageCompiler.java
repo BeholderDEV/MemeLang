@@ -6,10 +6,10 @@
 package br.beholder.memelang.model.executor;
 
 import br.beholder.memelang.model.analisador.ErroLexico;
-import br.beholder.memelang.model.analisador.FuncoesPadroes;
 import br.beholder.memelang.model.analisador.Identificador;
 import br.beholder.memelang.model.language.MemelangLexer;
 import br.beholder.memelang.model.language.MemelangParser;
+import br.beholder.memelang.model.visitor.BipGeneratorVisitor;
 import br.beholder.memelang.model.visitor.SemanticVisitor;
 import java.util.ArrayList;
 import java.util.List;
@@ -95,7 +95,7 @@ public class MemeLanguageCompiler {
         this.warnings.clear();
         this.tree = parser.prog();
         if(erroLexico.getErrors().isEmpty()){
-            SemanticVisitor semantic = new SemanticVisitor(FuncoesPadroes.gerarFuncoesPadroes(FuncoesPadroes.Compilador.BIPIDE));
+            SemanticVisitor semantic = new SemanticVisitor(new ArrayList<Identificador>());
             try
             {
                 semantic.visit(tree);
@@ -111,7 +111,9 @@ public class MemeLanguageCompiler {
                         erroLexico.getErrors().add(err.getMessage());
                     }
                 }else{
-                    
+                    BipGeneratorVisitor generatorVisitor = new BipGeneratorVisitor(ids);
+                    generatorVisitor.visit(tree);
+                    System.out.println(generatorVisitor.getCodigo());
                 }
             } catch (Exception e)
             {

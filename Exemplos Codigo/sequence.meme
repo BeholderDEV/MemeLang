@@ -1,0 +1,9 @@
+checkEm divideByZero L( )L illuminati
+	checkEm s [ 3 ] desu
+	checkEm a = 3 desu
+	s [ 0 ] = 1 desu
+	s [ 1 ] = 1 + 2 desu
+	s [ 2 ] = 6 - 1 desu
+	a = s [ 2 ] + s [ 0 ] desu
+	
+confirmed

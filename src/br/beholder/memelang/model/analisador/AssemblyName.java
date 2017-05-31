@@ -31,13 +31,13 @@ public class AssemblyName {
         for (Identificador identificador : tabelaSimbolos)
         {
             if(!identificador.isFuncao()){
-                anlist.add(new AssemblyName("var" + numb + identificador.getNome(), identificador));
+                anlist.add(new AssemblyName("var_" + numb + "_" + identificador.getNome(), identificador));
                 numb++;
             }else{
-                if(identificador.getNome().equals("main")){
-                    anlist.add(new AssemblyName("main", identificador));
+                if(identificador.getNome().equals("divideByZero")){
+                    anlist.add(new AssemblyName("divideByZero", identificador));
                 }else{
-                    anlist.add(new AssemblyName("func" + numbFun + identificador.getNome(), identificador));
+                    anlist.add(new AssemblyName("func_" + numbFun + "_" + identificador.getNome(), identificador));
                     numbFun++;
                 }
             }

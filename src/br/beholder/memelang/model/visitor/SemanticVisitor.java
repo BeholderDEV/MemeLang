@@ -55,7 +55,6 @@ public class SemanticVisitor extends MemeVisitor{
         Stack<Identificador.Tipo> pilhaTipoExpressaoLoop = new Stack<>();
         Stack<Operation> pilhaOperacaoLoop = new Stack<>();
         
-        System.out.println("Expressao Parenteses " + ctx.getText());
         
         for (MemelangParser.OperationsContext opCont : ctx.operations()) {
             pilhaOperacaoLoop.push(verificarTipoOperacao(opCont));
@@ -91,7 +90,6 @@ public class SemanticVisitor extends MemeVisitor{
                 if (id.getDimensoes() != multidimensional) {
                     this.semanticErrors.add(new ParseCancellationException("Dimensões incorreta do vetor " + id.getNome() + " . Ele possui " + id.getDimensoes() + " dimensões e foi usada " + multidimensional + " Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine()));
                 }
-                System.out.println("Expressão em " + id.getNome() + " Escopo atual " + escopoAtual + " Escopo dele " + id.getEscopo() );
                 id.setUsada(true);
                 
                 pilhaTipoExpressaoLoop.push(id.getTipo());
@@ -116,11 +114,9 @@ public class SemanticVisitor extends MemeVisitor{
         }
         this.pilhaOperacao.clear();
         this.pilhaTipoExpressao.clear();
-        System.out.println("Expressao " + ctx.getText());
         for (MemelangParser.OperationsContext opCont : ctx.operations()) {
             this.pilhaOperacao.push(verificarTipoOperacao(opCont));
         }
-        System.out.println("Operacoes " + this.pilhaOperacao.size());
         for (int i = 0; i < ctx.val_final().size(); i++) {
             String valFinal = ctx.val_final(i).getText();            
             if(ctx.val_final(i).multidimensional() != null){
@@ -150,7 +146,6 @@ public class SemanticVisitor extends MemeVisitor{
                 if (id.getDimensoes() != multidimensional) {
                     this.semanticErrors.add(new ParseCancellationException("Dimensões incorreta do vetor " + id.getNome() + " . Ele possui " + id.getDimensoes() + " dimensões e foi usada " + multidimensional + " Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine()));
                 }
-                System.out.println("Expressão em " + id.getNome() + " Escopo atual " + escopoAtual + " Escopo dele " + id.getEscopo() );
                 id.setUsada(true);
                 
                 this.pilhaTipoExpressao.push(id.getTipo());
@@ -167,7 +162,6 @@ public class SemanticVisitor extends MemeVisitor{
     }
 
     public void verificarCompatibilidadeOperacao(MemelangParser.ExpressaoContext ctx, Stack<Tipo> pilhaTipoExpressao, Stack<Operation> pilhaOperacao){
-//        System.out.println("Here for " + ctx.getText());
         if(pilhaOperacao.empty() || pilhaTipoExpressao.size() != pilhaOperacao.size() + 1){
             
             return;
@@ -176,28 +170,16 @@ public class SemanticVisitor extends MemeVisitor{
         Tipo tipo1, tipo2;
         Operation op;
         while(!pilhaOperacao.empty()) {
-            System.out.println("pilha e "+pilhaTipoExpressao.size());
-            System.out.println("Tipo 1 "+ pilhaTipoExpressao.peek() );
             tipo1 = pilhaTipoExpressao.pop();
-            System.out.println("pilha e "+pilhaTipoExpressao.size());
-            System.out.println("Tipo 2 "+ pilhaTipoExpressao.peek() );
             tipo2 = pilhaTipoExpressao.pop();
             
             op = pilhaOperacao.pop();
-            if(tipo2 == null){
-                System.out.println("Doing " + op.name() + " " + tipo1.name());
-            }else{
-                System.out.println("Doing " + tipo2.name() + " " + op.name() + " " + tipo1.name());
-            }
-            
             int resulExp = SemanticTable.resultType(tipo1, tipo2, op);
-            System.out.println("Tipo1 " + tipo1.name() + " tipo2 " + tipo2.name() + " op " + op.name() + " ResultType " + resulExp);
             if(resulExp == SemanticTable.ERR){
                 this.semanticErrors.add(new ParseCancellationException("Tentando realizar uma " + op.name() + " entre " + tipo1.name() + " e " + tipo2.name() + " na linha " + ctx.start.getLine()));
                 return;
             }
             pilhaTipoExpressao.push(SemanticTable.getCodeType(resulExp));
-            System.out.println("COLOCANDO EXPRESSAO PILHA " + pilhaTipoExpressao.peek());
         }
     }
     
@@ -371,7 +353,6 @@ public class SemanticVisitor extends MemeVisitor{
                 visitMultidimensional(ctx.parametro(i).multidimensional());
             }
             
-            System.out.println("Parametro: "+ idName +" do tipo" + tipoAtual + "  no escopo "+escopoAtual.getNome()+" qtdMultidimensional: " + qtdMultidimensional + " Mult " + multidimensional);
             visitTipo(ctx.parametro(i).tipo());
             Identificador id = new Identificador(
                     idName,
@@ -483,7 +464,6 @@ public class SemanticVisitor extends MemeVisitor{
             this.semanticErrors.add(new ParseCancellationException("Váriavel " + ctx.ID() + " não existe neste escopo Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine()));
             return null;
         }
-        System.out.println("Atribuindo "+ id.getNome());
         if (ctx.atribuicoesIncEDec() != null && !id.isInicializada()) {
             this.semanticErrors.add(new ParseCancellationException("Váriavel " + ctx.ID() + " não inicializada Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine()));
         }
@@ -551,8 +531,6 @@ public class SemanticVisitor extends MemeVisitor{
             }
             if (Escopo.verificaSeExisteNoEscopo(id.getSymbol().getText(), tabelaSimbolos, escopoAtual)) {
                this.semanticErrors.add(new ParseCancellationException("Declaração de Váriavel " + declaracaoContext.ID() + " já existe neste escopo Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine()));
-            }else{
-                System.out.println("vou salvar a variável: "+id.getSymbol().getStartIndex()+" do tipo" + tipoAtual + "  no escopo "+escopoAtual.getNome()+" inicializada: "+inicializada);
             }
             Identificador ident = new Identificador(
                     id.getSymbol().getText(),
@@ -612,8 +590,7 @@ public class SemanticVisitor extends MemeVisitor{
             return null;
         }
 
-        System.out.println("Funcao " + ctx.ID().getText());
-        //criaEVaiEscopoNovo(ctx.ID().getText());
+       //criaEVaiEscopoNovo(ctx.ID().getText());
         escopoAtual = getEscopoDaFuncao(ctx.ID().getText());
         //visitParametros(ctx.parametros());
         visitBloco(ctx.bloco());

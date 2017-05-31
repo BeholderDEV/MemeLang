@@ -1,5 +1,6 @@
 checkEm divideByZero L( )L illuminati
-	batata g = 'a' desu
-	lolicon gg = "bb" + 2 desu
-	escreva L( g )L desu
+	checkEm s [ 3 ] desu
+	s [ 0 ] = 1 desu
+	leia L( s[ 1 ] )L desu
+	escreva L( s[ 1 ] )L desu
 confirmed
