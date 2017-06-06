@@ -9,6 +9,8 @@ import br.beholder.memelang.model.analisador.AssemblyName;
 import br.beholder.memelang.model.analisador.Identificador;
 import br.beholder.memelang.model.language.MemelangParser;
 import br.beholder.memelang.model.language.MemelangParser.ExpressaoContext;
+import br.beholder.memelang.model.language.MemelangParser.Op_bitwiseContext;
+import br.beholder.memelang.model.language.MemelangParser.Val_finalContext;
 import java.util.List;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 
@@ -92,7 +94,7 @@ public class BipGeneratorVisitor extends MemeVisitor{
     @Override
     public Object visitExpressao(MemelangParser.ExpressaoContext ctx) {
         //Primeira operação
-//        System.out.println("Expr: " + ctx.getText());
+        System.out.println("Expr: " + ctx.getText());
         this.primeiraOperacao(ctx);
         //Demais Operações
         int tempNum;
@@ -164,7 +166,7 @@ public class BipGeneratorVisitor extends MemeVisitor{
     }
 
     private void primeiraOperacao(MemelangParser.ExpressaoContext ctx) {
-//        System.out.println("FirstOp: " + ctx.getText());
+        System.out.println("FirstOp: " + ctx.getText());
         MemelangParser.Val_finalContext valctx = ctx.val_final(0);
         //Carregar valor inteiro imediato
         if (valctx.CONSTINTEIRO() != null) {
@@ -186,7 +188,7 @@ public class BipGeneratorVisitor extends MemeVisitor{
                 comando("LD", varName);
             }
         }
-
+       
         //Chama função
         if (valctx.chamadaFuncao() != null) {
             visitChamadaFuncao(valctx.chamadaFuncao());
@@ -194,17 +196,22 @@ public class BipGeneratorVisitor extends MemeVisitor{
 
         //Resolve outra expressão
         if (valctx.expressao() != null) {
+            System.out.println("exp");
             visitExpressao(valctx.expressao());
         }
 
         if (ctx.op_neg() != null) {
-            if (ctx.op_neg().MENOS() != null) {
+            if(ctx.op_neg().BITNOT() != null){
+                comando("NOT", "0");
+            } else if (ctx.op_neg().MENOS() != null) {
                 reverteSinalAcc();
             }
         }
+        System.out.println("Caiu fora");
     }
 
     private void resolveValFinalEOperando(MemelangParser.OperationsContext opctx, MemelangParser.Val_finalContext valctx) {
+        System.out.println("Entrou resolve");
         if (opctx.op_arit_baixa() != null) {
             if (opctx.op_arit_baixa().MAIS() != null) {
                 resolveOpAritmeticaMaisOuNegacaoMenos(valctx, true);
@@ -220,7 +227,127 @@ public class BipGeneratorVisitor extends MemeVisitor{
         }
     }
     
-    private void resolveOpBitwise(MemelangParser.Op_bitwiseContext opBit, MemelangParser.Val_finalContext valctx){
+    private void resolveOpBitwise(Op_bitwiseContext opBit, Val_finalContext valctx){
+        System.out.println("Entrou " + valctx.getText());
+        if (valctx.CONSTINTEIRO() != null) {
+            if (opBit.BITAND() != null) {
+                comando("ANDI", valctx.CONSTINTEIRO().getSymbol().getText());
+            } else if (opBit.BITOR() != null) {
+                comando("ORI", valctx.CONSTINTEIRO().getSymbol().getText());
+            } else if (opBit.BITXOR() != null){
+                comando("XORI", valctx.CONSTINTEIRO().getSymbol().getText());
+            } else if (opBit.BITSHIFTLEFT() != null){
+                comando("SLL", valctx.CONSTINTEIRO().getSymbol().getText());
+            } else if (opBit.BITSHIFTRIGHT() != null){
+                comando("SRL", valctx.CONSTINTEIRO().getSymbol().getText());
+            } else if (opBit.BITNOT() != null){
+                comando("NOT", "0");
+            }
+            return;
+        }
+        //Carrega valor de um ID
+        if (valctx.ID() != null) {
+            if (valctx.multidimensional() != null) {
+                //Carregar valor de vetor
+                int tempNum = getOneTemp();
+                comando("STO", "temp" + tempNum);
+                for(ExpressaoContext exp : valctx.multidimensional().expressao()){
+                    visitExpressao(exp);
+                }
+                comando("STO", "$indr");
+                comando("LDV", findAN(valctx.ID().getSymbol().getText()).toString());
+                tempNum = getOneTemp();
+                comando("STO", "temp" + tempNum);
+                comando("LD", "temp" + (tempNum - 1));
+                if(opBit.BITAND() != null){
+                    comando("AND", "temp" + tempNum);
+                }else if (opBit.BITNOT() != null){
+                    comando("NOT", "0");
+                }else if (opBit.BITOR() != null ){
+                    comando("OR", "temp" + tempNum);
+                }else if (opBit.BITSHIFTLEFT() != null){
+                    comando("SLL", "temp" + tempNum);
+                }else if (opBit.BITSHIFTRIGHT() != null){
+                    comando("SRL", "temp" + tempNum);
+                }else if(opBit.BITXOR() != null){
+                    comando("XOR", "temp" + tempNum);
+                }
+                releaseTheTemp();
+                releaseTheTemp();
+                return;
+
+            } else {
+                //Carregar valor de variavel
+                String varName = findAN(valctx.ID().getText()).toString();
+                 if(opBit.BITAND() != null){
+                    comando("AND", varName);
+                }else if (opBit.BITNOT() != null){
+                    comando("NOT", "0");
+                }else if (opBit.BITOR() != null ){
+                    comando("OR", varName);
+                }else if (opBit.BITSHIFTLEFT() != null){
+                    comando("SLL", varName);
+                }else if (opBit.BITSHIFTRIGHT() != null){
+                    comando("SRL", varName);
+                }else if(opBit.BITXOR() != null){
+                    comando("XOR", varName);
+                }
+                return;
+            }
+        }
+
+        //Chama função
+        if (valctx.chamadaFuncao() != null) {
+            int tempNum = getOneTemp();
+            comando("STO", "temp" + tempNum);
+            visitChamadaFuncao(valctx.chamadaFuncao());
+            tempNum = getOneTemp();
+            comando("STO", "temp" + tempNum);
+            comando("LD", "temp" + (tempNum - 1));
+            if(opBit.BITAND() != null){
+                comando("AND", "temp" + tempNum);
+            }else if (opBit.BITNOT() != null){
+                comando("NOT", "0");
+            }else if (opBit.BITOR() != null ){
+                comando("OR", "temp" + tempNum);
+            }else if (opBit.BITSHIFTLEFT() != null){
+                comando("SLL", "temp" + tempNum);
+            }else if (opBit.BITSHIFTRIGHT() != null){
+                comando("SRL", "temp" + tempNum);
+            }else if(opBit.BITXOR() != null){
+                comando("XOR", "temp" + tempNum);
+            }
+            releaseTheTemp();
+            releaseTheTemp();
+            return;
+        }
+
+        //Resolve outra expressão
+        if (valctx.expressao() != null) {
+            int tempNum = getOneTemp();
+            comando("STO", "temp" + tempNum);
+            visitExpressao(valctx.expressao());
+            tempNum = getOneTemp();
+            comando("STO", "temp" + tempNum);
+            comando("LD", "temp" + (tempNum - 1));
+            if(opBit.BITAND() != null){
+                comando("AND", "temp" + tempNum);
+            }else if (opBit.BITNOT() != null){
+                comando("NOT", "0");
+            }else if (opBit.BITOR() != null ){
+                comando("OR", "temp" + tempNum);
+            }else if (opBit.BITSHIFTLEFT() != null){
+                comando("SLL", "temp" + tempNum);
+            }else if (opBit.BITSHIFTRIGHT() != null){
+                comando("SRL", "temp" + tempNum);
+            }else if(opBit.BITXOR() != null){
+                comando("XOR", "temp" + tempNum);
+            }
+            releaseTheTemp();
+            releaseTheTemp();
+            return;
+        }
+        throw new ParseCancellationException("Outras operações não identificadas" + valctx.getText());
         
     }
 
