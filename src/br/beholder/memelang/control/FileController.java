@@ -50,13 +50,15 @@ public class FileController {
         scanner.close();
         return text.toString();
     }
-    
     public static int salvarTexto(String txt){
+        return salvarTexto(txt, ".meme");
+    }
+    public static int salvarTexto(String txt, String ext){
         JFileChooser chooser = new JFileChooser(currentDirectory);
         int returnVal = chooser.showSaveDialog(null);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             try {
-                FileWriter fw = new FileWriter (chooser.getSelectedFile() + ".meme");
+                FileWriter fw = new FileWriter (chooser.getSelectedFile() + ext);
                 fw.write(txt);
                 fw.close();
                 return 1;
@@ -67,4 +69,6 @@ public class FileController {
         }
         return 2;
     }
+    
+    
 }

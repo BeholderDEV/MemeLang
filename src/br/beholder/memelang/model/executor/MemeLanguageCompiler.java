@@ -36,6 +36,7 @@ public class MemeLanguageCompiler {
     ErroLexico erroLexico;
     ParseTree tree;
     TableModel model;
+    String codigoGerado= "";
     private List<String> warnings = new ArrayList<String>();
     
     public TableModel getModel() {
@@ -113,7 +114,7 @@ public class MemeLanguageCompiler {
                 }else{
                     BipGeneratorVisitor generatorVisitor = new BipGeneratorVisitor(ids);
                     generatorVisitor.visit(tree);
-                    System.out.println(generatorVisitor.getCodigo());
+                    codigoGerado = generatorVisitor.getCodigo();
                 }
             } catch (Exception e)
             {
@@ -126,6 +127,11 @@ public class MemeLanguageCompiler {
         }
     }
 
+    public String getCodigoGerado() {
+        return codigoGerado;
+    }
+    
+    
     public ParseTree getTree() {
         return tree;
     }

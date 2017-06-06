@@ -73,10 +73,8 @@ public class MainPanel extends javax.swing.JPanel {
             jPanel1.setBackground(ColorController.COR_PRINCIPAL);
             jPanel2.setBackground(ColorController.COR_PRINCIPAL);
             jPanel4.setBackground(ColorController.COR_PRINCIPAL);
-            treePanel.setBackground(ColorController.COR_PRINCIPAL);
-            treePanel.setForeground(ColorController.COR_LETRA);
-            sidePanel.setBackground(ColorController.COR_PRINCIPAL);
             jPanel7.setBackground(ColorController.COR_PRINCIPAL);
+            messagesPane.setBackground(ColorController.COR_DESTAQUE);
             editorPane.setBackground(ColorController.COR_DESTAQUE);
             identifiersPane.setBackground(ColorController.COR_DESTAQUE);
             console.setBackground(ColorController.FUNDO_ESCURO);
@@ -85,8 +83,8 @@ public class MainPanel extends javax.swing.JPanel {
             jTabbedPane1.setUI(new PSOutTabbedPaneUI());
             jTabbedPane1.setForeground(ColorController.COR_LETRA);
             WeblafUtils.configuraWebLaf(sp);
-            WeblafUtils.configuraWebLaf(treeScroll);
             WeblafUtils.configurarBotao(compileButton, ColorController.COR_PRINCIPAL, ColorController.COR_LETRA, ColorController.COR_DESTAQUE, ColorController.COR_LETRA, 5);
+            WeblafUtils.configurarBotao(generateCodeButton, ColorController.COR_PRINCIPAL, ColorController.COR_LETRA, ColorController.COR_DESTAQUE, ColorController.COR_LETRA, 5);
             WeblafUtils.configurarBotao(openfileButton, ColorController.COR_PRINCIPAL, ColorController.COR_LETRA, ColorController.COR_DESTAQUE, ColorController.COR_LETRA, 5);
             WeblafUtils.configurarBotao(savefileButton, ColorController.COR_PRINCIPAL, ColorController.COR_LETRA, ColorController.COR_DESTAQUE, ColorController.COR_LETRA, 5);
             WeblafUtils.configurarBotao(generatetreeButton, ColorController.COR_PRINCIPAL, ColorController.COR_LETRA, ColorController.COR_DESTAQUE, ColorController.COR_LETRA, 5);
@@ -105,9 +103,9 @@ public class MainPanel extends javax.swing.JPanel {
     public JPanel getMessagesPane() {
         return messagesPane;
     }
-    public JPanel getTreePanel() {
-        return treePanel;
-    }
+//    public JPanel getTreePanel() {
+//        return treePanel;
+//    }
     
     public JPanel getIdentifiersPane() {
         return identifiersPane;
@@ -123,7 +121,6 @@ public class MainPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
-        jSplitPane1 = new javax.swing.JSplitPane();
         jPanel4 = new javax.swing.JPanel();
         jSplitPane2 = new javax.swing.JSplitPane();
         jPanel7 = new javax.swing.JPanel();
@@ -133,15 +130,13 @@ public class MainPanel extends javax.swing.JPanel {
         compileButton = new com.alee.laf.button.WebButton();
         generatetreeButton = new com.alee.laf.button.WebButton();
         tabelatiposButton = new com.alee.laf.button.WebButton();
+        generateCodeButton = new com.alee.laf.button.WebButton();
         editorPane = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         console = new javax.swing.JTextArea();
         messagesPane = new javax.swing.JPanel();
         identifiersPane = new javax.swing.JPanel();
-        sidePanel = new javax.swing.JPanel();
-        treeScroll = new javax.swing.JScrollPane();
-        treePanel = new javax.swing.JPanel();
 
         setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         setPreferredSize(new java.awt.Dimension(1024, 600));
@@ -149,9 +144,6 @@ public class MainPanel extends javax.swing.JPanel {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         jPanel2.setLayout(new java.awt.BorderLayout(5, 5));
-
-        jSplitPane1.setDividerLocation(600);
-        jSplitPane1.setAlignmentX(0.9F);
 
         jPanel4.setLayout(new java.awt.BorderLayout());
 
@@ -163,7 +155,8 @@ public class MainPanel extends javax.swing.JPanel {
         jPanel1.setOpaque(false);
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.Y_AXIS));
 
-        openfileButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/beholder/memelang/ui/resources/stop.png"))); // NOI18N
+        openfileButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/beholder/memelang/ui/resources/folder.png"))); // NOI18N
+        openfileButton.setToolTipText("");
         openfileButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 openfileButtonActionPerformed(evt);
@@ -187,7 +180,7 @@ public class MainPanel extends javax.swing.JPanel {
         });
         jPanel1.add(compileButton);
 
-        generatetreeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/beholder/memelang/ui/resources/stop.png"))); // NOI18N
+        generatetreeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/beholder/memelang/ui/resources/tree.png"))); // NOI18N
         generatetreeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 generatetreeButtonActionPerformed(evt);
@@ -195,13 +188,21 @@ public class MainPanel extends javax.swing.JPanel {
         });
         jPanel1.add(generatetreeButton);
 
-        tabelatiposButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/beholder/memelang/ui/resources/stop.png"))); // NOI18N
+        tabelatiposButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/beholder/memelang/ui/resources/table.png"))); // NOI18N
         tabelatiposButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tabelatiposButtonActionPerformed(evt);
             }
         });
         jPanel1.add(tabelatiposButton);
+
+        generateCodeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/beholder/memelang/ui/resources/terminal.png"))); // NOI18N
+        generateCodeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                generateCodeButtonActionPerformed(evt);
+            }
+        });
+        jPanel1.add(generateCodeButton);
 
         jPanel7.add(jPanel1, java.awt.BorderLayout.WEST);
 
@@ -227,17 +228,7 @@ public class MainPanel extends javax.swing.JPanel {
 
         jPanel4.add(jSplitPane2, java.awt.BorderLayout.CENTER);
 
-        jSplitPane1.setLeftComponent(jPanel4);
-
-        sidePanel.setLayout(new java.awt.BorderLayout());
-
-        treeScroll.setViewportView(treePanel);
-
-        sidePanel.add(treeScroll, java.awt.BorderLayout.CENTER);
-
-        jSplitPane1.setRightComponent(sidePanel);
-
-        jPanel2.add(jSplitPane1, java.awt.BorderLayout.CENTER);
+        jPanel2.add(jPanel4, java.awt.BorderLayout.CENTER);
 
         add(jPanel2, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
@@ -261,11 +252,16 @@ public class MainPanel extends javax.swing.JPanel {
     private void tabelatiposButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tabelatiposButtonActionPerformed
         this.controller.abrirTabelaTipos();
     }//GEN-LAST:event_tabelatiposButtonActionPerformed
+
+    private void generateCodeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateCodeButtonActionPerformed
+        this.controller.exibirCodigoAssembly();
+    }//GEN-LAST:event_generateCodeButtonActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.alee.laf.button.WebButton compileButton;
     private javax.swing.JTextArea console;
     private javax.swing.JPanel editorPane;
+    private com.alee.laf.button.WebButton generateCodeButton;
     private com.alee.laf.button.WebButton generatetreeButton;
     private javax.swing.JPanel identifiersPane;
     private javax.swing.JPanel jPanel1;
@@ -273,15 +269,11 @@ public class MainPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSplitPane jSplitPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JPanel messagesPane;
     private com.alee.laf.button.WebButton openfileButton;
     private com.alee.laf.button.WebButton savefileButton;
-    private javax.swing.JPanel sidePanel;
     private com.alee.laf.button.WebButton tabelatiposButton;
-    private javax.swing.JPanel treePanel;
-    private javax.swing.JScrollPane treeScroll;
     // End of variables declaration//GEN-END:variables
 }

@@ -165,6 +165,14 @@ public class MainWindowController {
         }
     }
     
+    public void exibirCodigoAssembly(){
+        if(this.compiler.getCodigoGerado().equals("")){
+            JOptionPane.showMessageDialog(this.mainWindow, "É necessário compilar antes de gerar o código");
+            return;
+        }
+        FileController.salvarTexto(this.compiler.getCodigoGerado(),".asm");
+    }
+    
     public void exibirArvoreSintatica(){
         if(this.compiler.getTree() == null){
             JOptionPane.showMessageDialog(this.mainWindow, "É necessário compilar antes de gerar a árvore");
@@ -181,9 +189,9 @@ public class MainWindowController {
         tree.setForeground(ColorController.COR_LETRA);
         
         
-        this.mainWindow.getTreePanel().removeAll();
-        this.mainWindow.getTreePanel().add(tree);
-        this.mainWindow.getTreePanel().repaint();        
+//        this.mainWindow.getTreePanel().removeAll();
+//        this.mainWindow.getTreePanel().add(tree);
+//        this.mainWindow.getTreePanel().repaint();        
     }
     
     private static class TreeNodeWrapper extends DefaultMutableTreeNode {
