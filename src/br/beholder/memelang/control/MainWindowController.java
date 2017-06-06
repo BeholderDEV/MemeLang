@@ -56,12 +56,15 @@ public class MainWindowController {
                 this.prepararTabelaErros();
                 
             }
-            this.exibirTabela(); 
+            this.exibirTabela();
+            this.mainWindow.getTextAreaAssembly().setText(this.compiler.getCodigoGerado()); 
             this.mainWindow.repaint(); 
+            
             
         }else{
             this.mainWindow.getIdentifiersPane().removeAll();
             this.mainWindow.getTextAreaMensagens().setText("Erros foram encontrados, visualizar aba de Mensagens");
+            this.mainWindow.getTextAreaAssembly().setText(""); 
             this.prepararTabelaErros();
 
         }

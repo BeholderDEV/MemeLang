@@ -33,9 +33,11 @@ public class MainPanel extends javax.swing.JPanel {
     int pX, pY;
     
     private MainWindowController controller;
-    RSyntaxTextArea textArea;
-    RTextScrollPane sp;
+    RSyntaxTextArea memeCodeTextArea;
+    RTextScrollPane memeCodeScrollPane;
     
+    RSyntaxTextArea assemblyTextArea;
+    RTextScrollPane assemblyScrollPane;
     private Theme carregarTema(){
         final String caminho = "br/beholder/memelang/ui/resources/dark.xml";
         final InputStream resourceStream = ClassLoader.getSystemClassLoader().getResourceAsStream(caminho);
@@ -51,18 +53,28 @@ public class MainPanel extends javax.swing.JPanel {
     public MainPanel() {
         controller = new MainWindowController(this);
         initComponents();
-        textArea = new RSyntaxTextArea(20, 60);
+        memeCodeTextArea = new RSyntaxTextArea(20, 60);
+        assemblyTextArea = new RSyntaxTextArea(20, 60);
         
         AbstractTokenMakerFactory atmf = (AbstractTokenMakerFactory)TokenMakerFactory.getDefaultInstance();
         atmf.putMapping("text/myLanguage", "br.beholder.memelang.ui.swing.rsa.MemeTokenMaker");
+        atmf.putMapping("text/bipLanguage", "br.beholder.memelang.ui.swing.rsa.BipTokenMaker");
         
         FoldParserManager.get().addFoldParserMapping("text/myLanguage", new MemeFoldParser());
-        textArea.setSyntaxEditingStyle("text/myLanguage");
-        textArea.setCodeFoldingEnabled(true);
+        memeCodeTextArea.setSyntaxEditingStyle("text/myLanguage");
+        memeCodeTextArea.setCodeFoldingEnabled(true);
+        
+        assemblyTextArea.setEditable(false);
+        assemblyTextArea.setSyntaxEditingStyle("text/bipLanguage");
+        //assemblyTextArea.setCodeFoldingEnabled(true);
+        
         Theme theme = carregarTema();
-        theme.apply(textArea);
-        sp = new RTextScrollPane(textArea);
-        editorPane.add(sp);
+        theme.apply(memeCodeTextArea);
+        theme.apply(assemblyTextArea);
+        memeCodeScrollPane = new RTextScrollPane(memeCodeTextArea);
+        assemblyScrollPane = new RTextScrollPane(assemblyTextArea);
+        editorPane.add(memeCodeScrollPane);
+        assemblyPanel.add(assemblyScrollPane);
         configurarCores();
     }
     private void configurarCores(){
@@ -76,13 +88,17 @@ public class MainPanel extends javax.swing.JPanel {
             jPanel7.setBackground(ColorController.COR_PRINCIPAL);
             messagesPane.setBackground(ColorController.COR_DESTAQUE);
             editorPane.setBackground(ColorController.COR_DESTAQUE);
+            assemblyPanel.setBackground(ColorController.COR_DESTAQUE);
             identifiersPane.setBackground(ColorController.COR_DESTAQUE);
             console.setBackground(ColorController.FUNDO_ESCURO);
             console.setForeground(ColorController.COR_LETRA);
             WeblafUtils.configuraWebLaf(jScrollPane1);
             jTabbedPane1.setUI(new PSOutTabbedPaneUI());
             jTabbedPane1.setForeground(ColorController.COR_LETRA);
-            WeblafUtils.configuraWebLaf(sp);
+            jTabbedPane2.setUI(new PSOutTabbedPaneUI());
+            jTabbedPane2.setForeground(ColorController.COR_LETRA);
+            WeblafUtils.configuraWebLaf(memeCodeScrollPane);
+            WeblafUtils.configuraWebLaf(assemblyScrollPane);
             WeblafUtils.configurarBotao(compileButton, ColorController.COR_PRINCIPAL, ColorController.COR_LETRA, ColorController.COR_DESTAQUE, ColorController.COR_LETRA, 5);
             WeblafUtils.configurarBotao(generateCodeButton, ColorController.COR_PRINCIPAL, ColorController.COR_LETRA, ColorController.COR_DESTAQUE, ColorController.COR_LETRA, 5);
             WeblafUtils.configurarBotao(openfileButton, ColorController.COR_PRINCIPAL, ColorController.COR_LETRA, ColorController.COR_DESTAQUE, ColorController.COR_LETRA, 5);
@@ -93,9 +109,13 @@ public class MainPanel extends javax.swing.JPanel {
     }
     
     public JTextArea getTextAreaCodigo() {
-        return textArea;
+        return memeCodeTextArea;
     }
 
+    public JTextArea getTextAreaAssembly() {
+        return assemblyTextArea;
+    }
+    
     public JTextArea getTextAreaMensagens() {
         return console;
     }
@@ -131,7 +151,9 @@ public class MainPanel extends javax.swing.JPanel {
         generatetreeButton = new com.alee.laf.button.WebButton();
         tabelatiposButton = new com.alee.laf.button.WebButton();
         generateCodeButton = new com.alee.laf.button.WebButton();
+        jTabbedPane2 = new javax.swing.JTabbedPane();
         editorPane = new javax.swing.JPanel();
+        assemblyPanel = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         console = new javax.swing.JTextArea();
@@ -207,7 +229,12 @@ public class MainPanel extends javax.swing.JPanel {
         jPanel7.add(jPanel1, java.awt.BorderLayout.WEST);
 
         editorPane.setLayout(new java.awt.BorderLayout());
-        jPanel7.add(editorPane, java.awt.BorderLayout.CENTER);
+        jTabbedPane2.addTab("Meme Code", editorPane);
+
+        assemblyPanel.setLayout(new java.awt.BorderLayout());
+        jTabbedPane2.addTab("Assembly Code", assemblyPanel);
+
+        jPanel7.add(jTabbedPane2, java.awt.BorderLayout.CENTER);
 
         jSplitPane2.setLeftComponent(jPanel7);
 
@@ -258,6 +285,7 @@ public class MainPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_generateCodeButtonActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel assemblyPanel;
     private com.alee.laf.button.WebButton compileButton;
     private javax.swing.JTextArea console;
     private javax.swing.JPanel editorPane;
@@ -271,6 +299,7 @@ public class MainPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSplitPane jSplitPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JPanel messagesPane;
     private com.alee.laf.button.WebButton openfileButton;
     private com.alee.laf.button.WebButton savefileButton;

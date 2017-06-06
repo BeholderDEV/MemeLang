@@ -39,9 +39,10 @@ public class BipGeneratorVisitor extends MemeVisitor{
         StringBuilder finalCode = new StringBuilder();
         finalCode.append(this.header);
         for (int i = 1; i <= this.maiorNumTemporariosNecessarios; i++) {
+            finalCode.append("\t");
             finalCode.append("temp");
             finalCode.append(i);
-            finalCode.append(": 0\n");
+            finalCode.append(" : 0\n");
         }
         finalCode.append(this.codigo);
         return finalCode.toString();
@@ -73,13 +74,14 @@ public class BipGeneratorVisitor extends MemeVisitor{
                 if (identificador.getTipo() != Identificador.Tipo.INTEIRO) {
                     throw new ParseCancellationException(identificador.getTipo() + " NOT SUPPORTED BY BIPIDE");
                 }
+                this.header.append("\t");
                 this.header.append(AssemblyName.findAN(this.anlist, identificador));
-                this.header.append(": ");
+                this.header.append(" : ");
                 for (int i = 0; i < identificador.getQtdArmazenada(); i++) {
                     if (i == identificador.getQtdArmazenada() - 1) {
                         this.header.append("0\n");
                     } else {
-                        this.header.append("0,");
+                        this.header.append("0 , ");
                     }
                 }
             }
@@ -440,6 +442,7 @@ public class BipGeneratorVisitor extends MemeVisitor{
     }
 
     private void comando(String comando, String operador) {
+        this.codigo.append("\t");
         this.codigo.append(comando);
         this.codigo.append(" ");
         this.codigo.append(operador);
@@ -515,10 +518,10 @@ public class BipGeneratorVisitor extends MemeVisitor{
         AssemblyName an = findAN(ctx.ID().getText());
         escopoAtual = vaiEscopoFilho(an.getId().getNome());
         this.codigo.append(an.toString());
-        this.codigo.append(": \n");
+        this.codigo.append(" : \n");
         visitBloco(ctx.bloco()); //To change body of generated methods, choose Tools | Templates.
         if (an.toString().equals("divideByZero")) {
-            this.codigo.append("HLT\n");
+            this.codigo.append("\tHLT\n");
         } else {
             this.codigo.append("RETURN\n");
         }
@@ -548,15 +551,15 @@ public class BipGeneratorVisitor extends MemeVisitor{
             rot2 = getOneRot();
             comando("JMP", rot2);
         }
-        comando(rot + ":", "");
+        comando(rot + " : ", "");
 
         if (ctx.ifdeselse() != null) {
             visitIfdeselse(ctx.ifdeselse());
-            comando(rot2 + ":", "");
+            comando(rot2 + " : ", "");
         }
         if (ctx.ifdeselseif() != null) {
             visitIfdeselseif(ctx.ifdeselseif());
-            comando(rot2 + ":", "");
+            comando(rot2 + " : ", "");
         }
         return null;
     }
@@ -615,7 +618,7 @@ public class BipGeneratorVisitor extends MemeVisitor{
         
         String rotRest = getOneRot();
         String rotQuit = getOneRot();
-        comando(rotRest+":", "");
+        comando(rotRest+" : ", "");
         
         visitExpressao(ctx.expressao());
         
@@ -634,7 +637,7 @@ public class BipGeneratorVisitor extends MemeVisitor{
         }
         
         comando("JMP", rotRest);
-        comando(rotQuit+":", "");
+        comando(rotQuit+" : ", "");
         return null;
     }
 
@@ -642,7 +645,7 @@ public class BipGeneratorVisitor extends MemeVisitor{
     public Object visitWhiledes(MemelangParser.WhiledesContext ctx) {
         String rotRest = getOneRot();
         String rotQuit = getOneRot();
-        comando(rotRest+":", "");
+        comando(rotRest+" : ", "");
         
         visitExpressao(ctx.expressao());
         
@@ -656,7 +659,7 @@ public class BipGeneratorVisitor extends MemeVisitor{
         visitBloco(ctx.bloco());
         
         comando("JMP", rotRest);
-        comando(rotQuit+":", "");
+        comando(rotQuit+" : ", "");
         return null;
     }
 
@@ -761,7 +764,7 @@ public class BipGeneratorVisitor extends MemeVisitor{
 
     @Override
     public Object visitChamadaFuncao(MemelangParser.ChamadaFuncaoContext ctx) {
-        System.out.println("func: "+ctx.ID().getSymbol().getText());
+        System.out.println("func : "+ctx.ID().getSymbol().getText());
         
             //PRECISA DOS PARAMETROS !!!! //TODO INCOMPLETE
             String funName = findAN(ctx.ID().getText()).toString();
