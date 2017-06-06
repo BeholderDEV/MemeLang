@@ -92,6 +92,7 @@ public class BipGeneratorVisitor extends MemeVisitor{
     @Override
     public Object visitExpressao(MemelangParser.ExpressaoContext ctx) {
         //Primeira operação
+//        System.out.println("Expr: " + ctx.getText());
         this.primeiraOperacao(ctx);
         //Demais Operações
         int tempNum;
@@ -163,6 +164,7 @@ public class BipGeneratorVisitor extends MemeVisitor{
     }
 
     private void primeiraOperacao(MemelangParser.ExpressaoContext ctx) {
+//        System.out.println("FirstOp: " + ctx.getText());
         MemelangParser.Val_finalContext valctx = ctx.val_final(0);
         //Carregar valor inteiro imediato
         if (valctx.CONSTINTEIRO() != null) {
@@ -217,6 +219,9 @@ public class BipGeneratorVisitor extends MemeVisitor{
 
     private void resolveOpAritmeticaMaisOuNegacaoMenos(MemelangParser.Val_finalContext valctx, boolean operacaoMais) {
         //ADD ou SUB valor inteiro imediato
+        
+//        System.out.println("Exp " + valctx.getText());
+        
         if (valctx.CONSTINTEIRO() != null) {
             if (operacaoMais) {
                 comando("ADDI", valctx.CONSTINTEIRO().getSymbol().getText());
@@ -581,35 +586,41 @@ public class BipGeneratorVisitor extends MemeVisitor{
 
     @Override
     public Object visitEntradaesaida(MemelangParser.EntradaesaidaContext ctx) {
-        if (ctx.DEFREAD() != null) {            
-            if(ctx.parametrosChamada().expressao(0).val_final(0).multidimensional() != null){
-                for(ExpressaoContext exp : ctx.parametrosChamada().expressao() ){
-                    visitExpressao(exp);
+        ExpressaoContext expGeralAtual;
+        for (int i = 0; i < ctx.parametrosChamada().expressao().size(); i++) {
+            expGeralAtual = ctx.parametrosChamada().expressao().get(i);
+//            System.out.println("TEST " + expGeralAtual.val_final(0).getText());
+            if (ctx.DEFREAD() != null) {       
+                if(expGeralAtual.val_final(0).multidimensional() != null){
+                    for(ExpressaoContext exp : expGeralAtual.val_final(0).multidimensional().expressao() ){
+                        visitExpressao(exp);
+                    }
+                    comando("STO", "$indr");
+                    comando("LD", "$in_port");
+                    comando("STOV", findAN(expGeralAtual.val_final(0).ID().getText()).toString());
+                }else{
+                    comando("LD", "$in_port");
+                    comando("STO", findAN(expGeralAtual.getText()).toString());
                 }
-                comando("STO", "$indr");
-                comando("LD", "$in_port");
-                comando("STOV", findAN(ctx.parametrosChamada().expressao(0).val_final(0).ID().getText()).toString());
-            }else{
-                comando("LD", "$in_port");
-                comando("STO", findAN(ctx.parametrosChamada().expressao(0).getText()).toString());
-            }
-            
-            
-        } else if (ctx.DEFWRITE() != null) {
-            int tempNum = getOneTemp();
-            
-            if(ctx.parametrosChamada().expressao(0).val_final(0).multidimensional() != null){
-                visitExpressao(ctx.parametrosChamada().expressao(0));
-                comando("STO", "$indr");
-                comando("LDV", findAN(ctx.parametrosChamada().expressao(0).val_final(0).ID().getText()).toString());
-            }else{
-                visitExpressao(ctx.parametrosChamada().expressao(0));
-            }
-            comando("STO", "$out_port");
-            releaseTheTemp();
 
+
+            } else if (ctx.DEFWRITE() != null) {
+                int tempNum = getOneTemp();
+                if(expGeralAtual.val_final(0).multidimensional() != null){
+                    for(ExpressaoContext exp : expGeralAtual.val_final(0).multidimensional().expressao() ){
+                        visitExpressao(exp);
+                    }
+                    comando("STO", "$indr");
+                    comando("LDV", findAN(expGeralAtual.val_final(0).ID().getText()).toString());
+                }else{
+                    visitExpressao(expGeralAtual);
+                }
+                comando("STO", "$out_port");
+                releaseTheTemp();
+            }
         }
-        return super.visitEntradaesaida(ctx); //To change body of generated methods, choose Tools | Templates.
+
+        return null; //To change body of generated methods, choose Tools | Templates.
     }
     
     

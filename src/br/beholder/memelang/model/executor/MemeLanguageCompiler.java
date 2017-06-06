@@ -117,6 +117,9 @@ public class MemeLanguageCompiler {
                 }
             } catch (Exception e)
             {
+                ids = semantic.getTabelaSimbolos();
+                model = getModel(ids);
+                
                 erroLexico.getErrors().add(e.getLocalizedMessage());
                 Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, e);
             }

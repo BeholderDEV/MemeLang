@@ -698,6 +698,17 @@ public class SemanticVisitor extends MemeVisitor{
         return super.visitOp_neg(ctx); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public Object visitEntradaesaida(MemelangParser.EntradaesaidaContext ctx) {
+        for (MemelangParser.ExpressaoContext exp : ctx.parametrosChamada().expressao()) {
+            visitExpressao(exp);
+            if(ctx.DEFREAD() != null && exp.val_final(0).ID() == null){
+                this.semanticErrors.add(new ParseCancellationException("Tentando ler uma entrada em uma constante na Linha: " + ctx.start.getLine() + " Coluna: " + ctx.start.getCharPositionInLine()));
+            }
+        }
+        return null;
+    }
+
     public List<ParseCancellationException> getSemanticErrors() {
         return semanticErrors;
     }

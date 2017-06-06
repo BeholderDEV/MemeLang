@@ -1,0 +1,6 @@
+checkEm divideByZero L( )L illuminati
+	checkEm s [ 3 ] desu
+	s [ 0 ] = 1 desu
+	leia L( s[ 1 ], s[ 2 ] )L desu
+	escreva L( s[ 1 ], s[ 2 ] )L desu
+confirmed

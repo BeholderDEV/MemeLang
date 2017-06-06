@@ -136,9 +136,9 @@ public class MainWindowController {
         
 
         table.addComponentListener(ajustadorLinha);
-        this.compiler.getModel().addTableModelListener(ajustadorLinha);
-        
-        
+        if(this.compiler.getModel() != null){
+            this.compiler.getModel().addTableModelListener(ajustadorLinha);
+        }
         
         WeblafUtils.configuraWebLaf(errorPane);
         this.mainWindow.getMessagesPane().removeAll();
