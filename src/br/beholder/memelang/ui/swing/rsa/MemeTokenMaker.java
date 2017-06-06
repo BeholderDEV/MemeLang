@@ -63,6 +63,13 @@ public class MemeTokenMaker extends AbstractTokenMaker{
         tokenMap.put("==", Token.OPERATOR);
         tokenMap.put("!=", Token.OPERATOR);
         
+        tokenMap.put("<<", Token.OPERATOR);
+        tokenMap.put(">>", Token.OPERATOR);
+        tokenMap.put("|", Token.OPERATOR);
+        tokenMap.put("&", Token.OPERATOR);
+        tokenMap.put("~", Token.OPERATOR);
+        tokenMap.put("^", Token.OPERATOR);
+        
         tokenMap.put("and", Token.OPERATOR);
         tokenMap.put("or", Token.OPERATOR);
         tokenMap.put("nope", Token.OPERATOR);

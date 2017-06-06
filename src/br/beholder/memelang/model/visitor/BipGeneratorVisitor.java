@@ -210,11 +210,18 @@ public class BipGeneratorVisitor extends MemeVisitor{
                 resolveOpAritmeticaMaisOuNegacaoMenos(valctx, true);
             }
         }
+        if (opctx.op_bitwise() != null){
+            resolveOpBitwise(opctx.op_bitwise(), valctx);
+        }
         if (opctx.op_neg() != null) {
             if (opctx.op_neg().MENOS() != null) {
                 resolveOpAritmeticaMaisOuNegacaoMenos(valctx, false);
             }
         }
+    }
+    
+    private void resolveOpBitwise(MemelangParser.Op_bitwiseContext opBit, MemelangParser.Val_finalContext valctx){
+        
     }
 
     private void resolveOpAritmeticaMaisOuNegacaoMenos(MemelangParser.Val_finalContext valctx, boolean operacaoMais) {
