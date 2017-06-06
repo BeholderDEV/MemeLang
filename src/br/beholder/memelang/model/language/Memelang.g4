@@ -70,7 +70,7 @@ operations : op_rel | op_neg | op_bitwise | op_arit_baixa | op_logica;
 op_atr : MAIS IGUAL | MENOS IGUAL;
 op_rel : MAIORQUE | MENORQUE | MAIOROUIGUAL | MENOROUIGUAL | IDENTICO | DIFERENTE;
 op_neg : MENOS | BITNOT | NOT;
-op_bitwise : BITSHIFTLEFT | BITSHIFTRIGHT;
+op_bitwise : BITSHIFTLEFT | BITSHIFTRIGHT | BITAND | BITOR | BITXOR | BITNOT;
 op_arit_baixa : MAIS | DIVIDE | MULTIPLICA | MOD;
 op_logica : AND | OR | NOT;
 val_final : CONSTINTEIRO | CONSTSTRING | CONSTBINARIO | CONSTHEXA | CONSTCHAR | CONSTLOGICO | CONSTREAL | ID | chamadaFuncao | ID multidimensional | PARENTESEABRE expressao PARENTESEFECHA;

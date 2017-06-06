@@ -1,4 +1,5 @@
 package br.beholder.memelang.model.language;
+
 // Generated from .\Memelang.g4 by ANTLR 4.7
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -2469,7 +2470,7 @@ public class MemelangParser extends Parser {
 			setState(324);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << MAIS) | (1L << MENOS) | (1L << MULTIPLICA) | (1L << DIVIDE) | (1L << MOD) | (1L << MAIORQUE) | (1L << MENORQUE) | (1L << MAIOROUIGUAL) | (1L << MENOROUIGUAL) | (1L << IDENTICO) | (1L << DIFERENTE) | (1L << AND) | (1L << OR) | (1L << NOT) | (1L << BITSHIFTRIGHT) | (1L << BITSHIFTLEFT) | (1L << BITNOT))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << MAIS) | (1L << MENOS) | (1L << MULTIPLICA) | (1L << DIVIDE) | (1L << MOD) | (1L << MAIORQUE) | (1L << MENORQUE) | (1L << MAIOROUIGUAL) | (1L << MENOROUIGUAL) | (1L << IDENTICO) | (1L << DIFERENTE) | (1L << AND) | (1L << OR) | (1L << NOT) | (1L << BITSHIFTRIGHT) | (1L << BITSHIFTLEFT) | (1L << BITAND) | (1L << BITOR) | (1L << BITXOR) | (1L << BITNOT))) != 0)) {
 				{
 				{
 				{
@@ -2764,6 +2765,10 @@ public class MemelangParser extends Parser {
 	public static class Op_bitwiseContext extends ParserRuleContext {
 		public TerminalNode BITSHIFTLEFT() { return getToken(MemelangParser.BITSHIFTLEFT, 0); }
 		public TerminalNode BITSHIFTRIGHT() { return getToken(MemelangParser.BITSHIFTRIGHT, 0); }
+		public TerminalNode BITAND() { return getToken(MemelangParser.BITAND, 0); }
+		public TerminalNode BITOR() { return getToken(MemelangParser.BITOR, 0); }
+		public TerminalNode BITXOR() { return getToken(MemelangParser.BITXOR, 0); }
+		public TerminalNode BITNOT() { return getToken(MemelangParser.BITNOT, 0); }
 		public Op_bitwiseContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -2792,7 +2797,7 @@ public class MemelangParser extends Parser {
 			{
 			setState(344);
 			_la = _input.LA(1);
-			if ( !(_la==BITSHIFTRIGHT || _la==BITSHIFTLEFT) ) {
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << BITSHIFTRIGHT) | (1L << BITSHIFTLEFT) | (1L << BITAND) | (1L << BITOR) | (1L << BITXOR) | (1L << BITNOT))) != 0)) ) {
 			_errHandler.recoverInline(this);
 			}
 			else {
@@ -3092,8 +3097,8 @@ public class MemelangParser extends Parser {
 		"%\3%\3&\3&\3\'\3\'\3(\3(\3)\3)\3)\3)\3)\3)\3)\3)\3)\3)\3)\3)\3)\3)\3)"+
 		"\5)\u0170\n)\3)\2\2*\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\60"+
 		"\62\64\668:<>@BDFHJLNP\2\t\3\2\3\4\4\2\13\20\22\22\3\2\34!\5\2\30\30$"+
-		"$++\3\2&\'\4\2\27\27\31\33\3\2\"$\2\u0181\2R\3\2\2\2\4X\3\2\2\2\6\\\3"+
-		"\2\2\2\bk\3\2\2\2\nm\3\2\2\2\fu\3\2\2\2\16}\3\2\2\2\20\u0085\3\2\2\2\22"+
+		"$++\3\2&+\4\2\27\27\31\33\3\2\"$\2\u0181\2R\3\2\2\2\4X\3\2\2\2\6\\\3\2"+
+		"\2\2\bk\3\2\2\2\nm\3\2\2\2\fu\3\2\2\2\16}\3\2\2\2\20\u0085\3\2\2\2\22"+
 		"\u0089\3\2\2\2\24\u008e\3\2\2\2\26\u0091\3\2\2\2\30\u009e\3\2\2\2\32\u00a7"+
 		"\3\2\2\2\34\u00a9\3\2\2\2\36\u00b2\3\2\2\2 \u00b5\3\2\2\2\"\u00b8\3\2"+
 		"\2\2$\u00be\3\2\2\2&\u00cb\3\2\2\2(\u00d2\3\2\2\2*\u00e4\3\2\2\2,\u00ed"+
