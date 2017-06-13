@@ -682,7 +682,7 @@ public class SemanticVisitor extends MemeVisitor{
 
     @Override
     public Object visitIfdeselseif(MemelangParser.IfdeselseifContext ctx) {
-        escopoAtual = Escopo.criaEVaiEscopoNovo("else if_" + contEscopo++, escopoAtual);
+        escopoAtual = Escopo.criaEVaiEscopoNovo("else_if_" + contEscopo++, escopoAtual);
         visitChildren(ctx);
         retornaEscopoPai();
         return null;

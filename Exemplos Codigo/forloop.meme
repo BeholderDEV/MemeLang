@@ -1,0 +1,10 @@
+checkEm divideByZero L( )L illuminati
+	checkEm a = 2 desu
+	kek L( a == 2 )L illuminati
+		a = a >> 3  desu
+		waitForIt L( checkEm i = 0 desu i < a desu i++ )L illuminati
+			a++ desu
+		confirmed
+	confirmed
+	escreva L( a )L desu
+confirmed

@@ -6,6 +6,7 @@
 package br.beholder.memelang.model.visitor;
 
 import br.beholder.memelang.model.analisador.AssemblyName;
+import br.beholder.memelang.model.analisador.Escopo;
 import br.beholder.memelang.model.analisador.Identificador;
 import br.beholder.memelang.model.language.MemelangParser;
 import br.beholder.memelang.model.language.MemelangParser.ExpressaoContext;
@@ -26,6 +27,7 @@ public class BipGeneratorVisitor extends MemeVisitor{
     private int maiorNumTemporariosNecessarios = 0;
     private int numTemporariosNecessarios = 0;
     private int numRotuloAtual = 0;
+    private int contEscopo = 1;
 
     public BipGeneratorVisitor(List<Identificador> tabelaSimbolos) {
         super(tabelaSimbolos);
@@ -532,11 +534,13 @@ public class BipGeneratorVisitor extends MemeVisitor{
 
     @Override
     public Object visitIfdeselse(MemelangParser.IfdeselseContext ctx) {
+        escopoAtual = Escopo.criaEVaiEscopoNovo("else_" + contEscopo++, escopoAtual);
         return super.visitIfdeselse(ctx); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Object visitIfdes(MemelangParser.IfdesContext ctx) {
+        escopoAtual = Escopo.criaEVaiEscopoNovo("if_" + contEscopo++, escopoAtual);
         String rot = getOneRot();
         String rot2 = null;
         visitExpressao(ctx.expressao());
@@ -614,6 +618,7 @@ public class BipGeneratorVisitor extends MemeVisitor{
 
     @Override
     public Object visitFordes(MemelangParser.FordesContext ctx) {
+        escopoAtual = Escopo.criaEVaiEscopoNovo("for_" + contEscopo++, escopoAtual);
         visitDeclaracoes(ctx.declaracoes());
         
         String rotRest = getOneRot();
@@ -643,6 +648,7 @@ public class BipGeneratorVisitor extends MemeVisitor{
 
     @Override
     public Object visitWhiledes(MemelangParser.WhiledesContext ctx) {
+        escopoAtual = Escopo.criaEVaiEscopoNovo("while_" + contEscopo++, escopoAtual);
         String rotRest = getOneRot();
         String rotQuit = getOneRot();
         comando(rotRest+" : ", "");
@@ -664,15 +670,18 @@ public class BipGeneratorVisitor extends MemeVisitor{
     }
 
     private AssemblyName findAN(String name) {
+        
         return AssemblyName.findAN(this.anlist, Identificador.getId(name, tabelaSimbolos, escopoAtual));
     }
 
     @Override
     public Object visitDeclaracoes(MemelangParser.DeclaracoesContext ctx) {
+        
         visitTipo(ctx.tipo());
-        for (MemelangParser.DeclaracaoContext declaracaoContext : ctx.declaracao()) {            
+        for (MemelangParser.DeclaracaoContext declaracaoContext : ctx.declaracao()) {  
             if(declaracaoContext.IGUAL() != null){
                 AssemblyName variavel = findAN(declaracaoContext.ID().getText());
+        
                 if (declaracaoContext.multidimensional() == null) {
                     visitExpressao(declaracaoContext.expressao());
                     comando("STO", variavel.toString());
@@ -696,6 +705,7 @@ public class BipGeneratorVisitor extends MemeVisitor{
 
     @Override
     public Object visitDodes(MemelangParser.DodesContext ctx) {
+        escopoAtual = Escopo.criaEVaiEscopoNovo("doWhile_" + contEscopo++, escopoAtual);
         return super.visitDodes(ctx); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -774,6 +784,7 @@ public class BipGeneratorVisitor extends MemeVisitor{
 
     @Override
     public Object visitIfdeselseif(MemelangParser.IfdeselseifContext ctx) {
+        escopoAtual = Escopo.criaEVaiEscopoNovo("else_if_" + contEscopo++, escopoAtual);
         return super.visitIfdeselseif(ctx); //To change body of generated methods, choose Tools | Templates.
     }
 
