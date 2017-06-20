@@ -12,6 +12,7 @@ import br.beholder.memelang.model.language.MemelangParser;
 import br.beholder.memelang.model.language.MemelangParser.ExpressaoContext;
 import br.beholder.memelang.model.language.MemelangParser.Op_bitwiseContext;
 import br.beholder.memelang.model.language.MemelangParser.Val_finalContext;
+import java.util.ArrayList;
 import java.util.List;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 
@@ -444,7 +445,9 @@ public class BipGeneratorVisitor extends MemeVisitor{
     }
 
     private void comando(String comando, String operador) {
-        this.codigo.append("\t");
+        if(!comando.contains(":")){
+            this.codigo.append("\t");
+        }
         this.codigo.append(comando);
         this.codigo.append(" ");
         this.codigo.append(operador);
@@ -633,8 +636,11 @@ public class BipGeneratorVisitor extends MemeVisitor{
     @Override
     public Object visitFordes(MemelangParser.FordesContext ctx) {
         escopoAtual = Escopo.criaEVaiEscopoNovo("for_" + contEscopo++, escopoAtual);
-        visitDeclaracoes(ctx.declaracoes());
-        
+        if(ctx.declaracoes() != null){
+            visitDeclaracoes(ctx.declaracoes());
+        }else{
+            visitAtribuicoes(ctx.atribuicoes(0));
+        }
         String rotRest = getOneRot();
         String rotQuit = getOneRot();
         comando(rotRest+" : ", "");
@@ -649,11 +655,11 @@ public class BipGeneratorVisitor extends MemeVisitor{
         }
         
         visitBloco(ctx.bloco());
-
-        List<MemelangParser.AtribuicoesContext> atris = ctx.atribuicoes();
-        for (MemelangParser.AtribuicoesContext atri : atris) {
-            visitAtribuicoes(atri);
-        }
+        visitAtribuicoes(ctx.atribuicoes(ctx.atribuicoes().size() - 1));
+//        List<MemelangParser.AtribuicoesContext> atris = ctx.atribuicoes();
+//        for (MemelangParser.AtribuicoesContext atri : atris) {
+//            visitAtribuicoes(atri);
+//        }
         
         comando("JMP", rotRest);
         comando(rotQuit+" : ", "");
