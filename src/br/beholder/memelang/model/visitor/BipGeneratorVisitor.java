@@ -591,7 +591,21 @@ public class BipGeneratorVisitor extends MemeVisitor{
     @Override
     public Object visitAtribuicoes(MemelangParser.AtribuicoesContext ctx) {
         AssemblyName variavel = findAN(ctx.ID().getText());
-        if (variavel.getId().getDimensoes() == 0) {
+        if(ctx.atribuicoesIncEDec()!= null){
+            if(ctx.atribuicoesIncEDec().MAIS().size()>0)
+            {
+                comando("LD", variavel.toString());
+                comando("ADDI", ""+1);
+                comando("STO", variavel.toString());
+            }
+            else if(ctx.atribuicoesIncEDec().MENOS().size()>0)
+            {
+                comando("LD", variavel.toString());
+                comando("SUBI", ""+1);
+                comando("STO", variavel.toString());
+            }            
+        }
+        else if (variavel.getId().getDimensoes() == 0) {
             visitExpressao(ctx.expressao());
             comando("STO", variavel.toString());
         } else {

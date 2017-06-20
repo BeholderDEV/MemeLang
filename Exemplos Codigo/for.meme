@@ -1,0 +1,8 @@
+checkEm divideByZero L( )L illuminati
+	checkEm g = 1 desu
+	checkEm b = 2 desu
+
+	waitForIt L( checkEm i = 0 desu i < 10 desu i++ )L illuminati
+		
+	confirmed
+confirmed
