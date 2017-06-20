@@ -1,0 +1,19 @@
+checkEm divideByZero L( )L illuminati
+	checkEm a = 1 desu
+	kek L( a != 2 )L illuminati
+		checkEm b = 2 desu		
+		leia L( b )L desu
+		kek L( b > 1 )L illuminati
+			a = a << 1  desu
+		confirmed
+		notSureIf illuminati
+			a = a << 3 desu
+		confirmed		
+	confirmed
+	notSureIf kek L( a > 2 )L illuminati
+		escreva L( a + 2 )L desu
+	confirmed
+	notSureIf illuminati
+		escreva L( a + a + a )L desu
+	confirmed
+confirmed

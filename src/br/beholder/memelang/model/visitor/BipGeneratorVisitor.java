@@ -702,11 +702,27 @@ public class BipGeneratorVisitor extends MemeVisitor{
         }
         return null; //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public Object visitDodes(MemelangParser.DodesContext ctx) {
         escopoAtual = Escopo.criaEVaiEscopoNovo("doWhile_" + contEscopo++, escopoAtual);
-        return super.visitDodes(ctx); //To change body of generated methods, choose Tools | Templates.
+        String rotRest = getOneRot();
+        String rotQuit = getOneRot();
+        comando(rotRest+" : ", "");
+        
+        visitBloco(ctx.bloco());
+        
+        visitExpressao(ctx.expressao());
+        
+        List<MemelangParser.OperationsContext> operacoes = ctx.expressao().operations();
+        for (MemelangParser.OperationsContext operacao : operacoes) {
+            if (operacao.op_rel() != null) {
+                resolveSalto(operacao.op_rel(), true, rotQuit);
+            }
+        }     
+        comando("JMP", rotRest);
+        comando(rotQuit+" : ", "");
+        return null;
     }
 
     @Override

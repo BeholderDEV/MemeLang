@@ -8,27 +8,25 @@ package br.beholder.memelang.control;
 import br.beholder.memelang.model.executor.MemeLanguageCompiler;
 import br.beholder.memelang.ui.MainPanel;
 import br.beholder.memelang.ui.swing.webLaf.AjustadorLinhaTabelaMensagensCompilador;
-import br.beholder.memelang.ui.swing.webLaf.ExampleTreeRender;
-import br.beholder.memelang.ui.swing.webLaf.PSTreeUI;
 import br.beholder.memelang.ui.swing.webLaf.RenderizadorTabelaMensagensCompilador;
-import br.beholder.memelang.ui.swing.webLaf.WebHeaderRenderer;
 import br.beholder.memelang.ui.swing.webLaf.WeblafUtils;
 import br.beholder.memelang.ui.utils.ColorController;
 import com.alee.laf.table.WebTableHeaderUI;
 import java.awt.Desktop;
+import java.awt.Dimension;
 import java.io.FileNotFoundException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTree;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.TreeSelectionModel;
 import org.antlr.v4.gui.TreeViewer;
 import org.antlr.v4.runtime.tree.Tree;
 
@@ -185,11 +183,29 @@ public class MainWindowController {
         Tree parseTreeRoot = this.compiler.getTree();
         TreeNodeWrapper nodeRoot = new TreeNodeWrapper(parseTreeRoot);
         fillTree(nodeRoot, parseTreeRoot);
-        final JTree tree = new JTree(nodeRoot);
-        tree.setCellRenderer(new ExampleTreeRender());
-        tree.setUI(new PSTreeUI());
-        tree.setBackground(ColorController.COR_PRINCIPAL);
-        tree.setForeground(ColorController.COR_LETRA);
+        
+        JFrame frame = new JFrame("Árvore Sintática");
+        frame.setContentPane(new JScrollPane(new TreeViewer(Arrays.asList(this.compiler.getParser().getRuleNames()), this.compiler.getTree())));
+        frame.setPreferredSize( new Dimension(800, 600));
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        
+//        final JTree tree = new JTree(nodeRoot);
+//        tree.setCellRenderer(new ExampleTreeRender());
+//        tree.setUI(new PSTreeUI());
+//        tree.setBackground(ColorController.COR_PRINCIPAL);
+//        tree.setForeground(ColorController.COR_LETRA);
+//        JDialog treeDialog = new JDialog();
+//        JScrollPane treeScroll = new JScrollPane();
+//        for (int i = 0; i < tree.getRowCount(); i++) {
+//            tree.expandRow(i);
+//        }
+//        treeScroll.setViewportView(tree);
+//        treeDialog.setSize(800, 600);
+//        treeDialog.add(treeScroll);
+//        treeDialog.setVisible(true);
+//        treeScroll.setVisible(true);
         
         
 //        this.mainWindow.getTreePanel().removeAll();
