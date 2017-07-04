@@ -581,7 +581,10 @@ public class SemanticVisitor extends MemeVisitor{
                     false);
             tabelaSimbolos.add(ident);
             visitChildren(ctx);
-            verificarCompatibilidadeAtribuicao(ident.getTipo(), ctx);
+                System.out.println(ident.getTipo());
+            if(inicializada){
+                verificarCompatibilidadeAtribuicao(ident.getTipo(), ctx);
+            }            
         }
         
         return null;

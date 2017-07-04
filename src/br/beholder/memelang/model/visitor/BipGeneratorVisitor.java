@@ -588,6 +588,7 @@ public class BipGeneratorVisitor extends MemeVisitor{
             visitIfdeselseif(ctx.ifdeselseif());
             comando(rot2 + " : ", "");
         }
+        retornaEscopoPai();
         return null;
     }
 
@@ -710,7 +711,6 @@ public class BipGeneratorVisitor extends MemeVisitor{
     }
 
     private AssemblyName findAN(String name) {
-        
         return AssemblyName.findAN(this.anlist, Identificador.getId(name, tabelaSimbolos, escopoAtual));
     }
 
@@ -849,7 +849,8 @@ public class BipGeneratorVisitor extends MemeVisitor{
 
     @Override
     public Object visitRetorno(MemelangParser.RetornoContext ctx) {
-        return super.visitRetorno(ctx); //To change body of generated methods, choose Tools | Templates.
+        visitExpressao(ctx.expressao());
+        return null; //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
