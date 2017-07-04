@@ -58,7 +58,8 @@ public class BipTokenMaker extends AbstractTokenMaker{
         tokenMap.put("BGE", Token.RESERVED_WORD_2);
         tokenMap.put("BEQ", Token.RESERVED_WORD_2);
         tokenMap.put("BNE", Token.RESERVED_WORD_2);
-        
+        tokenMap.put("CALL", Token.RESERVED_WORD_2);
+        tokenMap.put("RETURN", Token.RESERVED_WORD_2);
         
 
         return tokenMap;

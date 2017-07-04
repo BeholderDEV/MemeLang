@@ -9,6 +9,8 @@ import br.beholder.memelang.model.language.MemelangParser;
 import br.beholder.memelang.model.analisador.Identificador.Tipo;
 import br.beholder.memelang.model.analisador.Escopo;
 import br.beholder.memelang.model.analisador.Identificador;
+import br.beholder.memelang.model.language.MemelangParser.ExpressaoContext;
+import br.beholder.memelang.model.language.MemelangParser.TipoContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -28,6 +30,8 @@ public class SemanticVisitor extends MemeVisitor{
     List<String> semanticWarnings = new ArrayList<String>();
     Stack<Identificador.Tipo> pilhaTipoExpressao = new Stack<>();
     Stack<Operation> pilhaOperacao = new Stack<>();
+    boolean temRetorno = false;
+    Tipo tipoFuncao = null;
     int contEscopo = 1;
     
     public SemanticVisitor(List<Identificador> tabelaSimbolos) {
@@ -284,6 +288,24 @@ public class SemanticVisitor extends MemeVisitor{
         }
         return null;
     }
+    public Tipo verificarTipo(MemelangParser.TipoContext tipo){
+        if (tipo.BIN() != null) {
+            return Tipo.BINARIO;
+        } else if (tipo.BOOL() != null) {
+            return Tipo.LOGICO;
+        } else if (tipo.DOUBLE() != null) {
+            return Tipo.REAL;
+        } else if (tipo.HEXA() != null) {
+            return Tipo.HEXADECIMAL;
+        } else if (tipo.INT() != null) {
+            return Tipo.INTEIRO;
+        } else if (tipo.STRING() != null) {
+            return Tipo.STRING;
+        }else if(tipo.CHAR() != null){
+            return Tipo.CHAR;
+        }
+        return null;
+    }
     
     @Override
     public Object visitVal_final(MemelangParser.Val_finalContext ctx) {
@@ -302,12 +324,19 @@ public class SemanticVisitor extends MemeVisitor{
 
     @Override
     public Object visitRetorno(MemelangParser.RetornoContext ctx) {
-        return super.visitRetorno(ctx); //To change body of generated methods, choose Tools | Templates.
+        Tipo tipoExpressao = visitExpressaoLoop(ctx.expressao());
+        if(tipoExpressao == tipoFuncao){
+            temRetorno = true;
+        }
+        return null; //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Object visitParametrosChamada(MemelangParser.ParametrosChamadaContext ctx) {
-        return super.visitParametrosChamada(ctx); //To change body of generated methods, choose Tools | Templates.
+//        for (ExpressaoContext expressao : ctx.expressao()) {
+//            Tipo tipoParametro = visitExpressaoLoop(expressao);
+//        }
+        return null; //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -589,11 +618,20 @@ public class SemanticVisitor extends MemeVisitor{
         if (ctx.ID() == null) {
             return null;
         }
-
+        
        //criaEVaiEscopoNovo(ctx.ID().getText());
         escopoAtual = getEscopoDaFuncao(ctx.ID().getText());
+        if(ctx.tipoComVoid().tipo()!=null)
+        {
+            tipoFuncao = verificarTipo(ctx.tipoComVoid().tipo());
+        }
         //visitParametros(ctx.parametros());
-        visitBloco(ctx.bloco());
+        visitBloco(ctx.bloco());        
+        if(ctx.tipoComVoid().tipo() != null && !temRetorno && !ctx.ID().getText().equals("divideByZero")){
+            this.semanticErrors.add(new ParseCancellationException("Funcao "+ctx.ID().getText()+" não tem retorno necessário"));
+            
+        }
+        temRetorno = false;
         retornaEscopoPai();
         return null; //To change body of generated methods, choose Tools | Templates.
     }
@@ -633,13 +671,6 @@ public class SemanticVisitor extends MemeVisitor{
             retornaEscopoPai();
             //visitFuncao(ctx);
         }
-        
-//        List<MemelangParser.DeclaracoesContext> dctx = ctxProg.funcaoInicio().declaracoes();
-//        for (MemelangParser.DeclaracoesContext ctx : dctx) {
-//            visitDeclaracoes(ctx);
-//        }
-        
-        
     }
 
     @Override

@@ -115,7 +115,7 @@ public class MemeLanguageCompiler {
                     BipGeneratorVisitor generatorVisitor = new BipGeneratorVisitor(ids);
                     generatorVisitor.visit(tree);
                     codigoGerado = generatorVisitor.getCodigo();
-                    System.out.println(codigoGerado);
+//                    System.out.println(codigoGerado);
                 }
             } catch (Exception e)
             {

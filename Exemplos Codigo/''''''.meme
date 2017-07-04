@@ -1,0 +1,11 @@
+checkEm divideByme L( checkEm a )L illuminati
+	a = 2 desu
+confirmed
+
+checkEm divideByZero L( )L illuminati
+	checkEm g [3] desu
+	g[0] = 12 desu
+	divideByme L( g[0] )L desu
+confirmed
+
+

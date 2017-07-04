@@ -11,6 +11,7 @@ import br.beholder.memelang.model.analisador.Identificador;
 import br.beholder.memelang.model.language.MemelangParser;
 import br.beholder.memelang.model.language.MemelangParser.ExpressaoContext;
 import br.beholder.memelang.model.language.MemelangParser.Op_bitwiseContext;
+import br.beholder.memelang.model.language.MemelangParser.ParametroContext;
 import br.beholder.memelang.model.language.MemelangParser.Val_finalContext;
 import java.util.ArrayList;
 import java.util.List;
@@ -99,7 +100,7 @@ public class BipGeneratorVisitor extends MemeVisitor{
     @Override
     public Object visitExpressao(MemelangParser.ExpressaoContext ctx) {
         //Primeira operação
-        System.out.println("Expr: " + ctx.getText());
+//        System.out.println("Expr: " + ctx.getText());
         this.primeiraOperacao(ctx);
         //Demais Operações
         int tempNum;
@@ -171,7 +172,7 @@ public class BipGeneratorVisitor extends MemeVisitor{
     }
 
     private void primeiraOperacao(MemelangParser.ExpressaoContext ctx) {
-        System.out.println("FirstOp: " + ctx.getText());
+//        System.out.println("FirstOp: " + ctx.getText());
         MemelangParser.Val_finalContext valctx = ctx.val_final(0);
         //Carregar valor inteiro imediato
         if (valctx.CONSTINTEIRO() != null) {
@@ -201,7 +202,7 @@ public class BipGeneratorVisitor extends MemeVisitor{
 
         //Resolve outra expressão
         if (valctx.expressao() != null) {
-            System.out.println("exp");
+//            System.out.println("exp");
             visitExpressao(valctx.expressao());
         }
 
@@ -212,11 +213,11 @@ public class BipGeneratorVisitor extends MemeVisitor{
                 reverteSinalAcc();
             }
         }
-        System.out.println("Caiu fora");
+//        System.out.println("Caiu fora");
     }
 
     private void resolveValFinalEOperando(MemelangParser.OperationsContext opctx, MemelangParser.Val_finalContext valctx) {
-        System.out.println("Entrou resolve");
+//        System.out.println("Entrou resolve");
         if (opctx.op_arit_baixa() != null) {
             if (opctx.op_arit_baixa().MAIS() != null) {
                 resolveOpAritmeticaMaisOuNegacaoMenos(valctx, true);
@@ -233,7 +234,7 @@ public class BipGeneratorVisitor extends MemeVisitor{
     }
     
     private void resolveOpBitwise(Op_bitwiseContext opBit, Val_finalContext valctx){
-        System.out.println("Entrou " + valctx.getText());
+//        System.out.println("Entrou " + valctx.getText());
         if (valctx.CONSTINTEIRO() != null) {
             if (opBit.BITAND() != null) {
                 comando("ANDI", valctx.CONSTINTEIRO().getSymbol().getText());
@@ -487,7 +488,16 @@ public class BipGeneratorVisitor extends MemeVisitor{
 
     @Override
     public Object visitParametrosChamada(MemelangParser.ParametrosChamadaContext ctx) {
-        return super.visitParametrosChamada(ctx); //To change body of generated methods, choose Tools | Templates.
+        for (ExpressaoContext expressao : ctx.expressao()) {
+            visitExpressao(expressao);
+            int tempNum = getOneTemp();
+            comando("STO", "temp" + tempNum);
+        }
+        for (ExpressaoContext expressao : ctx.expressao()) {
+            releaseTheTemp();
+        }
+        return null;
+//        return super.visitParametrosChamada(ctx); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -524,11 +534,21 @@ public class BipGeneratorVisitor extends MemeVisitor{
         escopoAtual = vaiEscopoFilho(an.getId().getNome());
         this.codigo.append(an.toString());
         this.codigo.append(" : \n");
+        for (ParametroContext par : ctx.parametros().parametro()) {
+            AssemblyName variavel = findAN(par.ID().getText());
+            int tempNum = getOneTemp();
+            comando("LD", "temp" + tempNum);
+            comando("STO", variavel.toString());            
+        }
+        for (ParametroContext par : ctx.parametros().parametro()) {
+            releaseTheTemp();
+        }
+        
         visitBloco(ctx.bloco()); //To change body of generated methods, choose Tools | Templates.
         if (an.toString().equals("divideByZero")) {
             this.codigo.append("\tHLT\n");
         } else {
-            this.codigo.append("RETURN\n");
+            this.codigo.append("\tRETURN\n");
         }
         retornaEscopoPai();
 //        visitFuncoes(ctx.funcoes());
@@ -752,7 +772,8 @@ public class BipGeneratorVisitor extends MemeVisitor{
 
     @Override
     public Object visitBloco(MemelangParser.BlocoContext ctx) {
-        return super.visitBloco(ctx); //To change body of generated methods, choose Tools | Templates.
+        visitComandos(ctx.comandos());
+        return null; //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -763,6 +784,7 @@ public class BipGeneratorVisitor extends MemeVisitor{
     @Override
     public Object visitProg(MemelangParser.ProgContext ctx) {
         escopoAtual = Identificador.getUNSAFEId("divideByZero", tabelaSimbolos).getEscopo();
+        this.codigo.append("\tCALL divideByZero\n");
         //JUMP TO MAIN
         return super.visitProg(ctx); //To change body of generated methods, choose Tools | Templates.
     }
@@ -810,11 +832,12 @@ public class BipGeneratorVisitor extends MemeVisitor{
 
     @Override
     public Object visitChamadaFuncao(MemelangParser.ChamadaFuncaoContext ctx) {
-        System.out.println("func : "+ctx.ID().getSymbol().getText());
+//        System.out.println("func : "+ctx.ID().getSymbol().getText());
         
             //PRECISA DOS PARAMETROS !!!! //TODO INCOMPLETE
-            String funName = findAN(ctx.ID().getText()).toString();
-            comando("CALL", funName);
+        visitParametrosChamada(ctx.parametrosChamada());
+        String funName = findAN(ctx.ID().getText()).toString();
+        comando("CALL", funName);
         return null; //To change body of generated methods, choose Tools | Templates.
     }
 

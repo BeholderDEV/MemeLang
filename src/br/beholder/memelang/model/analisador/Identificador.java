@@ -100,7 +100,7 @@ public class Identificador {
      * @return
      */
     public static Identificador getId(String nomeVariavel, List<Identificador> tabelaSimbolos, Escopo escopoAtual) {
-        System.out.println("entradas marotas : (nome: "+nomeVariavel+" ) (escopo: "+escopoAtual+")");
+//        System.out.println("entradas marotas : (nome: "+nomeVariavel+" ) (escopo: "+escopoAtual+")");
         for (Identificador variavel : tabelaSimbolos) {
             if (variavel.getNome().equals(nomeVariavel)) {
                 Escopo EscopoAtualVerificado = escopoAtual;
