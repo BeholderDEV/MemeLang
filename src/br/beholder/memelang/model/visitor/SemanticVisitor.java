@@ -109,6 +109,10 @@ public class SemanticVisitor extends MemeVisitor{
             }
         }
         verificarCompatibilidadeOperacao(ctx, pilhaTipoExpressaoLoop, pilhaOperacaoLoop);
+        if(pilhaTipoExpressaoLoop.empty())
+        {
+            return null;
+        }
         return pilhaTipoExpressaoLoop.peek();
     }
     
