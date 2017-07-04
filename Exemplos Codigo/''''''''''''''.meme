@@ -1,0 +1,21 @@
+checkEm divideByme L( checkEm a )L illuminati
+	a = a + 2 desu
+	goHomeYouAreDrunk a desu
+confirmed
+
+checkEm divideByHe L( checkEm b , checkEm c )L illuminati
+	checkEm d = b + c desu
+	goHomeYouAreDrunk d desu
+confirmed
+
+checkEm divideByZero L( )L illuminati
+	checkEm g [3] desu
+	g[0] = 12 desu
+	g[1] = divideByme L( g[0] )L desu
+	g[2] = divideByHe L( g[1] , 2 )L desu
+
+	escreva L( g[2] )L  desu
+	
+confirmed
+
+

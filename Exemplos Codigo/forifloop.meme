@@ -1,0 +1,16 @@
+checkEm divideByZero L( )L illuminati
+
+	waitForIt L( checkEm i = 0 desu i != 2 desu i++ )L illuminati
+		kek L( i > 0 )L illuminati
+			escreva L( 1 )L desu
+			i = - 10 desu
+		confirmed
+		notSureIf kek L( i < 0 )L illuminati
+			escreva L( - 1 )L desu
+			i = 10 desu
+		confirmed
+		notSureIf illuminati
+			escreva L( 0 )L desu
+		confirmed
+	confirmed
+confirmed

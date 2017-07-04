@@ -12,6 +12,7 @@ import br.beholder.memelang.model.analisador.Identificador;
 import br.beholder.memelang.model.language.MemelangParser.ExpressaoContext;
 import br.beholder.memelang.model.language.MemelangParser.TipoContext;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -126,7 +127,8 @@ public class SemanticVisitor extends MemeVisitor{
             if(ctx.val_final(i).multidimensional() != null){
                 valFinal =  ctx.val_final(i).ID().getText();
             }
-            if(ctx.val_final(i).chamadaFuncao() != null){
+            if(ctx.val_final(i).chamadaFuncao()!= null){
+                visitChamadaFuncao(ctx.val_final(i).chamadaFuncao());
                 valFinal = ctx.val_final(i).chamadaFuncao().ID().getText();
             }
             if(ctx.val_final(i).PARENTESEABRE() != null){
@@ -689,21 +691,42 @@ public class SemanticVisitor extends MemeVisitor{
             return null;
         }        
         id.setUsada(true);
+        
         //Captura os parametros da função e numeros
         Escopo escopoFuncao = getEscopoDaFuncao(id.getNome());
         int qtdParametrosNaFuncao;
+        List<Identificador> idListParametros = null;        
         if (escopoFuncao != null) {
-            List<Identificador> idListParametros = Identificador.getParametrosFuncao(escopoFuncao, tabelaSimbolos);
+            idListParametros = Identificador.getParametrosFuncao(escopoFuncao, tabelaSimbolos);
             qtdParametrosNaFuncao = idListParametros.size();
         }else{
             qtdParametrosNaFuncao = 0;
         }
-        visitExpressao(ctx.parametrosChamada().expressao(multidimensional));
+        
+        List<Tipo> tiposParam = new ArrayList<>();    
+        for (ExpressaoContext expressaoContext : ctx.parametrosChamada().expressao()) {
+            tiposParam.add(visitExpressaoLoop(expressaoContext));
+        }
         int qtdParametrosChamada = ctx.parametrosChamada().expressao().size();
-
+        
         //Valida se os numeros de parametros bate
         if (qtdParametrosChamada != qtdParametrosNaFuncao) {
             this.semanticErrors.add(new ParseCancellationException("Chamada de função na linha " + ctx.start.getLine() + " coluna " + ctx.start.getCharPositionInLine() + " com numero incorreto de parametros. Esperado: " + qtdParametrosNaFuncao + " Encontrado: " + qtdParametrosChamada));
+        }
+        //verifica os tipos dos parametros das funcoes
+        if(idListParametros!=null && !tiposParam.isEmpty())
+        {
+            Iterator<Tipo> expIte = tiposParam.iterator();
+            Iterator<Identificador> paramIte = idListParametros.iterator();
+            while(expIte.hasNext() && paramIte.hasNext())
+            {
+                Identificador parametroFuncao = paramIte.next();
+                Tipo tipoParametroChamada = expIte.next();
+                if(parametroFuncao.getTipo() != tipoParametroChamada)
+                {
+                    this.semanticErrors.add(new ParseCancellationException("Chamada de função na linha " + ctx.start.getLine() + " coluna " + ctx.start.getCharPositionInLine() + " está com parametros com tipos incorretos Esperado: "+parametroFuncao.getTipo().name()+" Recebido: "+tipoParametroChamada.name()));
+                }
+            }
         }
         visitChildren(ctx);
         return null;
