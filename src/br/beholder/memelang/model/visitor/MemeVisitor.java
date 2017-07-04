@@ -55,7 +55,6 @@ public abstract class MemeVisitor extends MemelangBaseVisitor<Object>{
     }
     protected void retornaEscopoPai()
     {
-        System.out.println("VOLTOU PRO PAI");
         escopoAtual = escopoAtual.getPai();
     }
 }

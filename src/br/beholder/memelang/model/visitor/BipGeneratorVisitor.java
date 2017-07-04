@@ -40,6 +40,8 @@ public class BipGeneratorVisitor extends MemeVisitor{
     }
     
     public String getCodigo() {
+        String lines[] = this.codigo.toString().split("\n");
+        int lastReturn = -2;
         StringBuilder finalCode = new StringBuilder();
         finalCode.append(this.header);
         for (int i = 1; i <= this.maiorNumTemporariosNecessarios; i++) {
@@ -48,7 +50,16 @@ public class BipGeneratorVisitor extends MemeVisitor{
             finalCode.append(i);
             finalCode.append(" : 0\n");
         }
-        finalCode.append(this.codigo);
+        for (int i = 0; i < lines.length; i++) {
+            if(i - 1 == lastReturn && lines[i].contains("RETURN")){
+                lines[i] = "";
+            }
+            if(lines[i].contains("RETURN")){
+                lastReturn = i;
+            }
+            finalCode.append("\t"+lines[i]+"\n");
+        }
+//        finalCode.append(this.codigo);
         return finalCode.toString();
     }
 
@@ -831,10 +842,7 @@ public class BipGeneratorVisitor extends MemeVisitor{
     
 
     @Override
-    public Object visitChamadaFuncao(MemelangParser.ChamadaFuncaoContext ctx) {
-//        System.out.println("func : "+ctx.ID().getSymbol().getText());
-        
-            //PRECISA DOS PARAMETROS !!!! //TODO INCOMPLETE
+    public Object visitChamadaFuncao(MemelangParser.ChamadaFuncaoContext ctx) {        
         visitParametrosChamada(ctx.parametrosChamada());
         String funName = findAN(ctx.ID().getText()).toString();
         comando("CALL", funName);
@@ -850,6 +858,7 @@ public class BipGeneratorVisitor extends MemeVisitor{
     @Override
     public Object visitRetorno(MemelangParser.RetornoContext ctx) {
         visitExpressao(ctx.expressao());
+        this.codigo.append("\tRETURN\n");
         return null; //To change body of generated methods, choose Tools | Templates.
     }
 
