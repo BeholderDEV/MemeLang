@@ -57,7 +57,7 @@ public class BipGeneratorVisitor extends MemeVisitor{
             if(lines[i].contains("RETURN")){
                 lastReturn = i;
             }
-            finalCode.append("\t"+lines[i]+"\n");
+            finalCode.append(lines[i]+"\n");
         }
 //        finalCode.append(this.codigo);
         return finalCode.toString();
@@ -626,6 +626,9 @@ public class BipGeneratorVisitor extends MemeVisitor{
     @Override
     public Object visitAtribuicoes(MemelangParser.AtribuicoesContext ctx) {
         AssemblyName variavel = findAN(ctx.ID().getText());
+        if(variavel == null){
+            System.out.println("Null aqui " + ctx.ID().getText());
+        }
         if(ctx.atribuicoesIncEDec()!= null){
             if(ctx.atribuicoesIncEDec().MAIS().size()>0)
             {
@@ -695,6 +698,7 @@ public class BipGeneratorVisitor extends MemeVisitor{
         
         comando("JMP", rotRest);
         comando(rotQuit+" : ", "");
+        retornaEscopoPai();
         return null;
     }
 
@@ -718,10 +722,12 @@ public class BipGeneratorVisitor extends MemeVisitor{
         
         comando("JMP", rotRest);
         comando(rotQuit+" : ", "");
+        retornaEscopoPai();
         return null;
     }
 
     private AssemblyName findAN(String name) {
+        System.out.println(escopoAtual);
         return AssemblyName.findAN(this.anlist, Identificador.getId(name, tabelaSimbolos, escopoAtual));
     }
 
@@ -732,7 +738,6 @@ public class BipGeneratorVisitor extends MemeVisitor{
         for (MemelangParser.DeclaracaoContext declaracaoContext : ctx.declaracao()) {  
             if(declaracaoContext.IGUAL() != null){
                 AssemblyName variavel = findAN(declaracaoContext.ID().getText());
-        
                 if (declaracaoContext.multidimensional() == null) {
                     visitExpressao(declaracaoContext.expressao());
                     comando("STO", variavel.toString());
@@ -773,6 +778,7 @@ public class BipGeneratorVisitor extends MemeVisitor{
         }     
         comando("JMP", rotRest);
         comando(rotQuit+" : ", "");
+        retornaEscopoPai();
         return null;
     }
 
@@ -844,8 +850,14 @@ public class BipGeneratorVisitor extends MemeVisitor{
     @Override
     public Object visitChamadaFuncao(MemelangParser.ChamadaFuncaoContext ctx) {        
         visitParametrosChamada(ctx.parametrosChamada());
-        String funName = findAN(ctx.ID().getText()).toString();
+        if(ctx.ID() == null){
+            System.out.println("Satan " + ctx.getText());
+        }else{
+            System.out.println("782785");
+                    String funName = findAN(ctx.ID().getText()).toString();
         comando("CALL", funName);
+        }
+
         return null; //To change body of generated methods, choose Tools | Templates.
     }
 
